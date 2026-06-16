@@ -50,7 +50,7 @@ export default function ClientMagicLinkVerificationUI({
         });
         toast.success("Authentication successful!");
         setTimeout(() => {
-          router.push("/dashboard");
+          router.push("/");
         }, 1500);
       },
     },
@@ -110,7 +110,7 @@ export default function ClientMagicLinkVerificationUI({
           )}
           {isSuccess && (
             <Button asChild variant="outline" className="w-full">
-              <Link href="/dashboard">Go to Dashboard</Link>
+              <Link href="/">Go to Dashboard</Link>
             </Button>
           )}
         </CardFooter>

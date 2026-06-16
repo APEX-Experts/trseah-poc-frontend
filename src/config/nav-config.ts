@@ -17,12 +17,12 @@ export interface NavConfig {
 export const navConfig: NavConfig = {
   primaryLink: {
     label: "Dashboard",
-    href: "/dashboard",
+    href: "/",
   },
   sidebarNav: [
     {
       label: "Home",
-      href: "/dashboard",
+      href: "/",
       icon: LayoutDashboard,
     },
     {

@@ -7,20 +7,14 @@ export function proxy(request: NextRequest) {
 
   const isAuthPage = pathname.startsWith("/auth");
 
-  // Explicitly define public routes.
-  // It's usually safer to check exact matches for root ("/") to avoid catching everything.
-  const publicPaths = ["/", "/about", "/contact", "/products"];
-  const isPublicPage =
-    publicPaths.includes(pathname) || publicPaths.some((p) => p !== "/" && pathname.startsWith(p));
-
   // 1. Unauthenticated user trying to access a protected route
-  if (!hasAuthCookie && !isAuthPage && !isPublicPage) {
+  if (!hasAuthCookie && !isAuthPage) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
   // 2. Authenticated user trying to access login/register pages
   if (hasAuthCookie && isAuthPage) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();
