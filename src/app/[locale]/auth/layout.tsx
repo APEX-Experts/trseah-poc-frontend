@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/landing/layout/logo";
-import { ThemeToggle } from "@/components/landing/layout/theme-toggle";
 import { LocaleSwitcher } from "@/components/landing/layout/locale-switcher";
 
 /**
  * Layout component for the auth route group.
- * Shows a header with logo, locale switcher, and theme toggle.
+ * Shows a header with logo, locale switcher.
  *
  * @param props - Component props containing children elements.
  */
@@ -24,11 +23,10 @@ export default async function AuthLayout({
           </Link>
           <div className="flex items-center gap-4">
             <LocaleSwitcher />
-            <ThemeToggle />
           </div>
         </div>
       </header>
-      <main className="flex-grow flex items-center justify-center">{children}</main>
+      <main className="grow flex items-center justify-center">{children}</main>
     </div>
   );
 }
