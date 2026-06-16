@@ -89,7 +89,7 @@ export function ProfileDropdown({
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="text-red-600 focus:text-red-600 cursor-pointer"
+          className="text-error-foreground focus:text-error-foreground cursor-pointer"
           onClick={handleLogout}
           disabled={isPending}
         >
