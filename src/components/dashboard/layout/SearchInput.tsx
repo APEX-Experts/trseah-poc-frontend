@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import {
   CommandDialog,
   CommandEmpty,
@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { navConfig } from "@/config/nav-config";
+import { useTranslations } from "next-intl";
 
 // 1. The stateless trigger button
 export function SearchTrigger({
@@ -23,6 +24,7 @@ export function SearchTrigger({
   onClick: () => void;
   shortcut?: string;
 }) {
+  const t = useTranslations("Search");
   let modifier = "Ctrl";
   if (typeof navigator !== "undefined") {
     modifier = /Mac|iPhone|iPod|iPad/i.test(navigator.userAgent) ? "⌘" : "Ctrl";
@@ -37,9 +39,9 @@ export function SearchTrigger({
       )}
       onClick={onClick}
     >
-      <Search className="h-4 w-4 md:mr-2" />
-      <span className="hidden md:inline-flex">Search...</span>
-      <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 md:flex">
+      <Search className="h-4 w-4 md:me-2" />
+      <span className="hidden md:inline-flex">{t("placeholderShort")}</span>
+      <kbd className="pointer-events-none absolute end-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 md:flex">
         <span className="text-xs">{modifier}+</span>
         <span className="uppercase">{shortcut}</span>
       </kbd>
@@ -57,6 +59,8 @@ export function SearchDialog({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   shortcut?: string;
 }) {
+  const t = useTranslations("Search");
+  const tSidebar = useTranslations("AppSidebar");
   const router = useRouter();
 
   React.useEffect(() => {
@@ -80,20 +84,20 @@ export function SearchDialog({
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder="Type a command or search..." />
+      <CommandInput placeholder={t("placeholder")} />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Navigation">
+        <CommandEmpty>{t("noResults")}</CommandEmpty>
+        <CommandGroup heading={t("navigationHeading")}>
           {navConfig.sidebarNav.map((item) => (
             <CommandItem
               key={item.href}
-              value={item.label}
+              value={tSidebar(item.label)}
               onSelect={() => {
                 runCommand(() => router.push(item.href));
               }}
             >
-              <item.icon className="mr-2 h-4 w-4" />
-              <span>{item.label}</span>
+              <item.icon className="me-2 h-4 w-4" />
+              <span>{tSidebar(item.label)}</span>
             </CommandItem>
           ))}
         </CommandGroup>

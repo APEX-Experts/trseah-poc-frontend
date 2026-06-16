@@ -2,6 +2,7 @@
 
 import { Logo } from "@/components/landing/layout/logo";
 import { ThemeToggle } from "@/components/landing/layout/theme-toggle";
+import { LocaleSwitcher } from "@/components/landing/layout/locale-switcher";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { navConfig } from "@/config/nav-config";
 import Link from "next/link";
@@ -17,7 +18,7 @@ export function DashboardNavbar() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
         {/* Brand Logo & Main Nav */}
         <div className="flex items-center gap-2">
-          <SidebarTrigger className="absolute top-0 left-0" />
+          <SidebarTrigger className="absolute top-0 start-0" />
           <Link href={navConfig.primaryLink.href} className="flex items-center">
             <Logo brandName="Dashboard" />
           </Link>
@@ -36,6 +37,7 @@ export function DashboardNavbar() {
           </div>
 
           <NotificationsPopover />
+          <LocaleSwitcher />
           <ThemeToggle />
         </div>
       </div>

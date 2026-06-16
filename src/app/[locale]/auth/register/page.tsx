@@ -14,9 +14,9 @@ import { Button } from "@/components/ui/button";
 import { useAuthControllerRegister, GOOGLE_AUTH_URL } from "@/hooks/use-auth";
 import { getErrorMessage } from "@/lib/api-utils";
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import * as z from "zod";
+import { useTranslations } from "next-intl";
 
 const registerSchema = z.object({
   email: z.email("Invalid email address"),
@@ -28,6 +28,7 @@ const registerSchema = z.object({
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
+  const t = useTranslations("Register");
   const router = useRouter();
   const { mutateAsync: register, isPending, error, data, reset } = useAuthControllerRegister();
   const errorMessage = getErrorMessage(error, data);
@@ -50,13 +51,13 @@ export default function RegisterPage() {
           </div>
         )}
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold tracking-tight">Create an account</CardTitle>
-          <CardDescription>Enter your details below to create your account</CardDescription>
+          <CardTitle className="text-3xl font-bold tracking-tight">{t("createAccount")}</CardTitle>
+          <CardDescription>{t("detailsDescription")}</CardDescription>
         </CardHeader>
 
         <CardContent>
           <GenericForm
-            title="Register"
+            title={t("register")}
             schema={registerSchema}
             error={errorMessage}
             defaultValues={{
@@ -67,29 +68,31 @@ export default function RegisterPage() {
             }}
             onSubmit={handleSubmit}
             onReset={reset}
-            submitText="Create account"
+            submitText={t("createAccountButton")}
+            resetText={t("reset")}
+            submittingText={t("submitting")}
             fields={[
               {
                 name: "firstName",
-                label: "First Name",
-                placeholder: "John",
+                label: t("firstNameLabel"),
+                placeholder: t("firstNamePlaceholder"),
               },
               {
                 name: "lastName",
-                label: "Last Name",
-                placeholder: "Doe",
+                label: t("lastNameLabel"),
+                placeholder: t("lastNamePlaceholder"),
               },
               {
                 name: "email",
-                label: "Email Address",
+                label: t("emailLabel"),
                 type: "email",
-                placeholder: "john.doe@example.com",
+                placeholder: t("emailPlaceholder"),
               },
               {
                 name: "password",
-                label: "Password",
+                label: t("passwordLabel"),
                 type: "password",
-                placeholder: "••••••••",
+                placeholder: t("passwordPlaceholder"),
               },
             ]}
           />
@@ -99,12 +102,12 @@ export default function RegisterPage() {
               <Separator className="w-full" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">Or</span>
+              <span className="bg-card px-2 text-muted-foreground">{t("orSeparator")}</span>
             </div>
           </div>
 
           <Button variant="outline" className="w-full" asChild>
-            <a href={GOOGLE_AUTH_URL}>
+            <a href={GOOGLE_AUTH_URL} className="flex items-center justify-center">
               <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -123,16 +126,16 @@ export default function RegisterPage() {
                   fill="#EA4335"
                 />
               </svg>
-              Continue with Google
+              {t("googleButton")}
             </a>
           </Button>
         </CardContent>
 
         <CardFooter className="justify-center border-t bg-muted/50 py-4">
           <div className="text-sm">
-            Already have an account?{" "}
+            {t("alreadyHaveAccount")}{" "}
             <Link href="/auth/login" className="font-medium text-primary hover:underline">
-              Log in
+              {t("login")}
             </Link>
           </div>
         </CardFooter>

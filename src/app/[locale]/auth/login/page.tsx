@@ -16,10 +16,10 @@ import { getErrorMessage } from "@/lib/api-utils";
 import { getAuthControllerGetProfileQueryKey } from "@/lib/api/react-query/auth/auth";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import * as z from "zod";
+import { useTranslations } from "next-intl";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),
@@ -29,6 +29,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const t = useTranslations("Login");
   const router = useRouter();
   const queryClient = useQueryClient();
   const { mutateAsync: login, isPending, error, data, reset } = useAuthControllerLogin();
@@ -44,7 +45,7 @@ export default function LoginPage() {
           queryKey: getAuthControllerGetProfileQueryKey(),
         });
 
-        toast.success("Login successful! Welcome back.");
+        toast.success(t("successToast"));
         router.push("/");
       }
     } catch (err) {
@@ -61,13 +62,13 @@ export default function LoginPage() {
           </div>
         )}
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold tracking-tight">Welcome back</CardTitle>
-          <CardDescription>Enter your credentials to access your account</CardDescription>
+          <CardTitle className="text-3xl font-bold tracking-tight">{t("welcomeBack")}</CardTitle>
+          <CardDescription>{t("credentialsDescription")}</CardDescription>
         </CardHeader>
 
         <CardContent>
           <GenericForm
-            title="Login"
+            title={t("login")}
             schema={loginSchema}
             error={errorMessage}
             defaultValues={{
@@ -76,19 +77,21 @@ export default function LoginPage() {
             }}
             onSubmit={handleSubmit}
             onReset={reset}
-            submitText="Log in"
+            submitText={t("loginButton")}
+            resetText={t("reset")}
+            submittingText={t("submitting")}
             fields={[
               {
                 name: "email",
-                label: "Email Address",
+                label: t("emailLabel"),
                 type: "email",
-                placeholder: "john.doe@example.com",
+                placeholder: t("emailPlaceholder"),
               },
               {
                 name: "password",
-                label: "Password",
+                label: t("passwordLabel"),
                 type: "password",
-                placeholder: "••••••••",
+                placeholder: t("passwordPlaceholder"),
               },
             ]}
           />
@@ -98,7 +101,7 @@ export default function LoginPage() {
               <Separator className="w-full" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">Or</span>
+              <span className="bg-card px-2 text-muted-foreground">{t("orSeparator")}</span>
             </div>
           </div>
 
@@ -123,21 +126,21 @@ export default function LoginPage() {
                     fill="#EB4335"
                   />
                 </svg>
-                <span>Continue with Google</span>
+                <span>{t("googleButton")}</span>
               </a>
             </Button>
 
             <Button variant="outline" className="w-full" asChild>
-              <Link href="/auth/login/magic-link">Log in with Magic Link</Link>
+              <Link href="/auth/login/magic-link">{t("magicLinkButton")}</Link>
             </Button>
           </div>
         </CardContent>
 
         <CardFooter className="justify-center border-t bg-muted/50 py-4">
           <div className="text-sm">
-            Don&apos;t have an account?{" "}
+            {t("noAccount")}{" "}
             <Link href="/auth/register" className="font-medium text-primary hover:underline">
-              Sign up
+              {t("signUp")}
             </Link>
           </div>
         </CardFooter>

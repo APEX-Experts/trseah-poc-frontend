@@ -10,6 +10,7 @@ import { SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { UserResponseDto } from "@/types/api";
 import { LogOut, Settings, User } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 interface ProfileDropdownProps {
@@ -28,6 +29,8 @@ export function ProfileDropdown({
   const { state, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const expanded = expandedProp ?? !isCollapsed;
+
+  const t = useTranslations("AppSidebar");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -75,13 +78,13 @@ export function ProfileDropdown({
         <DropdownMenuItem asChild>
           <Link href="/dashboard/profile" className="cursor-pointer">
             <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
+            <span>{t("Profile")}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/dashboard/settings" className="cursor-pointer">
             <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
+            <span>{t("Settings")}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -91,7 +94,7 @@ export function ProfileDropdown({
           disabled={isPending}
         >
           <LogOut className="mr-2 h-4 w-4" />
-          <span>{isPending ? "Logging out..." : "Log out"}</span>
+          <span>{isPending ? t("loading") : t("logOut")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

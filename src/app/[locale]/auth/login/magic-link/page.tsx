@@ -24,7 +24,7 @@ type MagicLinkFormValues = z.infer<typeof magicLinkSchema>;
 
 export default function MagicLinkRequestPage() {
   const { mutateAsync: requestMagicLink, isPending, error } = useMagicLinkControllerRequest();
-  const errorMessage = Array.isArray(error?.message) ? error.message.join(", ") : error?.message;
+  const errorMessage = Array.isArray(error?.message) ? error?.message.join(", ") : error?.message;
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = async (values: MagicLinkFormValues) => {

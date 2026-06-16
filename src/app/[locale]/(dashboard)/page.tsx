@@ -29,6 +29,7 @@ import {
   sessionColumns,
   kpiData,
 } from "@/lib/mockData";
+import { useTranslations } from "next-intl";
 
 const iconMap = {
   DollarSign,
@@ -38,13 +39,13 @@ const iconMap = {
 };
 
 const DashboardPage = () => {
+  const t = useTranslations("Dashboard");
+
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
-        <p className="text-muted-foreground">
-          Welcome back! Here&apos;s what&apos;s happening with your projects today.
-        </p>
+        <h1 className="text-3xl font-bold tracking-tight">{t("overview")}</h1>
+        <p className="text-muted-foreground">{t("welcomeBackMsg")}</p>
       </div>
 
       <DashboardGrid>
@@ -65,8 +66,8 @@ const DashboardPage = () => {
         {/* Row 2: Main Charts */}
         <AreaChartWidget
           span={2}
-          title="Revenue Growth"
-          description="Monthly revenue trends over the last 6 months."
+          title={t("revenueGrowth")}
+          description={t("revenueDesc")}
           data={revenueData}
           categories={["Revenue", "Target"]}
           colors={["chart-1", "chart-2"]}
@@ -75,8 +76,8 @@ const DashboardPage = () => {
 
         <BarChartWidget
           span={2}
-          title="Sales by Category"
-          description="Comparison of sales across different product lines."
+          title={t("salesCategory")}
+          description={t("salesDesc")}
           data={categoryData}
           categories={["Sales"]}
           colors={["chart-3"]}
@@ -85,8 +86,8 @@ const DashboardPage = () => {
         {/* Row 3: Mixed Charts */}
         <DonutChartWidget
           span={1}
-          title="Traffic Source"
-          description="User acquisition channels."
+          title={t("trafficSource")}
+          description={t("trafficDesc")}
           data={trafficData}
           value="value"
           colors={["chart-1", "chart-2", "chart-3", "chart-4"]}
@@ -94,16 +95,16 @@ const DashboardPage = () => {
 
         <BarListWidget
           span={1}
-          title="Top Referrers"
-          description="Highest traffic from external sites."
+          title={t("topReferrers")}
+          description={t("topReferrersDesc")}
           data={referrerData}
           valueFormatter={(value) => `${value} visits`}
         />
 
         <LineChartWidget
           span={2}
-          title="Active Sessions"
-          description="Daily active users and session length."
+          title={t("activeSessions")}
+          description={t("activeSessionsDesc")}
           data={sessionData}
           categories={["Users", "Sessions"]}
           colors={["chart-4", "chart-5"]}
@@ -112,8 +113,8 @@ const DashboardPage = () => {
         {/* Row 4: Advanced Widgets */}
         <ComboChartWidget
           span={2}
-          title="Marketing ROI"
-          description="Spend vs Conversions performance."
+          title={t("marketingRoi")}
+          description={t("marketingRoiDesc")}
           data={marketingData}
           barSeries={{
             categories: ["Spend"],
@@ -129,16 +130,16 @@ const DashboardPage = () => {
 
         <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
           <ProgressBarWidget
-            title="Quarterly Goal"
-            description="Progress towards Q3 target."
+            title={t("quarterlyGoal")}
+            description={t("quarterlyGoalDesc")}
             value={75}
             label="75%"
             variant="success"
             mdSpan={2}
           />
           <CategoryBarWidget
-            title="Risk Assessment"
-            description="System vulnerability scoring."
+            title={t("riskAssessment")}
+            description={t("riskAssessmentDesc")}
             data={riskData}
             colors={["chart-2", "chart-3", "chart-4", "chart-5"]}
             marker={{ value: 65, tooltip: "Current: Moderate Risk" }}
@@ -146,7 +147,7 @@ const DashboardPage = () => {
           />
         </div>
         <ProgressCircleWidget
-          title="Uptime"
+          title={t("uptime")}
           value={99.9}
           radius={40}
           mdSpan={1}
@@ -154,7 +155,7 @@ const DashboardPage = () => {
           variant="success"
         />
         <ProgressCircleWidget
-          title="Error Rate"
+          title={t("errorRate")}
           value={0.5}
           max={5}
           radius={40}
@@ -167,15 +168,15 @@ const DashboardPage = () => {
         <TrackerWidget
           span={2}
           mdSpan={2}
-          title="Service Status"
-          description="API availability over the last 30 days."
+          title={t("serviceStatus")}
+          description={t("serviceStatusDesc")}
           data={statusData}
         />
 
         <SparkChartWidget
           span={2}
-          title="Quick Trend"
-          description="Last 24 hours activity."
+          title={t("quickTrend")}
+          description={t("quickTrendDesc")}
           data={sparkData}
           variant="area"
           colors={["chart-1"]}
@@ -185,8 +186,8 @@ const DashboardPage = () => {
         <DataTableWidget
           span={2}
           mdSpan={2}
-          title="Session Details"
-          description="Detailed view of user sessions per day."
+          title={t("sessionDetails")}
+          description={t("sessionDetailsDesc")}
           data={sessionData}
           columns={sessionColumns}
         />

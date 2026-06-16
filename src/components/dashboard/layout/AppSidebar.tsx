@@ -13,17 +13,21 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuthControllerGetProfile, useAuthControllerLogout } from "@/hooks/use-auth";
 import { AuthControllerGetProfile200 } from "@/types/api";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { Link, useRouter, usePathname } from "@/i18n/navigation";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { navConfig } from "@/config/nav-config";
 import { cn } from "@/lib/utils";
+import { useLocale, useTranslations } from "next-intl";
 
 export function AppSidebar({
   initialProfileData,
 }: {
   initialProfileData: AuthControllerGetProfile200;
 }) {
+  const t = useTranslations("AppSidebar");
+  const locale = useLocale();
+  const side = locale === "ar" ? "right" : "left";
+
   const { data, isLoading, error } = useAuthControllerGetProfile({
     query: {
       initialData: initialProfileData,
@@ -52,12 +56,13 @@ export function AppSidebar({
 
   const user = data?.data;
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" side={side}>
       <SidebarHeader className="h-16 flex py-3 items-start justify-center px-2">
         <Link href={navConfig.primaryLink.href} className="flex items-center text-start">
           <Logo brandName="Sidebar" logoOnly={isCollapsed} />
         </Link>
       </SidebarHeader>
+
       <SidebarContent className="flex flex-col gap-y-1">
         <SidebarGroup>
           <SidebarMenu className="space-y-2">
@@ -65,7 +70,7 @@ export function AppSidebar({
               <SidebarMenuItem key={item.href}>
                 <SidebarMenuButton
                   asChild
-                  tooltip={item.label}
+                  tooltip={t(item.label)}
                   isActive={pathname === item.href}
                   className={cn(
                     "w-full flex items-center gap-4 rounded-full px-4 py-6",
@@ -77,7 +82,7 @@ export function AppSidebar({
                 >
                   <Link href={item.href}>
                     <item.icon className="size-5" />
-                    {!isCollapsed && <span>{item.label}</span>}
+                    {!isCollapsed && <span>{t(item.label)}</span>}
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -89,11 +94,9 @@ export function AppSidebar({
       <SidebarFooter className="px-2 py-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            {isLoading && <div>Loading...</div>}
-            {error && <div>Error: {error.message}</div>}
-            {data?.statusCode && data?.statusCode >= 400 && (
-              <div>You are not authorized to access this page.</div>
-            )}
+            {isLoading && <div>{t("loading")}</div>}
+            {error && <div>{t("error", { message: String(error.message) })}</div>}
+            {data?.statusCode && data?.statusCode >= 400 && <div>{t("notAuthorized")}</div>}
             {user && (
               <ProfileDropdown
                 user={user}

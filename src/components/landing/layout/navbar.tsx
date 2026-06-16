@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { Logo, LogoProps } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
+import { LocaleSwitcher } from "./locale-switcher";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -95,12 +96,14 @@ export function Navbar({
 
         {/* Desktop Action Slot (e.g., Login Button) */}
         <div className="hidden md:flex items-center space-x-4">
+          <LocaleSwitcher />
           <ThemeToggle />
           {actionSlot}
         </div>
 
         {/* Mobile Navigation (Hidden on Desktop) */}
         <div className="flex md:hidden items-center space-x-2">
+          <LocaleSwitcher />
           <ThemeToggle />
           {actionSlot}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -110,6 +113,7 @@ export function Navbar({
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
+
             <SheetContent side="right" className="w-75 sm:w-100 p-6">
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <div className="mb-8">

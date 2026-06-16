@@ -12,9 +12,12 @@ import { PageContainer } from "@/components/layout/PageContainer";
 
 export default async function DashboardLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
   let initialProfileData: AuthControllerGetProfile200 | undefined = undefined;
   let defaultOpen = true;
 
@@ -37,7 +40,7 @@ export default async function DashboardLayout({
     console.error("Dashboard layout error:", error);
     if (isAxiosError(error)) {
       if (error.response?.status === 401 || error.response?.status === 403) {
-        redirect("/auth/login");
+        redirect(`/${locale}/auth/login`);
       }
     }
     // Re-throw network or other errors to be caught by the error boundary

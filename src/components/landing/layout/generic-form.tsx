@@ -56,6 +56,10 @@ interface GenericFormProps<T> {
   error?: string | null;
   /** Optional callback function to reset the form */
   onReset?: () => void;
+  /** Optional custom text for the reset button (default: "Reset") */
+  resetText?: string;
+  /** Optional custom text for the submitting state (default: "Submitting...") */
+  submittingText?: string;
 }
 
 /**
@@ -90,6 +94,8 @@ export function GenericForm<T>({
   onSubmit,
   fields,
   submitText = "Submit",
+  resetText = "Reset",
+  submittingText = "Submitting...",
   error,
   onReset,
 }: GenericFormProps<T>) {
@@ -171,7 +177,7 @@ export function GenericForm<T>({
           </form.Field>
         ))}
       </FieldGroup>
-      <UIField orientation="horizontal" className="w-full justify-between">
+      <UIField orientation="horizontal" className="w-full justify-between" dir="ltr">
         <Button
           type="button"
           variant="outline"
@@ -180,13 +186,13 @@ export function GenericForm<T>({
             onReset?.();
           }}
         >
-          Reset
+          {resetText}
         </Button>
 
         <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
           {([canSubmit, isSubmitting]) => (
             <Button type="submit" form="generic-form" disabled={!canSubmit}>
-              {isSubmitting ? "Submitting..." : submitText}
+              {isSubmitting ? submittingText : submitText}
             </Button>
           )}
         </form.Subscribe>

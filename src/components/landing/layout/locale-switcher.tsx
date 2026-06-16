@@ -1,0 +1,70 @@
+"use client";
+
+import { useLocale } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Globe } from "lucide-react";
+import { useTransition } from "react";
+import { locales } from "@/i18n/routing";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const localeNames: Record<string, string> = {
+  ar: "العربية",
+  en: "English",
+};
+
+/**
+ * A locale switcher component that displays a dropdown menu of all supported locales.
+ * Preserves the current path and query parameters during switching.
+ */
+export function LocaleSwitcher() {
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+
+  const switchLocale = (nextLocale: string) => {
+    const queryString = searchParams.toString();
+    const targetPath = queryString ? `${pathname}?${queryString}` : pathname;
+
+    startTransition(() => {
+      router.replace(targetPath, { locale: nextLocale });
+    });
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          disabled={isPending}
+          className="gap-2 px-3 h-9"
+          aria-label="Select language"
+        >
+          <Globe className="size-4 animate-in fade-in duration-300" />
+          <span className="text-sm font-medium uppercase">{locale}</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {locales.map((loc) => (
+          <DropdownMenuItem
+            key={loc}
+            disabled={loc === locale}
+            onClick={() => switchLocale(loc)}
+            className="cursor-pointer"
+          >
+            {localeNames[loc] || loc}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
