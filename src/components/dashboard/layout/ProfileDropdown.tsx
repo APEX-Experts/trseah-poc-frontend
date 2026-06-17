@@ -10,7 +10,7 @@ import { SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { UserResponseDto } from "@/types/api";
 import { LogOut, Settings, User } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 interface ProfileDropdownProps {
@@ -32,10 +32,10 @@ export function ProfileDropdown({
   const { state, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const expanded = expandedProp ?? !isCollapsed;
-
+  const locale = useLocale();
   const t = useTranslations("AppSidebar");
   return (
-    <DropdownMenu>
+    <DropdownMenu dir={locale === "ar" ? "rtl" : "ltr"}>
       <DropdownMenuTrigger asChild>
         <SidebarMenuButton
           size="lg"
