@@ -24,12 +24,14 @@ import { useAuthControllerResendVerification } from "@/hooks/use-auth";
 import { Loader2, Mail, RefreshCw } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/api-utils";
 
 export default function VerifyEmailUI({ email }: { email?: string }) {
   const [resendEmail, setResendEmail] = useState(email || "");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const t = useTranslations("Auth");
   const {
     mutateAsync: resendVerification,
     isPending: isResending,
@@ -41,14 +43,14 @@ export default function VerifyEmailUI({ email }: { email?: string }) {
 
   const handleResend = async () => {
     if (!resendEmail) {
-      toast.error("Please enter your email address.");
+      toast.error(t("verification.enterEmailToast"));
       return;
     }
 
     try {
       const response = await resendVerification({ data: { email: resendEmail } });
       if (response.statusCode === 200) {
-        toast.success("Verification email sent! Please check your inbox.");
+        toast.success(t("verification.verificationEmailSent"));
         setIsDialogOpen(false);
       }
     } catch (err) {
@@ -66,17 +68,19 @@ export default function VerifyEmailUI({ email }: { email?: string }) {
               <Mail className="h-10 w-10 text-primary" />
             </div>
           </div>
-          <CardTitle className="text-3xl font-bold tracking-tight">Check your email</CardTitle>
+          <CardTitle className="text-3xl font-bold tracking-tight">
+            {t("verification.checkEmailTitle")}
+          </CardTitle>
           <CardDescription>
-            We&apos;ve sent a verification link to{" "}
-            <span className="font-medium text-foreground">{email || "your email address"}</span>.
+            {t("verification.checkEmailDescription", {
+              email: email || t("verification.emailPlaceholder"),
+            })}
           </CardDescription>
         </CardHeader>
 
         <CardContent className="text-center pb-6">
           <p className="text-sm text-muted-foreground mb-4">
-            Please click the link in the email to verify your account. If you don&apos;t see it,
-            check your spam folder.
+            {t("verification.checkEmailInstructions")}
           </p>
 
           {errorMessage && (
@@ -88,30 +92,28 @@ export default function VerifyEmailUI({ email }: { email?: string }) {
 
         <CardFooter className="flex flex-col gap-3 border-t bg-muted/50 py-6">
           <Button asChild className="w-full">
-            <Link href="/auth/login">Back to Login</Link>
+            <Link href="/auth/login">{t("magicLink.backToLogin")}</Link>
           </Button>
 
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button variant="outline" className="w-full">
                 <RefreshCw className="mr-2 h-4 w-4" />
-                Resend Verification Email
+                {t("verification.resendButton")}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Resend Verification</DialogTitle>
-                <DialogDescription>
-                  Enter your email address and we&apos;ll send you a new verification link.
-                </DialogDescription>
+                <DialogTitle>{t("verification.resendDialogTitle")}</DialogTitle>
+                <DialogDescription>{t("verification.resendDialogDescription")}</DialogDescription>
               </DialogHeader>
               <div className="py-4 space-y-4">
                 <UIField>
-                  <FieldLabel htmlFor="resend-email">Email Address</FieldLabel>
+                  <FieldLabel htmlFor="resend-email">{t("verification.emailLabel")}</FieldLabel>
                   <Input
                     id="resend-email"
                     type="email"
-                    placeholder="john.doe@example.com"
+                    placeholder={t("verification.emailPlaceholder")}
                     value={resendEmail}
                     onChange={(e) => setResendEmail(e.target.value)}
                   />
@@ -128,10 +130,10 @@ export default function VerifyEmailUI({ email }: { email?: string }) {
                   {isResending ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Sending...
+                      {t("verification.sending")}
                     </>
                   ) : (
-                    "Send Verification Link"
+                    t("verification.sendVerificationLinkButton")
                   )}
                 </Button>
               </DialogFooter>

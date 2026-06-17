@@ -19,6 +19,7 @@ import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export default function ClientMagicLinkVerificationUI({
   token,
@@ -31,6 +32,7 @@ export default function ClientMagicLinkVerificationUI({
 }) {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const t = useTranslations("Auth");
   const hasAttempted = useRef(false);
 
   const {
@@ -47,7 +49,7 @@ export default function ClientMagicLinkVerificationUI({
         await queryClient.invalidateQueries({
           queryKey: getAuthControllerGetProfileQueryKey(),
         });
-        toast.success("Authentication successful!");
+        toast.success(t("magicLink.authSuccessToast"));
         setTimeout(() => {
           router.push("/");
         }, 1500);
@@ -72,14 +74,14 @@ export default function ClientMagicLinkVerificationUI({
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold tracking-tight">
-            {isPending && "Verifying..."}
-            {isSuccess && "Success!"}
-            {isError && "Verification Failed"}
+            {isPending && t("magicLink.verifying")}
+            {isSuccess && t("magicLink.successTitle")}
+            {isError && t("magicLink.failedTitle")}
           </CardTitle>
           <CardDescription>
-            {isPending && "Please wait while we verify your secure link."}
-            {isSuccess && "You have been successfully authenticated."}
-            {isError && "We couldn't verify your magic link."}
+            {isPending && t("magicLink.verifyingDescription")}
+            {isSuccess && t("magicLink.successDescription")}
+            {isError && t("magicLink.failedDescription")}
           </CardDescription>
         </CardHeader>
 
@@ -100,16 +102,16 @@ export default function ClientMagicLinkVerificationUI({
           {isError && (
             <>
               <Button asChild variant="default" className="w-full">
-                <Link href="/auth/login/magic-link">Request new link</Link>
+                <Link href="/auth/login/magic-link">{t("magicLink.requestNewLink")}</Link>
               </Button>
               <Button asChild variant="ghost" className="w-full">
-                <Link href="/auth/login">Back to Login</Link>
+                <Link href="/auth/login">{t("magicLink.backToLogin")}</Link>
               </Button>
             </>
           )}
           {isSuccess && (
             <Button asChild variant="outline" className="w-full">
-              <Link href="/">Go to Dashboard</Link>
+              <Link href="/">{t("magicLink.goToDashboard")}</Link>
             </Button>
           )}
         </CardFooter>

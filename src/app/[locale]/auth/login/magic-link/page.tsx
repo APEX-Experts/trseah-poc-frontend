@@ -14,20 +14,22 @@ import { useMagicLinkControllerRequest } from "@/hooks/use-auth";
 import { Loader2, MailCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import * as z from "zod";
 
-const magicLinkSchema = z.object({
-  email: z.email("Invalid email address"),
-});
-
-type MagicLinkFormValues = z.infer<typeof magicLinkSchema>;
+// schema localized inside component so we can use t()
 
 export default function MagicLinkRequestPage() {
+  const t = useTranslations("MagicLink");
+  const rootT = useTranslations();
+  const magicLinkSchema = z.object({
+    email: z.email(rootT("validation.invalidEmail")),
+  });
   const { mutateAsync: requestMagicLink, isPending, error } = useMagicLinkControllerRequest();
   const errorMessage = Array.isArray(error?.message) ? error?.message.join(", ") : error?.message;
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = async (values: MagicLinkFormValues) => {
+  const handleSubmit = async (values: { email: string }) => {
     const response = await requestMagicLink({ data: values });
     if (response.statusCode === 200) {
       setIsSuccess(true);
@@ -42,15 +44,16 @@ export default function MagicLinkRequestPage() {
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
               <MailCheck className="h-6 w-6 text-primary" />
             </div>
-            <CardTitle className="text-3xl font-bold tracking-tight">Check your inbox</CardTitle>
+            <CardTitle className="text-3xl font-bold tracking-tight">
+              {t("checkInboxTitle")}
+            </CardTitle>
             <CardDescription className="text-balance pt-2">
-              We&apos;ve sent a magic link to your email address. Click the link to sign in
-              instantly.
+              {t("checkInboxDescription")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center pb-8">
             <Button asChild variant="outline">
-              <Link href="/auth/login">Back to Login</Link>
+              <Link href="/auth/login">{t("backToLogin")}</Link>
             </Button>
           </CardContent>
         </Card>
@@ -67,26 +70,26 @@ export default function MagicLinkRequestPage() {
           </div>
         )}
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold tracking-tight">Magic Link</CardTitle>
-          <CardDescription>Enter your email to receive a passwordless login link</CardDescription>
+          <CardTitle className="text-3xl font-bold tracking-tight">{t("cardTitle")}</CardTitle>
+          <CardDescription>{t("cardDescription")}</CardDescription>
         </CardHeader>
 
         <CardContent>
           <GenericForm
-            title="Request Magic Link"
+            title={t("requestTitle")}
             schema={magicLinkSchema}
             error={errorMessage}
             defaultValues={{
               email: "",
             }}
             onSubmit={handleSubmit}
-            submitText="Send Magic Link"
+            submitText={t("submit")}
             fields={[
               {
                 name: "email",
-                label: "Email Address",
+                label: t("emailLabel"),
                 type: "email",
-                placeholder: "john.doe@example.com",
+                placeholder: t("emailPlaceholder"),
               },
             ]}
           />
@@ -94,9 +97,9 @@ export default function MagicLinkRequestPage() {
 
         <CardFooter className="justify-center border-t bg-muted/50 py-4">
           <div className="text-sm">
-            Remember your password?{" "}
+            {t("rememberPassword")}{" "}
             <Link href="/auth/login" className="font-medium text-primary hover:underline">
-              Sign in with password
+              {t("signInWithPassword")}
             </Link>
           </div>
         </CardFooter>

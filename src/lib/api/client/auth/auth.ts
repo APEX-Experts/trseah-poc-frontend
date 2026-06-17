@@ -5,181 +5,305 @@
  * OpenAPI spec version: 1.0
  */
 import type {
+  AuthControllerForgotPassword200,
   AuthControllerGetPermissions200,
   AuthControllerGetProfile200,
   AuthControllerLogin200,
   AuthControllerLogout200,
   AuthControllerRegister201,
   AuthControllerResendVerification200,
+  AuthControllerResetPassword200,
   AuthControllerUpdateProfile200,
   AuthControllerVerify200,
+  AuthControllerVerifyResetToken200,
+  ForgotPasswordDto,
   LoginDto,
   MagicLinkControllerRequest200,
   MagicLinkControllerVerify200,
   RegisterDto,
   RequestMagicLinkDto,
   ResendVerificationDto,
+  ResetPasswordDto,
   UpdateUserDto,
-  VerifyMagicLinkDto
-} from '../../../../types/api';
+  VerifyMagicLinkDto,
+  VerifyResetTokenDto,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-  export const getAuth = () => {
-/**
- * @summary Login with email and password
- */
-const authControllerLogin = (
+export const getAuth = () => {
+  /**
+   * @summary Login with email and password
+   */
+  const authControllerLogin = (
     loginDto: LoginDto,
- options?: SecondParameter<typeof api<AuthControllerLogin200>>,) => {
-      return api<AuthControllerLogin200>(
-      {url: `http://localhost:8000/api/auth/login`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: loginDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<AuthControllerLogin200>>,
+  ) => {
+    return api<AuthControllerLogin200>(
+      {
+        url: `http://localhost:8000/api/auth/login`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: loginDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary Logout the current user
- */
-const authControllerLogout = (
-
- options?: SecondParameter<typeof api<AuthControllerLogout200>>,) => {
-      return api<AuthControllerLogout200>(
-      {url: `http://localhost:8000/api/auth/logout`, method: 'POST'
-    },
-      options);
-    }
+   * @summary Logout the current user
+   */
+  const authControllerLogout = (options?: SecondParameter<typeof api<AuthControllerLogout200>>) => {
+    return api<AuthControllerLogout200>(
+      { url: `http://localhost:8000/api/auth/logout`, method: "POST" },
+      options,
+    );
+  };
   /**
- * @summary Get current user profile
- */
-const authControllerGetProfile = (
-
- options?: SecondParameter<typeof api<AuthControllerGetProfile200>>,) => {
-      return api<AuthControllerGetProfile200>(
-      {url: `http://localhost:8000/api/auth/me`, method: 'GET'
-    },
-      options);
-    }
+   * @summary Get current user profile
+   */
+  const authControllerGetProfile = (
+    options?: SecondParameter<typeof api<AuthControllerGetProfile200>>,
+  ) => {
+    return api<AuthControllerGetProfile200>(
+      { url: `http://localhost:8000/api/auth/me`, method: "GET" },
+      options,
+    );
+  };
   /**
- * @summary Update current user profile
- */
-const authControllerUpdateProfile = (
+   * @summary Update current user profile
+   */
+  const authControllerUpdateProfile = (
     updateUserDto: UpdateUserDto,
- options?: SecondParameter<typeof api<AuthControllerUpdateProfile200>>,) => {
-      return api<AuthControllerUpdateProfile200>(
-      {url: `http://localhost:8000/api/auth/me`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: updateUserDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<AuthControllerUpdateProfile200>>,
+  ) => {
+    return api<AuthControllerUpdateProfile200>(
+      {
+        url: `http://localhost:8000/api/auth/me`,
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        data: updateUserDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary Get current user permissions
- */
-const authControllerGetPermissions = (
-
- options?: SecondParameter<typeof api<AuthControllerGetPermissions200>>,) => {
-      return api<AuthControllerGetPermissions200>(
-      {url: `http://localhost:8000/api/auth/me/permissions`, method: 'GET'
-    },
-      options);
-    }
+   * @summary Get current user permissions
+   */
+  const authControllerGetPermissions = (
+    options?: SecondParameter<typeof api<AuthControllerGetPermissions200>>,
+  ) => {
+    return api<AuthControllerGetPermissions200>(
+      { url: `http://localhost:8000/api/auth/me/permissions`, method: "GET" },
+      options,
+    );
+  };
   /**
- * @summary Register a new user
- */
-const authControllerRegister = (
+   * @summary Register a new user
+   */
+  const authControllerRegister = (
     registerDto: RegisterDto,
- options?: SecondParameter<typeof api<AuthControllerRegister201>>,) => {
-      return api<AuthControllerRegister201>(
-      {url: `http://localhost:8000/api/auth/register`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: registerDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<AuthControllerRegister201>>,
+  ) => {
+    return api<AuthControllerRegister201>(
+      {
+        url: `http://localhost:8000/api/auth/register`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: registerDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary Resend verification email
- */
-const authControllerResendVerification = (
+   * @summary Resend verification email
+   */
+  const authControllerResendVerification = (
     resendVerificationDto: ResendVerificationDto,
- options?: SecondParameter<typeof api<AuthControllerResendVerification200>>,) => {
-      return api<AuthControllerResendVerification200>(
-      {url: `http://localhost:8000/api/auth/resend-verification`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: resendVerificationDto
-    },
-      options);
-    }
-  const authControllerGoogleAuth = (
-
- options?: SecondParameter<typeof api<void>>,) => {
-      return api<void>(
-      {url: `http://localhost:8000/api/auth/google`, method: 'GET'
-    },
-      options);
-    }
-  const authControllerGoogleAuthRedirect = (
-
- options?: SecondParameter<typeof api<unknown>>,) => {
-      return api<unknown>(
-      {url: `http://localhost:8000/api/auth/google/callback`, method: 'GET'
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<AuthControllerResendVerification200>>,
+  ) => {
+    return api<AuthControllerResendVerification200>(
+      {
+        url: `http://localhost:8000/api/auth/resend-verification`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: resendVerificationDto,
+      },
+      options,
+    );
+  };
+  const authControllerGoogleAuth = (options?: SecondParameter<typeof api<void>>) => {
+    return api<void>({ url: `http://localhost:8000/api/auth/google`, method: "GET" }, options);
+  };
+  const authControllerGoogleAuthRedirect = (options?: SecondParameter<typeof api<unknown>>) => {
+    return api<unknown>(
+      { url: `http://localhost:8000/api/auth/google/callback`, method: "GET" },
+      options,
+    );
+  };
   /**
- * @summary Verify email token
- */
-const authControllerVerify = (
+   * @summary Verify email token
+   */
+  const authControllerVerify = (
     verifyMagicLinkDto: VerifyMagicLinkDto,
- options?: SecondParameter<typeof api<AuthControllerVerify200>>,) => {
-      return api<AuthControllerVerify200>(
-      {url: `http://localhost:8000/api/auth/verify`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: verifyMagicLinkDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<AuthControllerVerify200>>,
+  ) => {
+    return api<AuthControllerVerify200>(
+      {
+        url: `http://localhost:8000/api/auth/verify`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: verifyMagicLinkDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary Request a magic link
- */
-const magicLinkControllerRequest = (
+   * @summary Request password reset email
+   */
+  const authControllerForgotPassword = (
+    forgotPasswordDto: ForgotPasswordDto,
+    options?: SecondParameter<typeof api<AuthControllerForgotPassword200>>,
+  ) => {
+    return api<AuthControllerForgotPassword200>(
+      {
+        url: `http://localhost:8000/api/auth/forgot-password`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: forgotPasswordDto,
+      },
+      options,
+    );
+  };
+  /**
+   * @summary Reset password using token
+   */
+  const authControllerResetPassword = (
+    resetPasswordDto: ResetPasswordDto,
+    options?: SecondParameter<typeof api<AuthControllerResetPassword200>>,
+  ) => {
+    return api<AuthControllerResetPassword200>(
+      {
+        url: `http://localhost:8000/api/auth/reset-password`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: resetPasswordDto,
+      },
+      options,
+    );
+  };
+  /**
+   * @summary Verify password reset token validity
+   */
+  const authControllerVerifyResetToken = (
+    verifyResetTokenDto: VerifyResetTokenDto,
+    options?: SecondParameter<typeof api<AuthControllerVerifyResetToken200>>,
+  ) => {
+    return api<AuthControllerVerifyResetToken200>(
+      {
+        url: `http://localhost:8000/api/auth/verify-reset-token`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: verifyResetTokenDto,
+      },
+      options,
+    );
+  };
+  /**
+   * @summary Request a magic link
+   */
+  const magicLinkControllerRequest = (
     requestMagicLinkDto: RequestMagicLinkDto,
- options?: SecondParameter<typeof api<MagicLinkControllerRequest200>>,) => {
-      return api<MagicLinkControllerRequest200>(
-      {url: `http://localhost:8000/api/auth/magic-link/request`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: requestMagicLinkDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<MagicLinkControllerRequest200>>,
+  ) => {
+    return api<MagicLinkControllerRequest200>(
+      {
+        url: `http://localhost:8000/api/auth/magic-link/request`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: requestMagicLinkDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary Verify a magic link token
- */
-const magicLinkControllerVerify = (
+   * @summary Verify a magic link token
+   */
+  const magicLinkControllerVerify = (
     verifyMagicLinkDto: VerifyMagicLinkDto,
- options?: SecondParameter<typeof api<MagicLinkControllerVerify200>>,) => {
-      return api<MagicLinkControllerVerify200>(
-      {url: `http://localhost:8000/api/auth/magic-link/verify`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: verifyMagicLinkDto
-    },
-      options);
-    }
-  return {authControllerLogin,authControllerLogout,authControllerGetProfile,authControllerUpdateProfile,authControllerGetPermissions,authControllerRegister,authControllerResendVerification,authControllerGoogleAuth,authControllerGoogleAuthRedirect,authControllerVerify,magicLinkControllerRequest,magicLinkControllerVerify}};
-export type AuthControllerLoginResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerLogin']>>>
-export type AuthControllerLogoutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerLogout']>>>
-export type AuthControllerGetProfileResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerGetProfile']>>>
-export type AuthControllerUpdateProfileResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerUpdateProfile']>>>
-export type AuthControllerGetPermissionsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerGetPermissions']>>>
-export type AuthControllerRegisterResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerRegister']>>>
-export type AuthControllerResendVerificationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerResendVerification']>>>
-export type AuthControllerGoogleAuthResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerGoogleAuth']>>>
-export type AuthControllerGoogleAuthRedirectResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerGoogleAuthRedirect']>>>
-export type AuthControllerVerifyResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['authControllerVerify']>>>
-export type MagicLinkControllerRequestResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['magicLinkControllerRequest']>>>
-export type MagicLinkControllerVerifyResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>['magicLinkControllerVerify']>>>
+    options?: SecondParameter<typeof api<MagicLinkControllerVerify200>>,
+  ) => {
+    return api<MagicLinkControllerVerify200>(
+      {
+        url: `http://localhost:8000/api/auth/magic-link/verify`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: verifyMagicLinkDto,
+      },
+      options,
+    );
+  };
+  return {
+    authControllerLogin,
+    authControllerLogout,
+    authControllerGetProfile,
+    authControllerUpdateProfile,
+    authControllerGetPermissions,
+    authControllerRegister,
+    authControllerResendVerification,
+    authControllerGoogleAuth,
+    authControllerGoogleAuthRedirect,
+    authControllerVerify,
+    authControllerForgotPassword,
+    authControllerResetPassword,
+    authControllerVerifyResetToken,
+    magicLinkControllerRequest,
+    magicLinkControllerVerify,
+  };
+};
+export type AuthControllerLoginResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerLogin"]>>
+>;
+export type AuthControllerLogoutResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerLogout"]>>
+>;
+export type AuthControllerGetProfileResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerGetProfile"]>>
+>;
+export type AuthControllerUpdateProfileResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerUpdateProfile"]>>
+>;
+export type AuthControllerGetPermissionsResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerGetPermissions"]>>
+>;
+export type AuthControllerRegisterResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerRegister"]>>
+>;
+export type AuthControllerResendVerificationResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerResendVerification"]>>
+>;
+export type AuthControllerGoogleAuthResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerGoogleAuth"]>>
+>;
+export type AuthControllerGoogleAuthRedirectResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerGoogleAuthRedirect"]>>
+>;
+export type AuthControllerVerifyResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerVerify"]>>
+>;
+export type AuthControllerForgotPasswordResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerForgotPassword"]>>
+>;
+export type AuthControllerResetPasswordResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerResetPassword"]>>
+>;
+export type AuthControllerVerifyResetTokenResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["authControllerVerifyResetToken"]>>
+>;
+export type MagicLinkControllerRequestResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["magicLinkControllerRequest"]>>
+>;
+export type MagicLinkControllerVerifyResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAuth>["magicLinkControllerVerify"]>>
+>;
