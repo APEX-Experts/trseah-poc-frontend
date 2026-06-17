@@ -97,8 +97,8 @@
     "logOut": "Log Out"
   },
   "Search": {
-    "placeholderShort": "Search...",
-    "placeholder": "Type a command or search...",
+    "placeholderShort": "Search tenders, requests, vendors...",
+    "placeholder": "Type a command or search tenders, requests, vendors...",
     "noResults": "No results found.",
     "navigationHeading": "Navigation"
   }

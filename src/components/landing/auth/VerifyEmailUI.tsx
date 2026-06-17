@@ -22,7 +22,7 @@ import { FieldLabel, Field as UIField } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useAuthControllerResendVerification } from "@/hooks/use-auth";
 import { Loader2, Mail, RefreshCw } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/api-utils";

@@ -11,13 +11,15 @@ import { cn } from "@/lib/utils";
 import { UserResponseDto } from "@/types/api";
 import { LogOut, Settings, User } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 interface ProfileDropdownProps {
   user: UserResponseDto;
   handleLogout: () => void;
   isPending: boolean;
   expanded?: boolean;
+  isSidebar?: boolean;
+  collapseOnMobile?: boolean;
 }
 
 export function ProfileDropdown({
@@ -25,6 +27,7 @@ export function ProfileDropdown({
   handleLogout,
   isPending,
   expanded: expandedProp,
+  collapseOnMobile,
 }: ProfileDropdownProps) {
   const { state, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
@@ -36,15 +39,16 @@ export function ProfileDropdown({
       <DropdownMenuTrigger asChild>
         <SidebarMenuButton
           size="lg"
-          tooltip="User Settings"
           className={cn(
             "relative flex items-center transition-all cursor-pointer",
             expanded
-              ? "w-full px-3 py-6 justify-start gap-3 rounded-lg"
+              ? collapseOnMobile
+                ? "w-8 h-8 md:w-full md:px-3 md:py-6 justify-center md:justify-start gap-0 md:gap-3 rounded-full md:rounded-lg p-0"
+                : "w-full px-3 py-6 justify-start gap-3 rounded-lg"
               : "h-8 w-8 justify-center rounded-full p-0",
           )}
         >
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted border border-border">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted border border-border text-foreground">
             {user.firstName && user.lastName ? (
               <span className="text-xs font-bold uppercase">
                 {user.firstName.charAt(0) + user.lastName.charAt(0)}
@@ -54,18 +58,33 @@ export function ProfileDropdown({
             )}
           </div>
           {expanded && (
-            <div className="flex flex-col text-start overflow-hidden">
+            <div
+              className={cn(
+                "flex flex-col text-start overflow-hidden",
+                collapseOnMobile && "hidden md:flex",
+              )}
+            >
               <p className="text-sm font-medium leading-none truncate">
                 {user.firstName} {user.lastName}
               </p>
-              <p className="text-xs leading-none text-muted-foreground truncate mt-1">
+              <p className="text-xs leading-none text-muted-foreground truncate mt-1 group-hover/sidebar:text-accent-300">
                 {user.email}
               </p>
             </div>
           )}
         </SidebarMenuButton>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent
+        className="w-56"
+        align="end"
+        forceMount
+        style={
+          {
+            "--accent": "var(--neutral-100)",
+            "--accent-foreground": "var(--primary-900)",
+          } as React.CSSProperties
+        }
+      >
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
@@ -76,20 +95,25 @@ export function ProfileDropdown({
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/dashboard/profile" className="cursor-pointer">
+          <Link href="/profile" className="cursor-pointer">
             <User className="mr-2 h-4 w-4" />
             <span>{t("Profile")}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/dashboard/settings" className="cursor-pointer">
+          <Link href="/settings" className="cursor-pointer">
             <Settings className="mr-2 h-4 w-4" />
             <span>{t("Settings")}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="text-error-foreground focus:text-error-foreground cursor-pointer"
+          className="text-error-foreground cursor-pointer"
+          style={
+            {
+              "--accent-foreground": "var(--error-foreground)",
+            } as React.CSSProperties
+          }
           onClick={handleLogout}
           disabled={isPending}
         >

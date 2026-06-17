@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { useMagicLinkControllerRequest } from "@/hooks/use-auth";
 import { Loader2, MailCheck } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useState } from "react";
 import * as z from "zod";
 

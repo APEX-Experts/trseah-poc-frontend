@@ -97,8 +97,8 @@
     "logOut": "تسجيل خروج"
   },
   "Search": {
-    "placeholderShort": "بحث...",
-    "placeholder": "اكتب أمراً أو ابحث...",
+    "placeholderShort": "بحث في المناقصات والطلبات...",
+    "placeholder": "اكتب أمراً أو ابحث في المناقصات والطلبات...",
     "noResults": "لم يتم العثور على نتائج.",
     "navigationHeading": "التنقل"
   }

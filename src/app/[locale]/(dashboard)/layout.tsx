@@ -5,10 +5,9 @@ import { getAuth } from "@/lib/api/client/auth/auth";
 import { AuthControllerGetProfile200 } from "@/types/api";
 import { isAxiosError } from "axios";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import React from "react";
-
 import { PageContainer } from "@/components/layout/PageContainer";
+import { redirect } from "@/i18n/navigation";
 
 export default async function DashboardLayout({
   children,
@@ -40,7 +39,11 @@ export default async function DashboardLayout({
     console.error("Dashboard layout error:", error);
     if (isAxiosError(error)) {
       if (error.response?.status === 401 || error.response?.status === 403) {
-        redirect(`/${locale}/auth/login`);
+        redirect({
+          href: `/${locale}/auth/login`,
+          locale,
+          forcePrefix: false,
+        });
       }
     }
     // Re-throw network or other errors to be caught by the error boundary
@@ -51,7 +54,7 @@ export default async function DashboardLayout({
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar initialProfileData={initialProfileData} />
       <div className="flex w-full flex-col flex-1">
-        <DashboardNavbar />
+        <DashboardNavbar initialProfileData={initialProfileData} />
         <main className="flex-1">
           <PageContainer>{children}</PageContainer>
         </main>
