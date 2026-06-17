@@ -1,6 +1,7 @@
 "use client";
 
 import { GenericForm } from "@/components/landing/layout/generic-form";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,16 +11,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
-import { useAuthControllerLogin, GOOGLE_AUTH_URL } from "@/hooks/use-auth";
+import { GOOGLE_AUTH_URL, useAuthControllerLogin } from "@/hooks/use-auth";
+import { Link, useRouter } from "@/i18n/navigation";
 import { getErrorMessage } from "@/lib/api-utils";
 import { getAuthControllerGetProfileQueryKey } from "@/lib/api/react-query/auth/auth";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import { Link, useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import * as z from "zod";
-import { useTranslations } from "next-intl";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),

@@ -46,11 +46,11 @@ export function LocaleSwitcher() {
           variant="ghost"
           size="sm"
           disabled={isPending}
-          className="gap-2 px-3 h-9"
+          className="gap-2 px-1 md:px-3 h-9 max-md:w-8 max-md:h-8 max-md:rounded-full"
           aria-label="Select language"
         >
           <Globe className="size-4 animate-in fade-in duration-300" />
-          <span className="text-sm font-medium uppercase">{locale}</span>
+          <span className="text-sm font-medium uppercase hidden md:block">{locale}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -59,7 +59,7 @@ export function LocaleSwitcher() {
             key={loc}
             disabled={loc === locale}
             onClick={() => switchLocale(loc)}
-            className="cursor-pointer"
+            className="cursor-pointer focus:bg-neutral-100 focus:text-foreground"
           >
             {localeNames[loc] || loc}
           </DropdownMenuItem>

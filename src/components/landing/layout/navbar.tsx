@@ -1,8 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Menu } from "lucide-react";
 import { Logo, LogoProps } from "./logo";
 import { LocaleSwitcher } from "./locale-switcher";

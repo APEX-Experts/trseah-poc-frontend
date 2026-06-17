@@ -59,7 +59,7 @@ export default async function MainLayout({ children, params }: Readonly<LayoutPr
     <html
       lang={locale}
       dir={dir}
-      className={`${inter.variable} ${notoSansArabic.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${notoSansArabic.variable} ${geistMono.variable} h-full antialiased bg-background text-foreground`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

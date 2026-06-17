@@ -50,7 +50,33 @@
     "quickTrend": "اتجاه سريع",
     "quickTrendDesc": "نشاط الـ 24 ساعة الماضية.",
     "sessionDetails": "تفاصيل الجلسة",
-    "sessionDetailsDesc": "عرض تفصيلي لجلسات المستخدم يومياً."
+    "sessionDetailsDesc": "عرض تفصيلي لجلسات المستخدم يومياً.",
+    "kpis": {
+      "totalRevenue": {
+        "title": "إجمالي الإيرادات",
+        "value": "$45,231.89",
+        "trendLabel": "منذ الشهر الماضي",
+        "trendValue": "20.1%"
+      },
+      "subscriptions": {
+        "title": "الاشتراكات",
+        "value": "+2,350",
+        "trendLabel": "منذ الشهر الماضي",
+        "trendValue": "180.1%"
+      },
+      "sales": {
+        "title": "المبيعات",
+        "value": "+12,234",
+        "trendLabel": "منذ الشهر الماضي",
+        "trendValue": "19%"
+      },
+      "activeNow": {
+        "title": "النشطون الآن",
+        "value": "+573",
+        "trendLabel": "منذ الساعة الماضية",
+        "trendValue": "201"
+      }
+    }
   },
   "Notifications": {
     "title": "الإعجابات والإشعارات",
@@ -97,8 +123,8 @@
     "logOut": "تسجيل خروج"
   },
   "Search": {
-    "placeholderShort": "بحث...",
-    "placeholder": "اكتب أمراً أو ابحث...",
+    "placeholderShort": "بحث في المناقصات والطلبات...",
+    "placeholder": "اكتب أمراً أو ابحث في المناقصات والطلبات...",
     "noResults": "لم يتم العثور على نتائج.",
     "navigationHeading": "التنقل"
   }

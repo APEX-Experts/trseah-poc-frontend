@@ -17,6 +17,10 @@ export interface LogoProps {
    */
   logoImage?: string;
   /**
+   * Optional image source for the logo in the collapsed sidebar.
+   */
+  logoOnlyImage?: string;
+  /**
    * Optional SVG component or element for the logo.
    */
   logoSvg?: React.ReactNode;
@@ -62,6 +66,7 @@ export function Logo({
   brandName,
   alt,
   logoImage,
+  logoOnlyImage,
   logoSvg,
   width = 30,
   height = 30,
@@ -72,7 +77,16 @@ export function Logo({
 
   return (
     <div className={cn("flex items-center gap-2.5", className)}>
-      {logoImage ? (
+      {logoOnly && logoOnlyImage ? (
+        <Image
+          src={logoOnlyImage}
+          alt={imageAlt}
+          width={width}
+          height={height}
+          className="object-contain"
+          priority
+        />
+      ) : logoImage ? (
         <Image
           src={logoImage}
           alt={imageAlt}

@@ -55,9 +55,13 @@ const DashboardPage = () => {
           return (
             <KpiCard
               key={kpi.title}
-              title={kpi.title}
-              value={kpi.value}
-              trend={kpi.trend}
+              title={t(kpi.title)}
+              value={t(kpi.value)}
+              trend={{
+                direction: kpi.trend.direction,
+                label: t(kpi.trend.label),
+                value: t(kpi.trend.value),
+              }}
               icon={<Icon className="size-4" />}
             />
           );

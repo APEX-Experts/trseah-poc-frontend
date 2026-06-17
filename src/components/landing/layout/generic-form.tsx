@@ -177,7 +177,7 @@ export function GenericForm<T>({
           </form.Field>
         ))}
       </FieldGroup>
-      <UIField orientation="horizontal" className="w-full justify-between" dir="ltr">
+      <UIField orientation="horizontal" className="w-full justify-between">
         <Button
           type="button"
           variant="outline"

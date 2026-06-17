@@ -5,7 +5,7 @@ import { Slot } from "radix-ui";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 transition-all duration-300",
   {
     variants: {
       variant: {
@@ -16,7 +16,7 @@ const buttonVariants = cva(
         secondary:
           "border border-neutral-300 bg-neutral-200 text-primary-800 hover:bg-primary-100 hover:border-primary-200 active:bg-primary-200 active:border-primary-300 disabled:bg-neutral-100 disabled:text-[#9bbdb8] disabled:border-transparent disabled:opacity-100",
         ghost:
-          "border border-primary-800/20 bg-transparent text-primary-800 hover:bg-primary-800/6 hover:border-primary-800/30 active:bg-primary-800/12 active:border-primary-800/40 disabled:bg-transparent disabled:text-[#9bbdb8] disabled:border-primary-800/10 disabled:opacity-100",
+          "border border-transparent bg-transparent text-primary-800 hover:bg-primary-800/6 hover:border-primary-800/30 active:bg-primary-800/12 active:border-primary-800/40 disabled:bg-transparent disabled:text-[#9bbdb8] disabled:border-primary-800/10 disabled:opacity-100",
         destructive:
           "border border-red-600 bg-red-600 text-white hover:bg-red-700 hover:border-red-700 active:bg-red-800 active:border-red-800 disabled:bg-red-100 disabled:text-red-300 disabled:border-transparent disabled:opacity-100",
         link: "text-primary underline-offset-4 hover:underline",

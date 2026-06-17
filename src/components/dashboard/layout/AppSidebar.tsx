@@ -11,13 +11,13 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useAuthControllerGetProfile, useAuthControllerLogout } from "@/hooks/use-auth";
-import { AuthControllerGetProfile200 } from "@/types/api";
-import { Link, useRouter, usePathname } from "@/i18n/navigation";
-import { ProfileDropdown } from "./ProfileDropdown";
 import { navConfig } from "@/config/nav-config";
+import { useAuthAndLogout } from "@/hooks/use-auth";
+import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { AuthControllerGetProfile200 } from "@/types/api";
 import { useLocale, useTranslations } from "next-intl";
+import { ProfileDropdown } from "./ProfileDropdown";
 
 export function AppSidebar({
   initialProfileData,
@@ -28,38 +28,23 @@ export function AppSidebar({
   const locale = useLocale();
   const side = locale === "ar" ? "right" : "left";
 
-  const { data, isLoading, error } = useAuthControllerGetProfile({
-    query: {
-      initialData: initialProfileData,
-      staleTime: 1000 * 60 * 5,
-    },
-  });
-  const router = useRouter();
-  const { mutate: logout, isPending } = useAuthControllerLogout({
-    mutation: {
-      onSuccess: () => {
-        // Redirect to login page after successful logout
-        router.push("/auth/login");
-        // Force a refresh to clear any cached states if necessary
-        router.refresh();
-      },
-    },
-  });
-
-  const handleLogout = () => {
-    logout();
-  };
   const pathname = usePathname();
 
   const { state, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
+  const { handleLogout, isPending, user, isLoading, error, statusCode } =
+    useAuthAndLogout(initialProfileData);
 
-  const user = data?.data;
   return (
-    <Sidebar collapsible="icon" side={side}>
+    <Sidebar collapsible="icon" side={side} className="*:bg-primary-800 text-white">
       <SidebarHeader className="h-16 flex py-3 items-start justify-center px-2">
         <Link href={navConfig.primaryLink.href} className="flex items-center text-start">
-          <Logo brandName="Sidebar" logoOnly={isCollapsed} />
+          <Logo
+            logoOnly={isCollapsed}
+            logoImage="/logo_white.png"
+            logoOnlyImage="/logo_mark.png"
+            width={isCollapsed ? 30 : 120}
+          />
         </Link>
       </SidebarHeader>
 
@@ -73,15 +58,20 @@ export function AppSidebar({
                   tooltip={t(item.label)}
                   isActive={pathname === item.href}
                   className={cn(
-                    "w-full flex items-center gap-4 rounded-full px-4 py-6",
+                    "w-full flex items-center gap-4 rounded-md px-4 py-6",
                     pathname === item.href
-                      ? "bg-secondary text-secondary-foreground"
-                      : "hover:bg-muted/80",
+                      ? "bg-accent-300/14! border border-accent-300/25 text-white! font-semibold!"
+                      : "hover:bg-accent-300/14 text-white/55 hover:text-white border border-transparent hover:border-accent-300/25",
                     isCollapsed && "px-0 justify-center",
                   )}
                 >
                   <Link href={item.href}>
-                    <item.icon className="size-5" />
+                    <item.icon
+                      className={cn(
+                        "size-5",
+                        pathname === item.href ? "text-accent-300" : "text-white/55",
+                      )}
+                    />
                     {!isCollapsed && <span>{t(item.label)}</span>}
                   </Link>
                 </SidebarMenuButton>
@@ -93,10 +83,10 @@ export function AppSidebar({
 
       <SidebarFooter className="px-2 py-4">
         <SidebarMenu>
-          <SidebarMenuItem>
+          <SidebarMenuItem className="*:hover:bg-accent-300/14 *:hover:text-white *:hover:border-accent-300/25 *:border *:border-transparent group/sidebar">
             {isLoading && <div>{t("loading")}</div>}
             {error && <div>{t("error", { message: String(error.message) })}</div>}
-            {data?.statusCode && data?.statusCode >= 400 && <div>{t("notAuthorized")}</div>}
+            {statusCode && statusCode >= 400 && <div>{t("notAuthorized")}</div>}
             {user && (
               <ProfileDropdown
                 user={user}

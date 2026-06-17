@@ -138,12 +138,12 @@
 
   /* Shadcn Core Tokens mapped to Design System */
   --background: var(--neutral-50);
-  --foreground: var(--neutral-900);
-  --card: var(--neutral-50);
-  --card-foreground: var(--neutral-900);
+  --foreground: var(--primary-900);
+  --card: #fff;
+  --card-foreground: var(--primary-900);
   --card-raised: var(--neutral-100);
-  --popover: var(--neutral-50);
-  --popover-foreground: var(--neutral-900);
+  --popover: #fff;
+  --popover-foreground: var(--primary-900);
 
   --primary: var(--primary-800);
   --primary-foreground: #ffffff;
@@ -153,8 +153,8 @@
   --muted: var(--neutral-100);
   --muted-foreground: var(--neutral-500);
 
-  --accent: var(--neutral-100);
-  --accent-foreground: var(--primary-800);
+  --accent: var(--accent-100);
+  --accent-foreground: var(--accent-500);
 
   --destructive: var(--error-foreground);
   --destructive-foreground: #ffffff;
@@ -163,30 +163,29 @@
   --input: #043d3626;
   --ring: var(--accent-300);
 
-  --chart-1: oklch(0.87 0 0);
-  --chart-1-foreground: oklch(0.145 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-2-foreground: oklch(0.985 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-3-foreground: oklch(0.985 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-4-foreground: oklch(0.985 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --chart-5-foreground: oklch(0.985 0 0);
-  --chart-6: #000035;
-  --chart-6-foreground: oklch(0.985 0 0);
+  --chart-1: var(--primary-500);
+  --chart-1-foreground: var(--primary-50);
+  --chart-2: var(--primary-50);
+  --chart-2-foreground: var(--primary-500);
+  --chart-3: var(--primary-300);
+  --chart-3-foreground: var(--neutral-600);
+  --chart-4: var(--primary-400);
+  --chart-4-foreground: var(--primary-50);
+  --chart-5: var(--primary-200);
+  --chart-5-foreground: var(--primary-500);
+  --chart-6: var(--primary-100);
+  --chart-6-foreground: var(--primary-500);
 
   --radius: 0.625rem;
 
   --sidebar: var(--neutral-50);
-  --sidebar-foreground: var(--neutral-900);
+  --sidebar-foreground: var(--primary-900);
   --sidebar-primary: var(--primary-800);
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: var(--neutral-200);
   --sidebar-accent-foreground: var(--primary-800);
   --sidebar-border: #043d361f;
   --sidebar-ring: var(--accent-300);
-
   --brand-mint-bg: var(--neutral-200);
 
   --font-sans:

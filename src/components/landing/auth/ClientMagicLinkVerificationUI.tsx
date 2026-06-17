@@ -16,8 +16,7 @@ import {
 } from "@/lib/api/react-query/auth/auth"; // Adjust import path
 import { useQueryClient } from "@tanstack/react-query";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 

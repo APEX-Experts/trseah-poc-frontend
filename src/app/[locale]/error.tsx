@@ -23,8 +23,8 @@ export default function Error({
 
   return (
     <div className="flex h-[70vh] flex-col items-center justify-center space-y-4 text-center px-4">
-      <h1 className="text-3xl font-bold tracking-tight">Something went wrong!</h1>
-      <p className="text-muted-foreground">An unexpected error occurred.</p>
+      <h1 className="h1">Something went wrong!</h1>
+      <p className="p-lg">An unexpected error occurred.</p>
       <Button onClick={() => reset()} variant="default">
         Try again
       </Button>

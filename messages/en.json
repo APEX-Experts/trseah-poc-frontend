@@ -50,7 +50,33 @@
     "quickTrend": "Quick Trend",
     "quickTrendDesc": "Last 24 hours activity.",
     "sessionDetails": "Session Details",
-    "sessionDetailsDesc": "Detailed view of user sessions per day."
+    "sessionDetailsDesc": "Detailed view of user sessions per day.",
+    "kpis": {
+      "totalRevenue": {
+        "title": "Total Revenue",
+        "value": "$45,231.89",
+        "trendLabel": "from last month",
+        "trendValue": "20.1%"
+      },
+      "subscriptions": {
+        "title": "Subscriptions",
+        "value": "+2,350",
+        "trendLabel": "from last month",
+        "trendValue": "180.1%"
+      },
+      "sales": {
+        "title": "Sales",
+        "value": "+12,234",
+        "trendLabel": "from last month",
+        "trendValue": "19%"
+      },
+      "activeNow": {
+        "title": "Active Now",
+        "value": "+573",
+        "trendLabel": "since last hour",
+        "trendValue": "201"
+      }
+    }
   },
   "Notifications": {
     "title": "Notifications",
@@ -97,8 +123,8 @@
     "logOut": "Log Out"
   },
   "Search": {
-    "placeholderShort": "Search...",
-    "placeholder": "Type a command or search...",
+    "placeholderShort": "Search tenders, requests, vendors...",
+    "placeholder": "Type a command or search tenders, requests, vendors...",
     "noResults": "No results found.",
     "navigationHeading": "Navigation"
   }
