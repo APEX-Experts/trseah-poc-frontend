@@ -2,27 +2,43 @@ import { ColumnDef } from "@tanstack/react-table";
 
 export const kpiData = [
   {
-    title: "Total Revenue",
-    value: "$45,231.89",
-    trend: { direction: "up" as const, label: "from last month", value: "20.1%" },
+    title: "kpis.totalRevenue.title",
+    value: "kpis.totalRevenue.value",
+    trend: {
+      direction: "up" as const,
+      label: "kpis.totalRevenue.trendLabel",
+      value: "kpis.totalRevenue.trendValue",
+    },
     icon: "DollarSign",
   },
   {
-    title: "Subscriptions",
-    value: "+2,350",
-    trend: { direction: "up" as const, label: "from last month", value: "180.1%" },
+    title: "kpis.subscriptions.title",
+    value: "kpis.subscriptions.value",
+    trend: {
+      direction: "up" as const,
+      label: "kpis.subscriptions.trendLabel",
+      value: "kpis.subscriptions.trendValue",
+    },
     icon: "CreditCard",
   },
   {
-    title: "Sales",
-    value: "+12,234",
-    trend: { direction: "up" as const, label: "from last month", value: "19%" },
+    title: "kpis.sales.title",
+    value: "kpis.sales.value",
+    trend: {
+      direction: "up" as const,
+      label: "kpis.sales.trendLabel",
+      value: "kpis.sales.trendValue",
+    },
     icon: "Activity",
   },
   {
-    title: "Active Now",
-    value: "+573",
-    trend: { direction: "up" as const, label: "since last hour", value: "201" },
+    title: "kpis.activeNow.title",
+    value: "kpis.activeNow.value",
+    trend: {
+      direction: "up" as const,
+      label: "kpis.activeNow.trendLabel",
+      value: "kpis.activeNow.trendValue",
+    },
     icon: "Clock",
   },
 ];
