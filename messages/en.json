@@ -22,7 +22,8 @@
     "signUp": "Sign up",
     "successToast": "Login successful! Welcome back.",
     "reset": "Reset",
-    "submitting": "Submitting..."
+    "submitting": "Submitting...",
+    "forgot": "Forgot your password?"
   },
   "Dashboard": {
     "overview": "Dashboard Overview",
