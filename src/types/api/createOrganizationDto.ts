@@ -4,37 +4,37 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { CreateOrganizationDtoMetadata } from './createOrganizationDtoMetadata';
+import type { CreateOrganizationDtoMetadata } from "./createOrganizationDtoMetadata";
 
 export interface CreateOrganizationDto {
   /**
-     * The Arabic name of the organization
-     * @maxLength 255
-     */
+   * The Arabic name of the organization
+   * @maxLength 255
+   */
   nameAr: string;
   /**
-     * The English name of the organization
-     * @maxLength 255
-     */
+   * The English name of the organization
+   * @maxLength 255
+   */
   nameEn?: string;
   /**
-     * Commercial Registration (CR) number of the organization
-     * @maxLength 50
-     */
+   * Commercial Registration (CR) number of the organization
+   * @maxLength 50
+   */
   crNumber?: string;
   /** Expiration date of the Commercial Registration */
   crExpiry?: string;
   /** Local content score of the organization */
-  localContentScore?: string;
+  localContentScore?: number;
   /**
-     * Industry sector of the organization
-     * @maxLength 100
-     */
+   * Industry sector of the organization
+   * @maxLength 100
+   */
   sector?: string;
   /**
-     * Size of the organization
-     * @maxLength 50
-     */
+   * Size of the organization
+   * @maxLength 50
+   */
   size?: string;
   /** Optional custom metadata fields for the organization */
   metadata?: CreateOrganizationDtoMetadata;

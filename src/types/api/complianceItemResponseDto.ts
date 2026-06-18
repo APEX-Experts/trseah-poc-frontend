@@ -4,19 +4,17 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ComplianceItemResponseDtoNotes } from './complianceItemResponseDtoNotes';
-import type { ComplianceItemResponseDtoRequirementEn } from './complianceItemResponseDtoRequirementEn';
-import type { ComplianceItemResponseDtoStatus } from './complianceItemResponseDtoStatus';
+import type { ComplianceItemResponseDtoStatus } from "./complianceItemResponseDtoStatus";
 
 export interface ComplianceItemResponseDto {
   id: string;
   proposalId: string;
   requirementAr: string;
   /** @nullable */
-  requirementEn?: ComplianceItemResponseDtoRequirementEn;
+  requirementEn?: string | null;
   status: ComplianceItemResponseDtoStatus;
   /** @nullable */
-  notes?: ComplianceItemResponseDtoNotes;
+  notes?: string | null;
   sortOrder: number;
   createdAt: string;
   updatedAt: string;

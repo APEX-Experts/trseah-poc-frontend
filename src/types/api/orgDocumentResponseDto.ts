@@ -4,18 +4,16 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { OrgDocumentResponseDtoDocumentType } from './orgDocumentResponseDtoDocumentType';
-import type { OrgDocumentResponseDtoNameEn } from './orgDocumentResponseDtoNameEn';
 
 export interface OrgDocumentResponseDto {
   id: string;
   organizationId: string;
   nameAr: string;
   /** @nullable */
-  nameEn?: OrgDocumentResponseDtoNameEn;
+  nameEn?: string | null;
   fileUrl: string;
   /** @nullable */
-  documentType?: OrgDocumentResponseDtoDocumentType;
+  documentType?: string | null;
   createdAt: string;
   updatedAt: string;
 }

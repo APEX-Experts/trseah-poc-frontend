@@ -4,35 +4,27 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { PastProjectResponseDtoClientNameAr } from './pastProjectResponseDtoClientNameAr';
-import type { PastProjectResponseDtoClientNameEn } from './pastProjectResponseDtoClientNameEn';
-import type { PastProjectResponseDtoDescriptionAr } from './pastProjectResponseDtoDescriptionAr';
-import type { PastProjectResponseDtoDescriptionEn } from './pastProjectResponseDtoDescriptionEn';
-import type { PastProjectResponseDtoEndDate } from './pastProjectResponseDtoEndDate';
-import type { PastProjectResponseDtoStartDate } from './pastProjectResponseDtoStartDate';
-import type { PastProjectResponseDtoTitleEn } from './pastProjectResponseDtoTitleEn';
-import type { PastProjectResponseDtoValue } from './pastProjectResponseDtoValue';
 
 export interface PastProjectResponseDto {
   id: string;
   organizationId: string;
   titleAr: string;
   /** @nullable */
-  titleEn?: PastProjectResponseDtoTitleEn;
+  titleEn?: string | null;
   /** @nullable */
-  clientNameAr?: PastProjectResponseDtoClientNameAr;
+  clientNameAr?: string | null;
   /** @nullable */
-  clientNameEn?: PastProjectResponseDtoClientNameEn;
+  clientNameEn?: string | null;
   /** @nullable */
-  value?: PastProjectResponseDtoValue;
+  value?: string | null;
   /** @nullable */
-  startDate?: PastProjectResponseDtoStartDate;
+  startDate?: string | null;
   /** @nullable */
-  endDate?: PastProjectResponseDtoEndDate;
+  endDate?: string | null;
   /** @nullable */
-  descriptionAr?: PastProjectResponseDtoDescriptionAr;
+  descriptionAr?: string | null;
   /** @nullable */
-  descriptionEn?: PastProjectResponseDtoDescriptionEn;
+  descriptionEn?: string | null;
   createdAt: string;
   updatedAt: string;
 }

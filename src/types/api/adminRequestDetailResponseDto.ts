@@ -4,40 +4,32 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { AdminRequestDetailResponseDtoAdminNotes } from './adminRequestDetailResponseDtoAdminNotes';
-import type { AdminRequestDetailResponseDtoDeclineReason } from './adminRequestDetailResponseDtoDeclineReason';
-import type { AdminRequestDetailResponseDtoInvoiceId } from './adminRequestDetailResponseDtoInvoiceId';
-import type { AdminRequestDetailResponseDtoProposalId } from './adminRequestDetailResponseDtoProposalId';
-import type { AdminRequestDetailResponseDtoReviewedById } from './adminRequestDetailResponseDtoReviewedById';
-import type { AdminRequestDetailResponseDtoRfpExternalDescription } from './adminRequestDetailResponseDtoRfpExternalDescription';
-import type { AdminRequestDetailResponseDtoRfpFileUrl } from './adminRequestDetailResponseDtoRfpFileUrl';
-import type { AdminRequestDetailResponseDtoStatus } from './adminRequestDetailResponseDtoStatus';
-import type { AdminRequestDetailResponseDtoTenderId } from './adminRequestDetailResponseDtoTenderId';
-import type { OrganizationResponseDto } from './organizationResponseDto';
-import type { PastProjectResponseDto } from './pastProjectResponseDto';
-import type { TeamMemberResponseDto } from './teamMemberResponseDto';
+import type { AdminRequestDetailResponseDtoStatus } from "./adminRequestDetailResponseDtoStatus";
+import type { OrganizationResponseDto } from "./organizationResponseDto";
+import type { PastProjectResponseDto } from "./pastProjectResponseDto";
+import type { TeamMemberResponseDto } from "./teamMemberResponseDto";
 
 export interface AdminRequestDetailResponseDto {
   id: string;
   organizationId: string;
   /** @nullable */
-  tenderId?: AdminRequestDetailResponseDtoTenderId;
+  tenderId?: string | null;
   /** @nullable */
-  rfpFileUrl?: AdminRequestDetailResponseDtoRfpFileUrl;
+  rfpFileUrl?: string | null;
   rfpSourceType: string;
   /** @nullable */
-  rfpExternalDescription?: AdminRequestDetailResponseDtoRfpExternalDescription;
+  rfpExternalDescription?: string | null;
   status: AdminRequestDetailResponseDtoStatus;
   /** @nullable */
-  adminNotes?: AdminRequestDetailResponseDtoAdminNotes;
+  adminNotes?: string | null;
   /** @nullable */
-  declineReason?: AdminRequestDetailResponseDtoDeclineReason;
+  declineReason?: string | null;
   /** @nullable */
-  invoiceId?: AdminRequestDetailResponseDtoInvoiceId;
+  invoiceId?: string | null;
   /** @nullable */
-  reviewedById?: AdminRequestDetailResponseDtoReviewedById;
+  reviewedById?: string | null;
   /** @nullable */
-  proposalId?: AdminRequestDetailResponseDtoProposalId;
+  proposalId?: string | null;
   createdAt: string;
   updatedAt: string;
   organization: OrganizationResponseDto;

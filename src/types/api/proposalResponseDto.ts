@@ -4,23 +4,20 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ProposalResponseDtoRfpFileUrl } from './proposalResponseDtoRfpFileUrl';
-import type { ProposalResponseDtoStatus } from './proposalResponseDtoStatus';
-import type { ProposalResponseDtoTenderId } from './proposalResponseDtoTenderId';
-import type { ProposalResponseDtoTitleEn } from './proposalResponseDtoTitleEn';
-import type { ProposalSectionResponseDto } from './proposalSectionResponseDto';
+import type { ProposalResponseDtoStatus } from "./proposalResponseDtoStatus";
+import type { ProposalSectionResponseDto } from "./proposalSectionResponseDto";
 
 export interface ProposalResponseDto {
   id: string;
   organizationId: string;
   /** @nullable */
-  tenderId?: ProposalResponseDtoTenderId;
+  tenderId?: string | null;
   titleAr: string;
   /** @nullable */
-  titleEn?: ProposalResponseDtoTitleEn;
+  titleEn?: string | null;
   status: ProposalResponseDtoStatus;
   /** @nullable */
-  rfpFileUrl?: ProposalResponseDtoRfpFileUrl;
+  rfpFileUrl?: string | null;
   language: string;
   createdById: string;
   createdAt: string;
