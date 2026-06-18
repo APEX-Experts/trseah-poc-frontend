@@ -228,5 +228,129 @@
     "lastNameRequired": "Last name is required",
     "confirmPasswordRequired": "Confirm password is required",
     "passwordsDoNotMatch": "Passwords do not match"
+  },
+  "Onboarding": {
+    "Company": {
+      "title": "Company Information",
+      "description": "Please enter your company's core details as registered.",
+      "nameAr": "Company Name (Arabic)",
+      "nameEn": "Company Name (English)",
+      "crNumber": "CR Number",
+      "crExpiry": "CR Expiry Date",
+      "localContentScore": "Local Content Score",
+      "sector": "Sector",
+      "size": "Company Size",
+      "sizes": {
+        "micro": "Micro",
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large"
+      },
+      "error": "An Error occurred while updating company information"
+    },
+    "Team": {
+      "title": "Team Members",
+      "description": "Add key personnel and their professional backgrounds.",
+      "addMember": "Add Team Member",
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "roleAr": "Role (Arabic)",
+      "roleEn": "Role (English)",
+      "experience": "Years of Experience",
+      "cv": "Upload CV (PDF)",
+      "roster": "Current Roster",
+      "addAtLeastOne": "Please add at least one team member",
+      "error": "An Error occurred while adding team member",
+      "success": "Team member added successfully",
+      "yearsOfExperiencePlaceholder": "e.g., 5",
+      "yearsOf": "Years of Experience",
+      "noMembersTitle": "No team members added yet",
+      "noMembersDescription": "Add your key team members using the form below to showcase your company's expertise.",
+      "addMembersOneByOne": "Team members are added one at a time."
+    },
+    "Review": {
+      "title": "Review & Submit",
+      "description": "Review your information before sending.",
+      "membersAdded": "Members added",
+      "projectsAdded": "Projects added",
+      "filesUploaded": "Files attached"
+    },
+    "Projects": {
+      "title": "Past Projects",
+      "description": "Highlight your organization's track record.",
+      "addProject": "Add Project",
+      "projectName": "Project Name",
+      "projectNameAr": "Project Name (Arabic)",
+      "projectNameEn": "Project Name (English)",
+      "clientNameAr": "Client Name (Arabic)",
+      "clientNameEn": "Client Name (English)",
+      "projectValue": "Project Value",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "projectDesc": "Description",
+      "projectDescAr": "Description (Arabic)",
+      "projectDescEn": "Description (English)",
+      "portfolio": "Project Portfolio",
+      "error": "An Error occurred while adding project",
+      "success": "Project added successfully",
+      "addAtLeastOne": "Please add at least one project",
+      "invalidDateRange": "End date must be after start date",
+      "noProjectsTitle": "No projects added yet",
+      "noProjectsDescription": "Use the form below to add your previous projects and build your company portfolio.",
+      "addProjectsOneByOne": "Projects are added one at a time."
+    },
+    "Actions": {
+      "continue": "Continue",
+      "back": "Back",
+      "complete": "Complete Onboarding",
+      "completeMessage": "Onboarding completed successfully!",
+      "saveDraft": "Save Draft",
+      "progress": "Progress",
+      "saving": "Saving...",
+      "upload": "Upload"
+    },
+    "Documents": {
+      "title": "Upload Documents",
+      "description": "Please upload the required documents.",
+      "error": "An Error occurred while uploading documents",
+      "fileSizeError": "File exceeds 15MB limit",
+      "fileTypePdf": "PDF",
+      "requiredTemplate": "Required Template",
+      "requiredProfileTitle": "Company Profile",
+      "success": "Documents uploaded successfully",
+      "warning": "Please upload at least one document.",
+      "deleteSuccess": "Document deleted successfully",
+      "deleteError": "Failed to delete document",
+      "nameArPlaceholder": "Arabic Document Name",
+      "nameEnPlaceholder": "English Document Name (Optional)",
+      "missingArabicNameError": "Please enter an Arabic name for the document",
+      "upload": "Upload",
+      "types": {
+        "companyProfile": "Company Profile",
+        "commercialRegistration": "Commercial Registration (CR)",
+        "taxCertificate": "ZATCA Certificate",
+        "saudizationCertificate": "Saudization Certificate",
+        "gosiCertificate": "GOSI Certificate",
+        "chamberOfCommerce": "Chamber of Commerce",
+        "financialStatements": "Financial Statements",
+        "previousExperience": "Previous Experience / Contracts",
+        "isoCertificate": "ISO Certificate",
+        "technicalMethodology": "Technical Methodology",
+        "other": "Other Document"
+      }
+    },
+    "Status": {
+      "uploaded": "Uploaded",
+      "pending": "Pending",
+      "rejected": "Rejected",
+      "required": "Required",
+      "validationError": "Please fill in all fields",
+      "submitError": "An error occurred while submitting the form"
+    },
+    "Dropzone": {
+      "title": "Upload or Drop files here",
+      "subtitle": "PDF, JPG, DOC or XLSX"
+    },
+    "progress": "Step {currentStep} of {maxSteps}"
   }
 }

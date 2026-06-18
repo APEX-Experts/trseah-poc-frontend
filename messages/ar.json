@@ -228,5 +228,132 @@
     "lastNameRequired": "الاسم الأخير مطلوب",
     "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
     "passwordsDoNotMatch": "كلمات المرور غير متطابقة"
+  },
+  "Onboarding": {
+    "Company": {
+      "title": "معلومات الشركة",
+      "description": "يرجى إدخال التفاصيل الأساسية لشركتك كما هي مسجلة في السجل التجاري.",
+      "nameAr": "اسم الشركة (بالعربية)",
+      "nameEn": "اسم الشركة (بالإنجليزية)",
+      "crNumber": "رقم السجل التجاري",
+      "crExpiry": "تاريخ انتهاء السجل التجاري",
+      "localContentScore": "درجة المحتوى المحلي",
+      "sector": "القطاع",
+      "size": "حجم الشركة",
+      "sizes": {
+        "micro": "صغيرة جدًا",
+        "small": "صغيرة",
+        "medium": "متوسطة",
+        "large": "كبيرة"
+      },
+      "error": "حدث خطأ أثناء تعديل معلومات الشركة"
+    },
+    "Team": {
+      "title": "معلومات الفريق",
+      "description": "أضف الموظفين الرئيسيين وخلفياتهم المهنية.",
+      "addMember": "إضافة عضو فريق",
+      "nameAr": "الاسم (بالعربية)",
+      "nameEn": "الاسم (بالإنجليزية)",
+      "roleAr": "المسمى الوظيفي (بالعربية)",
+      "roleEn": "المسمى الوظيفي (بالإنجليزية)",
+      "experience": "سنوات الخبرة",
+      "cv": "السيرة الذاتية (PDF)",
+      "roster": "قائمة الفريق",
+      "addAtLeastOne": "يرجى إضافة عضو فريق واحد على الأقل.",
+      "error": "حدث خطأ أثناء تحديث معلومات الفريق",
+      "success": "تم إضافة معلومات الفريق بنجاح",
+      "yearsOfExperiencePlaceholder": "مثال: 5",
+      "yearsOf": "سنوات من الخبرة",
+      "noMembersTitle": "لم يتم إضافة أي أعضاء فريق بعد",
+      "noMembersDescription": "أضف أعضاء فريقك الرئيسيين باستخدام النموذج بالأسفل لإبراز خبرات شركتك.",
+      "addMembersOneByOne": "يتم إضافة أعضاء الفريق واحدًا تلو الآخر."
+    },
+    "Review": {
+      "title": "مراجعة وإرسال",
+      "description": "راجع بيانات قبل الإرسال",
+      "membersAdded": "أعضاء سيتم إضافتهم",
+      "projectsAdded": "مشاريع سيتم إضافتها",
+      "filesUploaded": "ملفات سيتم إضافتها"
+    },
+    "Projects": {
+      "title": "المشاريع السابقة",
+      "description": "سلط الضوء على سجل إنجازات مؤسستك.",
+      "addProject": "إضافة مشروع",
+      "projectName": "اسم المشروع",
+      "projectNameAr": "اسم المشروع (بالعربية)",
+      "projectNameEn": "اسم المشروع (بالإنجليزية)",
+      "clientNameAr": "اسم العميل (بالعربية)",
+      "clientNameEn": "اسم العميل (بالإنجليزية)",
+      "projectValue": "قيمة المشروع",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء",
+      "projectDesc": "الوصف",
+      "projectDescAr": "الوصف (بالعربية)",
+      "projectDescEn": "الوصف (بالإنجليزية)",
+      "portfolio": "سجل المشاريع",
+      "error": "حدث خطأ أثناء إضافة المشاريع",
+      "success": "تمت إضافة المشاريع بنجاح",
+      "addAtLeastOne": "يرجى إضافة مشروع واحد على الأقل",
+      "invalidDateRange": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء",
+      "noProjectsTitle": "لم يتم إضافة أي مشاريع بعد",
+      "noProjectsDescription": "استخدم النموذج بالأسفل لإضافة مشاريعك السابقة وبناء معرض أعمال الشركة.",
+      "addProjectsOneByOne": "يتم إضافة المشاريع واحدًا تلو الآخر.",
+      "noMembersTitle": "لم يتم إضافة أي أعضاء فريق بعد",
+      "noMembersDescription": "أضف أعضاء فريقك الرئيسيين باستخدام النموذج بالأسفل لإبراز خبرات شركتك.",
+      "addMembersOneByOne": "يتم إضافة أعضاء الفريق واحدًا تلو الآخر."
+    },
+    "Actions": {
+      "continue": "متابعة",
+      "back": "عودة",
+      "complete": "إكمال التسجيل",
+      "completeMessage": "تم إكمال التسجيل بنجاح",
+      "saveDraft": "حفظ المسودة",
+      "progress": "التقدم",
+      "saving": "جاري الحفظ...",
+      "upload": "رفع"
+    },
+    "Documents": {
+      "title": "الوثائق المطلوبة",
+      "description": "يرجى رفع الوثائق المطلوبة.",
+      "error": "حدث خطأ أثناء رفع الوثائق",
+      "fileSizeError": "حجم الملف يتجاوز الحد المسموح به 15 ميغابايت",
+      "fileTypePdf": "PDF",
+      "requiredTemplate": "قالب مطلوب",
+      "requiredProfileTitle": "ملف الشركة",
+      "nameArPlaceholder": "عنوان المستند بالعربية",
+      "nameEnPlaceholder": "عنوان المستند بالإنجليزية (اختياري)",
+      "missingArabicNameError": "يرجى إدخال عنوان عربي للوثيقة",
+      "types": {
+        "companyProfile": "ملف تعريف الشركة",
+        "commercialRegistration": "السجل التجاري",
+        "taxCertificate": "شهادة الزكاة والدخل",
+        "saudizationCertificate": "شهادة السعودة",
+        "gosiCertificate": "شهادة التأمينات الاجتماعية",
+        "chamberOfCommerce": "شهادة الغرفة التجارية",
+        "financialStatements": "القوائم المالية",
+        "previousExperience": "الخبرات السابقة / العقود",
+        "isoCertificate": "شهادة الآيزو",
+        "technicalMethodology": "منهجية العمل التقنية",
+        "other": "مستند آخر"
+      },
+      "success": "تم رفع الوثائق بنجاح",
+      "warning": "يرجى رفع وثيقة واحدة على الأقل.",
+      "deleteSuccess": "تم حذف الوثيقة بنجاح",
+      "deleteError": "فشل حذف الوثيقة",
+      "upload": "رفع"
+    },
+    "Status": {
+      "uploaded": "تم الرفع",
+      "pending": "قيد الانتظار",
+      "rejected": "مرفوض",
+      "required": "مطلوب",
+      "validationError": "يرجى ملء جميع الحقول",
+      "submitError": "حدث خطأ أثناء إرسال البيانات"
+    },
+    "Dropzone": {
+      "title": "رفع أو إسقاط الملفات هنا",
+      "subtitle": "PDF, JPG, DOC أو XLSX"
+    },
+    "progress": "الخطوة {currentStep} من {maxSteps}"
   }
 }
