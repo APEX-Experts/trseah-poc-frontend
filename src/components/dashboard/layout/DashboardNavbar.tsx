@@ -15,8 +15,10 @@ import { AuthControllerGetProfile200 } from "@/types/api";
 
 export function DashboardNavbar({
   initialProfileData,
+  hideSidebarTrigger = false,
 }: {
   initialProfileData: AuthControllerGetProfile200;
+  hideSidebarTrigger?: boolean;
 }) {
   const [searchOpen, setSearchOpen] = useState(false); // Global search state
   const { handleLogout, isPending, user } = useAuthAndLogout(initialProfileData);
@@ -26,7 +28,7 @@ export function DashboardNavbar({
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
         {/* Brand Logo & Main Nav */}
         <div className="flex items-center gap-2">
-          <SidebarTrigger className="absolute top-0 inset-s-0" />
+          {!hideSidebarTrigger && <SidebarTrigger className="absolute top-0 inset-s-0" />}
           <Link href={navConfig.primaryLink.href} className="flex items-center">
             <Logo logoImage="/logo.png" width={120} />
           </Link>

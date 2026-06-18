@@ -8,6 +8,13 @@ import {
   FieldLabel,
   Field as UIField,
 } from "@/components/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DeepValue, FormValidateOrFn, Updater, useForm } from "@tanstack/react-form";
@@ -25,11 +32,24 @@ export type FieldConfig<T> = {
   /** The display label for the field */
   label: string;
   /** The input type (default: "text") */
-  type?: "text" | "textarea" | "email" | "password";
+  type?: "text" | "textarea" | "email" | "password" | "number" | "file" | "select" | "date";
   /** Optional placeholder text for the input */
   placeholder?: string;
   /** Optional descriptive text displayed below the field */
   description?: string;
+  /** Optional file acceptance types for file inputs (e.g., ".pdf") */
+  accept?: string;
+  /** Optional options for select fields */
+  options?: {
+    label: string;
+    value: string;
+  }[];
+  /** Optional minimum value for number inputs */
+  min?: number;
+  /** Optional maximum value for number inputs */
+  max?: number;
+  /** Optional step for number inputs */
+  step?: number;
 };
 
 /**
@@ -60,6 +80,14 @@ interface GenericFormProps<T> {
   resetText?: string;
   /** Optional custom text for the submitting state (default: "Submitting...") */
   submittingText?: string;
+  /** Optional flag to hide the reset button */
+  hideReset?: boolean;
+  /** Optional flag to reset the form after successful submission */
+  resetOnSubmit?: boolean;
+  /** Optional flag to hide the submit button */
+  hideSubmit?: boolean;
+  /** Optional form element id attribute */
+  formId?: string;
 }
 
 /**
@@ -98,6 +126,10 @@ export function GenericForm<T>({
   submittingText = "Submitting...",
   error,
   onReset,
+  hideReset = false,
+  resetOnSubmit = false,
+  hideSubmit = false,
+  formId = "generic-form",
 }: GenericFormProps<T>) {
   const form = useForm({
     defaultValues,
@@ -106,12 +138,16 @@ export function GenericForm<T>({
     },
     onSubmit: async ({ value }) => {
       await onSubmit(value as T);
+
+      if (resetOnSubmit) {
+        form.reset();
+      }
     },
   });
 
   return (
     <form
-      id="generic-form"
+      id={formId}
       onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
@@ -136,6 +172,7 @@ export function GenericForm<T>({
 
                   {fieldConfig.type === "textarea" ? (
                     <Textarea
+                      {...fieldConfig}
                       id={field.name}
                       name={field.name}
                       value={field.state.value as string}
@@ -145,23 +182,56 @@ export function GenericForm<T>({
                           e.target.value as Updater<DeepValue<T, Extract<keyof T, string>>>,
                         )
                       }
-                      placeholder={fieldConfig.placeholder}
                       className="min-h-24 resize-none"
+                      aria-invalid={isInvalid}
+                    />
+                  ) : fieldConfig.type === "select" ? (
+                    <Select
+                      value={(field.state.value as string) ?? ""}
+                      onValueChange={(value) =>
+                        field.handleChange(value as DeepValue<T, Extract<keyof T, string>>)
+                      }
+                    >
+                      <SelectTrigger aria-invalid={isInvalid}>
+                        <SelectValue placeholder={fieldConfig.placeholder} />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        {fieldConfig.options?.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : fieldConfig.type === "file" ? (
+                    <Input
+                      {...fieldConfig}
+                      id={field.name}
+                      name={field.name}
+                      value={(field.state.value as string) ?? ""}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        const val =
+                          fieldConfig.type === "number" ? Number(e.target.value) : e.target.value;
+
+                        field.handleChange(val as DeepValue<T, Extract<keyof T, string>>);
+                      }}
                       aria-invalid={isInvalid}
                     />
                   ) : (
                     <Input
+                      {...fieldConfig}
                       id={field.name}
                       name={field.name}
-                      type={fieldConfig.type || "text"}
-                      value={field.state.value as string}
+                      value={(field.state.value ?? "") as string}
                       onBlur={field.handleBlur}
-                      onChange={(e) =>
-                        field.handleChange(
-                          e.target.value as Updater<DeepValue<T, Extract<keyof T, string>>>,
-                        )
-                      }
-                      placeholder={fieldConfig.placeholder}
+                      onChange={(e) => {
+                        // Parse numbers natively
+                        const val =
+                          fieldConfig.type === "number" ? Number(e.target.value) : e.target.value;
+                        field.handleChange(val as DeepValue<T, Extract<keyof T, string>>);
+                      }}
                       aria-invalid={isInvalid}
                     />
                   )}
@@ -177,26 +247,30 @@ export function GenericForm<T>({
           </form.Field>
         ))}
       </FieldGroup>
-      <UIField orientation="horizontal" className="w-full justify-between">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => {
-            form.reset();
-            onReset?.();
-          }}
-        >
-          {resetText}
-        </Button>
-
-        <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
-          {([canSubmit, isSubmitting]) => (
-            <Button type="submit" form="generic-form" disabled={!canSubmit}>
-              {isSubmitting ? submittingText : submitText}
+      {!hideSubmit && (
+        <UIField orientation="horizontal" className="w-full justify-between">
+          {!hideReset && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                form.reset();
+                onReset?.();
+              }}
+            >
+              {resetText}
             </Button>
           )}
-        </form.Subscribe>
-      </UIField>
+
+          <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+            {([canSubmit, isSubmitting]) => (
+              <Button type="submit" form={formId} disabled={!canSubmit}>
+                {isSubmitting ? submittingText : submitText}
+              </Button>
+            )}
+          </form.Subscribe>
+        </UIField>
+      )}
     </form>
   );
 }
