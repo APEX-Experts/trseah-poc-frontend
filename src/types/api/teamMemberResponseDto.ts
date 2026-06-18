@@ -4,26 +4,21 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { TeamMemberResponseDtoCvFileUrl } from './teamMemberResponseDtoCvFileUrl';
-import type { TeamMemberResponseDtoNameEn } from './teamMemberResponseDtoNameEn';
-import type { TeamMemberResponseDtoRoleAr } from './teamMemberResponseDtoRoleAr';
-import type { TeamMemberResponseDtoRoleEn } from './teamMemberResponseDtoRoleEn';
-import type { TeamMemberResponseDtoYearsOfExperience } from './teamMemberResponseDtoYearsOfExperience';
 
 export interface TeamMemberResponseDto {
   id: string;
   organizationId: string;
   nameAr: string;
   /** @nullable */
-  nameEn?: TeamMemberResponseDtoNameEn;
+  nameEn?: string | null;
   /** @nullable */
-  roleAr?: TeamMemberResponseDtoRoleAr;
+  roleAr?: string | null;
   /** @nullable */
-  roleEn?: TeamMemberResponseDtoRoleEn;
+  roleEn?: string | null;
   /** @nullable */
-  cvFileUrl?: TeamMemberResponseDtoCvFileUrl;
+  cvFileUrl?: string | null;
   /** @nullable */
-  yearsOfExperience?: TeamMemberResponseDtoYearsOfExperience;
+  yearsOfExperience?: number | null;
   createdAt: string;
   updatedAt: string;
 }

@@ -1,6 +1,4 @@
-import { AppSidebar } from "@/components/dashboard/layout/AppSidebar";
 import { DashboardNavbar } from "@/components/dashboard/layout/DashboardNavbar";
-import { PageContainer } from "@/components/layout/PageContainer";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { redirect } from "@/i18n/navigation";
 import { Locale } from "@/i18n/routing";
@@ -15,9 +13,9 @@ export default async function DashboardLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const { initialProfileData, defaultOpen, redirectObject } = await getInitialData({
+  const { initialProfileData, redirectObject } = await getInitialData({
     locale: locale as Locale,
-    checkOrganization: true,
+    checkOrganization: false,
   });
 
   if (redirectObject?.href) {
@@ -32,13 +30,10 @@ export default async function DashboardLayout({
   }
 
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
-      <AppSidebar initialProfileData={initialProfileData} />
+    <SidebarProvider defaultOpen={false}>
       <div className="flex w-full flex-col flex-1">
-        <DashboardNavbar initialProfileData={initialProfileData} />
-        <main className="flex-1">
-          <PageContainer>{children}</PageContainer>
-        </main>
+        <DashboardNavbar initialProfileData={initialProfileData} hideSidebarTrigger />
+        <main className="flex-1">{children}</main>
       </div>
     </SidebarProvider>
   );

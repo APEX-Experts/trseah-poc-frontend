@@ -4,11 +4,10 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { TenderCategoryResponseDtoNameEn } from './tenderCategoryResponseDtoNameEn';
 
 export interface TenderCategoryResponseDto {
   id: string;
   nameAr: string;
   /** @nullable */
-  nameEn?: TenderCategoryResponseDtoNameEn;
+  nameEn?: string | null;
 }

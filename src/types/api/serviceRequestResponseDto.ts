@@ -4,37 +4,29 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ServiceRequestResponseDtoAdminNotes } from './serviceRequestResponseDtoAdminNotes';
-import type { ServiceRequestResponseDtoDeclineReason } from './serviceRequestResponseDtoDeclineReason';
-import type { ServiceRequestResponseDtoInvoiceId } from './serviceRequestResponseDtoInvoiceId';
-import type { ServiceRequestResponseDtoProposalId } from './serviceRequestResponseDtoProposalId';
-import type { ServiceRequestResponseDtoReviewedById } from './serviceRequestResponseDtoReviewedById';
-import type { ServiceRequestResponseDtoRfpExternalDescription } from './serviceRequestResponseDtoRfpExternalDescription';
-import type { ServiceRequestResponseDtoRfpFileUrl } from './serviceRequestResponseDtoRfpFileUrl';
-import type { ServiceRequestResponseDtoStatus } from './serviceRequestResponseDtoStatus';
-import type { ServiceRequestResponseDtoTenderId } from './serviceRequestResponseDtoTenderId';
+import type { ServiceRequestResponseDtoStatus } from "./serviceRequestResponseDtoStatus";
 
 export interface ServiceRequestResponseDto {
   id: string;
   organizationId: string;
   /** @nullable */
-  tenderId?: ServiceRequestResponseDtoTenderId;
+  tenderId?: string | null;
   /** @nullable */
-  rfpFileUrl?: ServiceRequestResponseDtoRfpFileUrl;
+  rfpFileUrl?: string | null;
   rfpSourceType: string;
   /** @nullable */
-  rfpExternalDescription?: ServiceRequestResponseDtoRfpExternalDescription;
+  rfpExternalDescription?: string | null;
   status: ServiceRequestResponseDtoStatus;
   /** @nullable */
-  adminNotes?: ServiceRequestResponseDtoAdminNotes;
+  adminNotes?: string | null;
   /** @nullable */
-  declineReason?: ServiceRequestResponseDtoDeclineReason;
+  declineReason?: string | null;
   /** @nullable */
-  invoiceId?: ServiceRequestResponseDtoInvoiceId;
+  invoiceId?: string | null;
   /** @nullable */
-  reviewedById?: ServiceRequestResponseDtoReviewedById;
+  reviewedById?: string | null;
   /** @nullable */
-  proposalId?: ServiceRequestResponseDtoProposalId;
+  proposalId?: string | null;
   createdAt: string;
   updatedAt: string;
 }

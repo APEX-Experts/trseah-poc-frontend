@@ -4,32 +4,25 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { OrganizationResponseDtoCrExpiry } from './organizationResponseDtoCrExpiry';
-import type { OrganizationResponseDtoCrNumber } from './organizationResponseDtoCrNumber';
-import type { OrganizationResponseDtoLocalContentScore } from './organizationResponseDtoLocalContentScore';
-import type { OrganizationResponseDtoLogoUrl } from './organizationResponseDtoLogoUrl';
-import type { OrganizationResponseDtoMetadata } from './organizationResponseDtoMetadata';
-import type { OrganizationResponseDtoNameEn } from './organizationResponseDtoNameEn';
-import type { OrganizationResponseDtoSector } from './organizationResponseDtoSector';
-import type { OrganizationResponseDtoSize } from './organizationResponseDtoSize';
+import type { OrganizationResponseDtoMetadata } from "./organizationResponseDtoMetadata";
 
 export interface OrganizationResponseDto {
   id: string;
   nameAr: string;
   /** @nullable */
-  nameEn?: OrganizationResponseDtoNameEn;
+  nameEn?: string | null;
   /** @nullable */
-  crNumber?: OrganizationResponseDtoCrNumber;
+  crNumber?: string | null;
   /** @nullable */
-  crExpiry?: OrganizationResponseDtoCrExpiry;
+  crExpiry?: string | null;
   /** @nullable */
-  localContentScore?: OrganizationResponseDtoLocalContentScore;
+  localContentScore?: string | null;
   /** @nullable */
-  sector?: OrganizationResponseDtoSector;
+  sector?: string | null;
   /** @nullable */
-  size?: OrganizationResponseDtoSize;
+  size?: string | null;
   /** @nullable */
-  logoUrl?: OrganizationResponseDtoLogoUrl;
+  logoUrl?: string | null;
   /** @nullable */
   metadata?: OrganizationResponseDtoMetadata;
   createdAt: string;

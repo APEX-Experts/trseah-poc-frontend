@@ -4,99 +4,49 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { TenderCategoryResponseDto } from './tenderCategoryResponseDto';
-import type { TenderResponseDtoAwardDate } from './tenderResponseDtoAwardDate';
-import type { TenderResponseDtoAwardResults } from './tenderResponseDtoAwardResults';
-import type { TenderResponseDtoBidCount } from './tenderResponseDtoBidCount';
-import type { TenderResponseDtoBidsEvaluationDate } from './tenderResponseDtoBidsEvaluationDate';
-import type { TenderResponseDtoBidsOpeningDate } from './tenderResponseDtoBidsOpeningDate';
-import type { TenderResponseDtoBidsOpeningLocationAr } from './tenderResponseDtoBidsOpeningLocationAr';
-import type { TenderResponseDtoBidsOpeningLocationEn } from './tenderResponseDtoBidsOpeningLocationEn';
-import type { TenderResponseDtoClassifications } from './tenderResponseDtoClassifications';
-import type { TenderResponseDtoCompetentAuthorityAr } from './tenderResponseDtoCompetentAuthorityAr';
-import type { TenderResponseDtoCompetentAuthorityEn } from './tenderResponseDtoCompetentAuthorityEn';
-import type { TenderResponseDtoContractDurationAr } from './tenderResponseDtoContractDurationAr';
-import type { TenderResponseDtoContractDurationEn } from './tenderResponseDtoContractDurationEn';
-import type { TenderResponseDtoContractDurationMonths } from './tenderResponseDtoContractDurationMonths';
-import type { TenderResponseDtoDescriptionAr } from './tenderResponseDtoDescriptionAr';
-import type { TenderResponseDtoDescriptionEn } from './tenderResponseDtoDescriptionEn';
-import type { TenderResponseDtoDetailsAr } from './tenderResponseDtoDetailsAr';
-import type { TenderResponseDtoDetailsEn } from './tenderResponseDtoDetailsEn';
-import type { TenderResponseDtoDocumentPrice } from './tenderResponseDtoDocumentPrice';
-import type { TenderResponseDtoEntityNameAr } from './tenderResponseDtoEntityNameAr';
-import type { TenderResponseDtoEntityNameEn } from './tenderResponseDtoEntityNameEn';
-import type { TenderResponseDtoEstimatedBudget } from './tenderResponseDtoEstimatedBudget';
-import type { TenderResponseDtoExecutionLocationAr } from './tenderResponseDtoExecutionLocationAr';
-import type { TenderResponseDtoExecutionLocationEn } from './tenderResponseDtoExecutionLocationEn';
-import type { TenderResponseDtoExpectedAwardDate } from './tenderResponseDtoExpectedAwardDate';
-import type { TenderResponseDtoExternalId } from './tenderResponseDtoExternalId';
-import type { TenderResponseDtoFinalGuarantee } from './tenderResponseDtoFinalGuarantee';
-import type { TenderResponseDtoGovernmentEntityAr } from './tenderResponseDtoGovernmentEntityAr';
-import type { TenderResponseDtoGovernmentEntityEn } from './tenderResponseDtoGovernmentEntityEn';
-import type { TenderResponseDtoInitialGuaranteeAddressAr } from './tenderResponseDtoInitialGuaranteeAddressAr';
-import type { TenderResponseDtoInitialGuaranteeAddressEn } from './tenderResponseDtoInitialGuaranteeAddressEn';
-import type { TenderResponseDtoInquiriesDeadline } from './tenderResponseDtoInquiriesDeadline';
-import type { TenderResponseDtoInquiriesStartDate } from './tenderResponseDtoInquiriesStartDate';
-import type { TenderResponseDtoLocalContentMechanisms } from './tenderResponseDtoLocalContentMechanisms';
-import type { TenderResponseDtoLocalContentTermsPdfUrl } from './tenderResponseDtoLocalContentTermsPdfUrl';
-import type { TenderResponseDtoMaxInquiriesResponseDuration } from './tenderResponseDtoMaxInquiriesResponseDuration';
-import type { TenderResponseDtoMetadata } from './tenderResponseDtoMetadata';
-import type { TenderResponseDtoPublishDate } from './tenderResponseDtoPublishDate';
-import type { TenderResponseDtoReferenceNumber } from './tenderResponseDtoReferenceNumber';
-import type { TenderResponseDtoRegion } from './tenderResponseDtoRegion';
-import type { TenderResponseDtoRemainingTimeAr } from './tenderResponseDtoRemainingTimeAr';
-import type { TenderResponseDtoRemainingTimeEn } from './tenderResponseDtoRemainingTimeEn';
-import type { TenderResponseDtoSector } from './tenderResponseDtoSector';
-import type { TenderResponseDtoStatus } from './tenderResponseDtoStatus';
-import type { TenderResponseDtoSubmissionDeadline } from './tenderResponseDtoSubmissionDeadline';
-import type { TenderResponseDtoSubmissionMethodAr } from './tenderResponseDtoSubmissionMethodAr';
-import type { TenderResponseDtoSubmissionMethodEn } from './tenderResponseDtoSubmissionMethodEn';
-import type { TenderResponseDtoSuspensionPeriod } from './tenderResponseDtoSuspensionPeriod';
-import type { TenderResponseDtoTenderActivityAr } from './tenderResponseDtoTenderActivityAr';
-import type { TenderResponseDtoTenderActivityEn } from './tenderResponseDtoTenderActivityEn';
-import type { TenderResponseDtoTenderNumber } from './tenderResponseDtoTenderNumber';
-import type { TenderResponseDtoTenderPurposeAr } from './tenderResponseDtoTenderPurposeAr';
-import type { TenderResponseDtoTenderPurposeEn } from './tenderResponseDtoTenderPurposeEn';
-import type { TenderResponseDtoTenderType } from './tenderResponseDtoTenderType';
-import type { TenderResponseDtoTitleEn } from './tenderResponseDtoTitleEn';
-import type { TenderResponseDtoWorkStartDate } from './tenderResponseDtoWorkStartDate';
+import type { TenderCategoryResponseDto } from "./tenderCategoryResponseDto";
+import type { TenderResponseDtoAwardResults } from "./tenderResponseDtoAwardResults";
+import type { TenderResponseDtoClassifications } from "./tenderResponseDtoClassifications";
+import type { TenderResponseDtoLocalContentMechanisms } from "./tenderResponseDtoLocalContentMechanisms";
+import type { TenderResponseDtoMetadata } from "./tenderResponseDtoMetadata";
+import type { TenderResponseDtoStatus } from "./tenderResponseDtoStatus";
 
 export interface TenderResponseDto {
   id: string;
   /** @nullable */
-  externalId?: TenderResponseDtoExternalId;
+  externalId?: string | null;
   titleAr: string;
   /** @nullable */
-  titleEn?: TenderResponseDtoTitleEn;
+  titleEn?: string | null;
   /** @nullable */
-  descriptionAr?: TenderResponseDtoDescriptionAr;
+  descriptionAr?: string | null;
   /** @nullable */
-  descriptionEn?: TenderResponseDtoDescriptionEn;
+  descriptionEn?: string | null;
   /** @nullable */
-  entityNameAr?: TenderResponseDtoEntityNameAr;
+  entityNameAr?: string | null;
   /** @nullable */
-  entityNameEn?: TenderResponseDtoEntityNameEn;
+  entityNameEn?: string | null;
   /** @nullable */
-  sector?: TenderResponseDtoSector;
+  sector?: string | null;
   /** @nullable */
-  region?: TenderResponseDtoRegion;
+  region?: string | null;
   /** @nullable */
-  tenderType?: TenderResponseDtoTenderType;
+  tenderType?: string | null;
   status: TenderResponseDtoStatus;
   /** @nullable */
-  estimatedBudget?: TenderResponseDtoEstimatedBudget;
+  estimatedBudget?: number | null;
   /** @nullable */
-  documentPrice?: TenderResponseDtoDocumentPrice;
+  documentPrice?: number | null;
   /** @nullable */
-  submissionDeadline?: TenderResponseDtoSubmissionDeadline;
+  submissionDeadline?: string | null;
   /** @nullable */
-  publishDate?: TenderResponseDtoPublishDate;
+  publishDate?: string | null;
   /** @nullable */
-  awardDate?: TenderResponseDtoAwardDate;
+  awardDate?: string | null;
   /** @nullable */
-  contractDurationMonths?: TenderResponseDtoContractDurationMonths;
+  contractDurationMonths?: number | null;
   /** @nullable */
-  bidCount?: TenderResponseDtoBidCount;
+  bidCount?: number | null;
   source: string;
   /** RFP (كراسة شروط) PDF file URL */
   rfpFileUrl: string;
@@ -104,48 +54,78 @@ export interface TenderResponseDto {
   localContentRequired: boolean;
   /** @nullable */
   metadata?: TenderResponseDtoMetadata;
-  tenderNumber?: TenderResponseDtoTenderNumber;
-  referenceNumber?: TenderResponseDtoReferenceNumber;
-  tenderPurposeAr?: TenderResponseDtoTenderPurposeAr;
-  tenderPurposeEn?: TenderResponseDtoTenderPurposeEn;
-  contractDurationAr?: TenderResponseDtoContractDurationAr;
-  contractDurationEn?: TenderResponseDtoContractDurationEn;
+  /** @nullable */
+  tenderNumber?: string | null;
+  /** @nullable */
+  referenceNumber?: string | null;
+  /** @nullable */
+  tenderPurposeAr?: string | null;
+  /** @nullable */
+  tenderPurposeEn?: string | null;
+  /** @nullable */
+  contractDurationAr?: string | null;
+  /** @nullable */
+  contractDurationEn?: string | null;
   insuranceRequired?: boolean;
-  governmentEntityAr?: TenderResponseDtoGovernmentEntityAr;
-  governmentEntityEn?: TenderResponseDtoGovernmentEntityEn;
-  competentAuthorityAr?: TenderResponseDtoCompetentAuthorityAr;
-  competentAuthorityEn?: TenderResponseDtoCompetentAuthorityEn;
-  remainingTimeAr?: TenderResponseDtoRemainingTimeAr;
-  remainingTimeEn?: TenderResponseDtoRemainingTimeEn;
-  submissionMethodAr?: TenderResponseDtoSubmissionMethodAr;
-  submissionMethodEn?: TenderResponseDtoSubmissionMethodEn;
+  /** @nullable */
+  governmentEntityAr?: string | null;
+  /** @nullable */
+  governmentEntityEn?: string | null;
+  /** @nullable */
+  competentAuthorityAr?: string | null;
+  /** @nullable */
+  competentAuthorityEn?: string | null;
+  /** @nullable */
+  remainingTimeAr?: string | null;
+  /** @nullable */
+  remainingTimeEn?: string | null;
+  /** @nullable */
+  submissionMethodAr?: string | null;
+  /** @nullable */
+  submissionMethodEn?: string | null;
   initialGuaranteeRequired?: boolean;
-  initialGuaranteeAddressAr?: TenderResponseDtoInitialGuaranteeAddressAr;
-  initialGuaranteeAddressEn?: TenderResponseDtoInitialGuaranteeAddressEn;
-  finalGuarantee?: TenderResponseDtoFinalGuarantee;
-  inquiriesDeadline?: TenderResponseDtoInquiriesDeadline;
-  bidsOpeningDate?: TenderResponseDtoBidsOpeningDate;
-  bidsEvaluationDate?: TenderResponseDtoBidsEvaluationDate;
-  suspensionPeriod?: TenderResponseDtoSuspensionPeriod;
-  expectedAwardDate?: TenderResponseDtoExpectedAwardDate;
-  workStartDate?: TenderResponseDtoWorkStartDate;
-  inquiriesStartDate?: TenderResponseDtoInquiriesStartDate;
-  maxInquiriesResponseDuration?: TenderResponseDtoMaxInquiriesResponseDuration;
-  bidsOpeningLocationAr?: TenderResponseDtoBidsOpeningLocationAr;
-  bidsOpeningLocationEn?: TenderResponseDtoBidsOpeningLocationEn;
+  /** @nullable */
+  initialGuaranteeAddressAr?: string | null;
+  /** @nullable */
+  initialGuaranteeAddressEn?: string | null;
+  finalGuarantee?: number;
+  /** @nullable */
+  inquiriesDeadline?: string | null;
+  /** @nullable */
+  bidsOpeningDate?: string | null;
+  /** @nullable */
+  bidsEvaluationDate?: string | null;
+  suspensionPeriod?: number;
+  /** @nullable */
+  expectedAwardDate?: string | null;
+  /** @nullable */
+  workStartDate?: string | null;
+  /** @nullable */
+  inquiriesStartDate?: string | null;
+  maxInquiriesResponseDuration?: number;
+  /** @nullable */
+  bidsOpeningLocationAr?: string | null;
+  /** @nullable */
+  bidsOpeningLocationEn?: string | null;
   classifications?: TenderResponseDtoClassifications;
-  executionLocationAr?: TenderResponseDtoExecutionLocationAr;
-  executionLocationEn?: TenderResponseDtoExecutionLocationEn;
-  detailsAr?: TenderResponseDtoDetailsAr;
-  detailsEn?: TenderResponseDtoDetailsEn;
-  tenderActivityAr?: TenderResponseDtoTenderActivityAr;
-  tenderActivityEn?: TenderResponseDtoTenderActivityEn;
+  /** @nullable */
+  executionLocationAr?: string | null;
+  /** @nullable */
+  executionLocationEn?: string | null;
+  /** @nullable */
+  detailsAr?: string | null;
+  /** @nullable */
+  detailsEn?: string | null;
+  /** @nullable */
+  tenderActivityAr?: string | null;
+  /** @nullable */
+  tenderActivityEn?: string | null;
   includesSupplyItems?: boolean;
   includesConstructionWorks?: boolean;
   includesMaintenanceAndOperationWorks?: boolean;
   awardResults?: TenderResponseDtoAwardResults;
   localContentMechanisms?: TenderResponseDtoLocalContentMechanisms;
-  localContentTermsPdfUrl?: TenderResponseDtoLocalContentTermsPdfUrl;
+  localContentTermsPdfUrl?: string;
   categories: TenderCategoryResponseDto[];
   createdAt: string;
   updatedAt: string;
