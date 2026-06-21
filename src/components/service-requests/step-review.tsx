@@ -12,6 +12,7 @@ import { ArrowLeft, ArrowRight, Building2, FileText } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ServiceRequestFooter } from "./service-request-footer";
+import { AxiosError } from "axios";
 
 export function StepReview() {
   const t = useTranslations("ServiceRequests");
@@ -57,14 +58,15 @@ export function StepReview() {
             });
             router.push("/requests");
           },
-          onError: () => {
-            toast.error(tOnboarding("Status.submitFailed"));
-          },
         },
       );
     } catch (e) {
-      console.error(e);
-      toast.error(tOnboarding("Status.submitFailed"));
+      const err = e as AxiosError;
+      if (err?.response?.status === 409) {
+        toast.error(t("errors.activeRequestExists"));
+      } else {
+        toast.error(tOnboarding("Status.submitFailed"));
+      }
     }
   };
 

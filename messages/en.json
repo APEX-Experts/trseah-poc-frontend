@@ -503,7 +503,8 @@
       "externalRequired": "Please provide either a description or upload an RFP document.",
       "submitFailed": "Failed to submit request. Please try again.",
       "loadFailed": "Failed to load data. Please refresh the page.",
-      "patchFailed": "Failed to update organization details. Please check the inputs."
+      "patchFailed": "Failed to update organization details. Please check the inputs.",
+      "activeRequestExists": "You already have an active service request for this tender."
     },
     "success": {
       "created": "Service request submitted successfully!",
