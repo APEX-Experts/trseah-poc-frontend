@@ -104,7 +104,7 @@ const BarLabels = ({ values }: { values: number[] }) => {
         "text-muted-foreground",
       )}
     >
-      <div className="absolute bottom-0 left-0 flex items-center">0</div>
+      <div className="absolute bottom-0 inset-s-0 flex items-center">0</div>
       {labelItems.map((item, index) => {
         const widthPositionLeft = getPositionLeft(item.widthPercentage, sumValues);
 
@@ -122,7 +122,7 @@ const BarLabels = ({ values }: { values: number[] }) => {
           </div>
         );
       })}
-      <div className="absolute right-0 bottom-0 flex items-center">{formatNumber(sumValues)}</div>
+      <div className="absolute inset-e-0 bottom-0 flex items-center">{formatNumber(sumValues)}</div>
     </div>
   );
 };

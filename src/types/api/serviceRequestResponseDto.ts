@@ -13,6 +13,7 @@ export interface ServiceRequestResponseDto {
   tenderId?: string | null;
   /** @nullable */
   rfpFileUrl?: string | null;
+  mediaUrls: string[];
   rfpSourceType: string;
   /** @nullable */
   rfpExternalDescription?: string | null;

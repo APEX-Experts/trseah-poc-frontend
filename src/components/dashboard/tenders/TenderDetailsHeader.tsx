@@ -114,10 +114,13 @@ export default function TenderDetailsHeader({ tender }: TenderDetailsHeaderProps
               <span>{t("downloadRfp")}</span>
             </a>
           )}
-          <button className="flex-1 lg:flex-none flex items-center justify-center gap-2 bg-primary-800 hover:bg-primary-700 text-white rounded-xl py-3 px-4 text-sm font-bold transition-all shadow-md">
+          <Link
+            href={`/requests/new?tenderId=${tender.id}`}
+            className="flex-1 lg:flex-none flex items-center justify-center gap-2 bg-primary-800 hover:bg-primary-700 text-white rounded-xl py-3 px-4 text-sm font-bold transition-all shadow-md"
+          >
             <Send className="w-4 h-4" />
             <span>{t("applyToTender")}</span>
-          </button>
+          </Link>
         </div>
       </div>
     </div>

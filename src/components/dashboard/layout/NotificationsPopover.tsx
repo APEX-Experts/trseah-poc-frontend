@@ -70,7 +70,7 @@ export function NotificationsPopover() {
         >
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute right-2 top-2 flex h-2 w-2">
+            <span className="absolute inset-e-2 top-2 flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive opacity-75"></span>
               <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive"></span>
             </span>

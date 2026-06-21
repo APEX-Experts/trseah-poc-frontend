@@ -33,7 +33,7 @@ import { api } from "../../../apiClient";
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 /**
- * Accepts an RFP file upload (PDF only) or a tender link. If the source type is external, either description or file is required.
+ * Accepts media files upload or a tender link. If the source type is external, either description or at least one file is required.
  * @summary Submit a new service request
  */
 export const requestsControllerCreateRequest = (
@@ -44,6 +44,9 @@ export const requestsControllerCreateRequest = (
   const formData = new FormData();
   if (createServiceRequestDto.file !== undefined) {
     formData.append(`file`, createServiceRequestDto.file);
+  }
+  if (createServiceRequestDto.files !== undefined) {
+    createServiceRequestDto.files.forEach((value) => formData.append(`files`, value));
   }
   formData.append(`rfpSourceType`, createServiceRequestDto.rfpSourceType);
   if (createServiceRequestDto.tenderId !== undefined) {
@@ -549,6 +552,85 @@ export function useRequestsControllerGetRequestDetails<
   return { ...query, queryKey: queryOptions.queryKey };
 }
 
+/**
+ * Deletes a service request if it belongs to the user organization and is not paid or in progress.
+ * @summary Delete a service request
+ */
+export const requestsControllerDeleteRequest = (
+  id: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  return api<ServiceRequestResponseDto>(
+    { url: `/api/requests/${id}`, method: "DELETE", signal },
+    options,
+  );
+};
+
+export const getRequestsControllerDeleteRequestMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof requestsControllerDeleteRequest>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof requestsControllerDeleteRequest>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  const mutationKey = ["requestsControllerDeleteRequest"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof requestsControllerDeleteRequest>>,
+    { id: string }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return requestsControllerDeleteRequest(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type RequestsControllerDeleteRequestMutationResult = NonNullable<
+  Awaited<ReturnType<typeof requestsControllerDeleteRequest>>
+>;
+
+export type RequestsControllerDeleteRequestMutationError = unknown;
+
+/**
+ * @summary Delete a service request
+ */
+export const useRequestsControllerDeleteRequest = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof requestsControllerDeleteRequest>>,
+      TError,
+      { id: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof requestsControllerDeleteRequest>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  return useMutation(getRequestsControllerDeleteRequestMutationOptions(options), queryClient);
+};
 /**
  * Marks a service request as paid and triggers the proposal creation job.
  * @summary Simulate service request payment
