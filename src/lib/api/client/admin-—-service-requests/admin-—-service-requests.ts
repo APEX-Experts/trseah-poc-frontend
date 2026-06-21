@@ -11,72 +11,99 @@ import type {
   AdminRequestsControllerListRequests200,
   AdminRequestsControllerListRequestsParams,
   AdminRequestsControllerReviewRequest200,
-  ReviewRequestDto
-} from '../../../../types/api';
+  ReviewRequestDto,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-  export const getAdminServiceRequests = () => {
-/**
- * Retrieves all service requests in the platform, filterable by status.
- * @summary List all service requests (Admin)
- */
-const adminRequestsControllerListRequests = (
+export const getAdminServiceRequests = () => {
+  /**
+   * Retrieves all service requests in the platform, filterable by status.
+   * @summary List all service requests (Admin)
+   */
+  const adminRequestsControllerListRequests = (
     params?: AdminRequestsControllerListRequestsParams,
- options?: SecondParameter<typeof api<AdminRequestsControllerListRequests200>>,) => {
-      return api<AdminRequestsControllerListRequests200>(
-      {url: `http://localhost:8000/api/admin-api/requests`, method: 'GET',
-        params
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<AdminRequestsControllerListRequests200>>,
+  ) => {
+    return api<AdminRequestsControllerListRequests200>(
+      { url: `/api/admin-api/requests`, method: "GET", params },
+      options,
+    );
+  };
   /**
- * Retrieves the complete service request details including the current organizational profile, active team members, and past projects.
- * @summary Get request details with organization profile (Admin)
- */
-const adminRequestsControllerGetRequestDetail = (
+   * Retrieves the complete service request details including the current organizational profile, active team members, and past projects.
+   * @summary Get request details with organization profile (Admin)
+   */
+  const adminRequestsControllerGetRequestDetail = (
     id: string,
- options?: SecondParameter<typeof api<AdminRequestsControllerGetRequestDetail200>>,) => {
-      return api<AdminRequestsControllerGetRequestDetail200>(
-      {url: `http://localhost:8000/api/admin-api/requests/${id}`, method: 'GET'
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<AdminRequestsControllerGetRequestDetail200>>,
+  ) => {
+    return api<AdminRequestsControllerGetRequestDetail200>(
+      { url: `/api/admin-api/requests/${id}`, method: "GET" },
+      options,
+    );
+  };
   /**
- * Submit an accept or decline decision. Accepting triggers invoice generation, declining triggers a decline notification email.
- * @summary Submit review decision for a service request (Admin)
- */
-const adminRequestsControllerReviewRequest = (
+   * Submit an accept or decline decision. Accepting triggers invoice generation, declining triggers a decline notification email.
+   * @summary Submit review decision for a service request (Admin)
+   */
+  const adminRequestsControllerReviewRequest = (
     id: string,
     reviewRequestDto: ReviewRequestDto,
- options?: SecondParameter<typeof api<AdminRequestsControllerReviewRequest200>>,) => {
-      return api<AdminRequestsControllerReviewRequest200>(
-      {url: `http://localhost:8000/api/admin-api/requests/${id}/review`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: reviewRequestDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<AdminRequestsControllerReviewRequest200>>,
+  ) => {
+    return api<AdminRequestsControllerReviewRequest200>(
+      {
+        url: `/api/admin-api/requests/${id}/review`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: reviewRequestDto,
+      },
+      options,
+    );
+  };
   /**
- * Triggers the PDF rendering via Puppeteer, uploads the file to storage, and sends the notification email containing the payment simulation link.
- * @summary Generate invoice PDF and notify user (Admin)
- */
-const adminRequestsControllerGenerateInvoice = (
+   * Triggers the PDF rendering via Puppeteer, uploads the file to storage, and sends the notification email containing the payment simulation link.
+   * @summary Generate invoice PDF and notify user (Admin)
+   */
+  const adminRequestsControllerGenerateInvoice = (
     id: string,
     params: AdminRequestsControllerGenerateInvoiceParams,
- options?: SecondParameter<typeof api<AdminRequestsControllerGenerateInvoice200>>,) => {
-      return api<AdminRequestsControllerGenerateInvoice200>(
-      {url: `http://localhost:8000/api/admin-api/requests/${id}/invoice`, method: 'POST',
-        params
-    },
-      options);
-    }
-  return {adminRequestsControllerListRequests,adminRequestsControllerGetRequestDetail,adminRequestsControllerReviewRequest,adminRequestsControllerGenerateInvoice}};
-export type AdminRequestsControllerListRequestsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAdminServiceRequests>['adminRequestsControllerListRequests']>>>
-export type AdminRequestsControllerGetRequestDetailResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAdminServiceRequests>['adminRequestsControllerGetRequestDetail']>>>
-export type AdminRequestsControllerReviewRequestResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAdminServiceRequests>['adminRequestsControllerReviewRequest']>>>
-export type AdminRequestsControllerGenerateInvoiceResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getAdminServiceRequests>['adminRequestsControllerGenerateInvoice']>>>
+    options?: SecondParameter<typeof api<AdminRequestsControllerGenerateInvoice200>>,
+  ) => {
+    return api<AdminRequestsControllerGenerateInvoice200>(
+      { url: `/api/admin-api/requests/${id}/invoice`, method: "POST", params },
+      options,
+    );
+  };
+  return {
+    adminRequestsControllerListRequests,
+    adminRequestsControllerGetRequestDetail,
+    adminRequestsControllerReviewRequest,
+    adminRequestsControllerGenerateInvoice,
+  };
+};
+export type AdminRequestsControllerListRequestsResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getAdminServiceRequests>["adminRequestsControllerListRequests"]>
+  >
+>;
+export type AdminRequestsControllerGetRequestDetailResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getAdminServiceRequests>["adminRequestsControllerGetRequestDetail"]
+    >
+  >
+>;
+export type AdminRequestsControllerReviewRequestResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getAdminServiceRequests>["adminRequestsControllerReviewRequest"]>
+  >
+>;
+export type AdminRequestsControllerGenerateInvoiceResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getAdminServiceRequests>["adminRequestsControllerGenerateInvoice"]>
+  >
+>;

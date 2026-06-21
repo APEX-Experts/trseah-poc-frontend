@@ -29,17 +29,20 @@ export function LoginForm({ onTabChange }: LoginFormProps) {
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
-      const response = await login({ data: values });
+      await login(
+        { data: values },
+        {
+          onSuccess: async () => {
+            // Invalidate profile query to fetch the newly logged-in user
+            await queryClient.invalidateQueries({
+              queryKey: getAuthControllerGetProfileQueryKey(),
+            });
 
-      if (response.statusCode === 200) {
-        // Invalidate profile query to fetch the newly logged-in user
-        await queryClient.invalidateQueries({
-          queryKey: getAuthControllerGetProfileQueryKey(),
-        });
-
-        toast.success(t("successToast"));
-        router.push("/");
-      }
+            toast.success(t("successToast"));
+            router.push("/");
+          },
+        },
+      );
     } catch (err) {
       console.log(err);
     }

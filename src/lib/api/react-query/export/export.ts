@@ -4,9 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import {
-  useQuery
-} from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -16,412 +14,566 @@ import type {
   QueryKey,
   UndefinedInitialDataOptions,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
   ExportControllerExportPdfParams,
   ExportControllerExportTestPdfParams,
   ExportControllerExportTestWordParams,
-  ExportControllerExportWordParams
-} from '../../../../types/api';
+  ExportControllerExportWordParams,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-
 
 /**
  * Generates and downloads a dummy Word document for testing the export feature.
  * @summary Export test proposal as Word document
  */
 export const exportControllerExportTestWord = (
-    params?: ExportControllerExportTestWordParams,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  params?: ExportControllerExportTestWordParams,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<unknown>(
+    { url: `/api/proposals/test-export/word`, method: "GET", params, signal },
+    options,
+  );
+};
 
-
-      return api<unknown>(
-      {url: `http://localhost:8000/api/proposals/test-export/word`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getExportControllerExportTestWordQueryKey = (params?: ExportControllerExportTestWordParams,) => {
-    return [
-    `http://localhost:8000/api/proposals/test-export/word`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getExportControllerExportTestWordQueryOptions = <TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError = void>(params?: ExportControllerExportTestWordParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getExportControllerExportTestWordQueryKey = (
+  params?: ExportControllerExportTestWordParams,
 ) => {
+  return [`/api/proposals/test-export/word`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getExportControllerExportTestWordQueryOptions = <
+  TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>,
+  TError = void,
+>(
+  params?: ExportControllerExportTestWordParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getExportControllerExportTestWordQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getExportControllerExportTestWordQueryKey(params);
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExportTestWord>>> = ({
+    signal,
+  }) => exportControllerExportTestWord(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof exportControllerExportTestWord>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExportTestWord>>> = ({ signal }) => exportControllerExportTestWord(params, requestOptions, signal);
+export type ExportControllerExportTestWordQueryResult = NonNullable<
+  Awaited<ReturnType<typeof exportControllerExportTestWord>>
+>;
+export type ExportControllerExportTestWordQueryError = void;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ExportControllerExportTestWordQueryResult = NonNullable<Awaited<ReturnType<typeof exportControllerExportTestWord>>>
-export type ExportControllerExportTestWordQueryError = void
-
-
-export function useExportControllerExportTestWord<TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError = void>(
- params: undefined |  ExportControllerExportTestWordParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>> & Pick<
+export function useExportControllerExportTestWord<
+  TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>,
+  TError = void,
+>(
+  params: undefined | ExportControllerExportTestWordParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof exportControllerExportTestWord>>,
           TError,
           Awaited<ReturnType<typeof exportControllerExportTestWord>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useExportControllerExportTestWord<TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError = void>(
- params?: ExportControllerExportTestWordParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useExportControllerExportTestWord<
+  TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>,
+  TError = void,
+>(
+  params?: ExportControllerExportTestWordParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof exportControllerExportTestWord>>,
           TError,
           Awaited<ReturnType<typeof exportControllerExportTestWord>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useExportControllerExportTestWord<TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError = void>(
- params?: ExportControllerExportTestWordParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useExportControllerExportTestWord<
+  TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>,
+  TError = void,
+>(
+  params?: ExportControllerExportTestWordParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Export test proposal as Word document
  */
 
-export function useExportControllerExportTestWord<TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError = void>(
- params?: ExportControllerExportTestWordParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useExportControllerExportTestWord<
+  TData = Awaited<ReturnType<typeof exportControllerExportTestWord>>,
+  TError = void,
+>(
+  params?: ExportControllerExportTestWordParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestWord>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getExportControllerExportTestWordQueryOptions(params, options);
 
-  const queryOptions = getExportControllerExportTestWordQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * Generates and downloads a Word document for the given proposal.
  * @summary Export proposal as Word document
  */
 export const exportControllerExportWord = (
-    id: string,
-    params?: ExportControllerExportWordParams,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  params?: ExportControllerExportWordParams,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<unknown>(
+    { url: `/api/proposals/${id}/export/word`, method: "GET", params, signal },
+    options,
+  );
+};
 
-
-      return api<unknown>(
-      {url: `http://localhost:8000/api/proposals/${id}/export/word`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getExportControllerExportWordQueryKey = (id: string,
-    params?: ExportControllerExportWordParams,) => {
-    return [
-    `http://localhost:8000/api/proposals/${id}/export/word`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getExportControllerExportWordQueryOptions = <TData = Awaited<ReturnType<typeof exportControllerExportWord>>, TError = void>(id: string,
-    params?: ExportControllerExportWordParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getExportControllerExportWordQueryKey = (
+  id: string,
+  params?: ExportControllerExportWordParams,
 ) => {
+  return [`/api/proposals/${id}/export/word`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getExportControllerExportWordQueryOptions = <
+  TData = Awaited<ReturnType<typeof exportControllerExportWord>>,
+  TError = void,
+>(
+  id: string,
+  params?: ExportControllerExportWordParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getExportControllerExportWordQueryKey(id,params);
+  const queryKey = queryOptions?.queryKey ?? getExportControllerExportWordQueryKey(id, params);
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExportWord>>> = ({
+    signal,
+  }) => exportControllerExportWord(id, params, requestOptions, signal);
 
+  return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof exportControllerExportWord>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExportWord>>> = ({ signal }) => exportControllerExportWord(id,params, requestOptions, signal);
+export type ExportControllerExportWordQueryResult = NonNullable<
+  Awaited<ReturnType<typeof exportControllerExportWord>>
+>;
+export type ExportControllerExportWordQueryError = void;
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ExportControllerExportWordQueryResult = NonNullable<Awaited<ReturnType<typeof exportControllerExportWord>>>
-export type ExportControllerExportWordQueryError = void
-
-
-export function useExportControllerExportWord<TData = Awaited<ReturnType<typeof exportControllerExportWord>>, TError = void>(
- id: string,
-    params: undefined |  ExportControllerExportWordParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>> & Pick<
+export function useExportControllerExportWord<
+  TData = Awaited<ReturnType<typeof exportControllerExportWord>>,
+  TError = void,
+>(
+  id: string,
+  params: undefined | ExportControllerExportWordParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof exportControllerExportWord>>,
           TError,
           Awaited<ReturnType<typeof exportControllerExportWord>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useExportControllerExportWord<TData = Awaited<ReturnType<typeof exportControllerExportWord>>, TError = void>(
- id: string,
-    params?: ExportControllerExportWordParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useExportControllerExportWord<
+  TData = Awaited<ReturnType<typeof exportControllerExportWord>>,
+  TError = void,
+>(
+  id: string,
+  params?: ExportControllerExportWordParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof exportControllerExportWord>>,
           TError,
           Awaited<ReturnType<typeof exportControllerExportWord>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useExportControllerExportWord<TData = Awaited<ReturnType<typeof exportControllerExportWord>>, TError = void>(
- id: string,
-    params?: ExportControllerExportWordParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useExportControllerExportWord<
+  TData = Awaited<ReturnType<typeof exportControllerExportWord>>,
+  TError = void,
+>(
+  id: string,
+  params?: ExportControllerExportWordParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Export proposal as Word document
  */
 
-export function useExportControllerExportWord<TData = Awaited<ReturnType<typeof exportControllerExportWord>>, TError = void>(
- id: string,
-    params?: ExportControllerExportWordParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useExportControllerExportWord<
+  TData = Awaited<ReturnType<typeof exportControllerExportWord>>,
+  TError = void,
+>(
+  id: string,
+  params?: ExportControllerExportWordParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportWord>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getExportControllerExportWordQueryOptions(id, params, options);
 
-  const queryOptions = getExportControllerExportWordQueryOptions(id,params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * Generates and downloads a dummy PDF document for testing the export feature.
  * @summary Export test proposal as PDF document
  */
 export const exportControllerExportTestPdf = (
-    params?: ExportControllerExportTestPdfParams,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  params?: ExportControllerExportTestPdfParams,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<Blob>(
+    { url: `/api/proposals/test-export/pdf`, method: "GET", params, responseType: "blob", signal },
+    options,
+  );
+};
 
-
-      return api<Blob>(
-      {url: `http://localhost:8000/api/proposals/test-export/pdf`, method: 'GET',
-        params,
-        responseType: 'blob', signal
-    },
-      options);
-    }
-
-
-
-
-export const getExportControllerExportTestPdfQueryKey = (params?: ExportControllerExportTestPdfParams,) => {
-    return [
-    `http://localhost:8000/api/proposals/test-export/pdf`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getExportControllerExportTestPdfQueryOptions = <TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError = void>(params?: ExportControllerExportTestPdfParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getExportControllerExportTestPdfQueryKey = (
+  params?: ExportControllerExportTestPdfParams,
 ) => {
+  return [`/api/proposals/test-export/pdf`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getExportControllerExportTestPdfQueryOptions = <
+  TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>,
+  TError = void,
+>(
+  params?: ExportControllerExportTestPdfParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getExportControllerExportTestPdfQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getExportControllerExportTestPdfQueryKey(params);
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExportTestPdf>>> = ({
+    signal,
+  }) => exportControllerExportTestPdf(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof exportControllerExportTestPdf>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExportTestPdf>>> = ({ signal }) => exportControllerExportTestPdf(params, requestOptions, signal);
+export type ExportControllerExportTestPdfQueryResult = NonNullable<
+  Awaited<ReturnType<typeof exportControllerExportTestPdf>>
+>;
+export type ExportControllerExportTestPdfQueryError = void;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ExportControllerExportTestPdfQueryResult = NonNullable<Awaited<ReturnType<typeof exportControllerExportTestPdf>>>
-export type ExportControllerExportTestPdfQueryError = void
-
-
-export function useExportControllerExportTestPdf<TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError = void>(
- params: undefined |  ExportControllerExportTestPdfParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>> & Pick<
+export function useExportControllerExportTestPdf<
+  TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>,
+  TError = void,
+>(
+  params: undefined | ExportControllerExportTestPdfParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof exportControllerExportTestPdf>>,
           TError,
           Awaited<ReturnType<typeof exportControllerExportTestPdf>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useExportControllerExportTestPdf<TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError = void>(
- params?: ExportControllerExportTestPdfParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useExportControllerExportTestPdf<
+  TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>,
+  TError = void,
+>(
+  params?: ExportControllerExportTestPdfParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof exportControllerExportTestPdf>>,
           TError,
           Awaited<ReturnType<typeof exportControllerExportTestPdf>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useExportControllerExportTestPdf<TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError = void>(
- params?: ExportControllerExportTestPdfParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useExportControllerExportTestPdf<
+  TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>,
+  TError = void,
+>(
+  params?: ExportControllerExportTestPdfParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Export test proposal as PDF document
  */
 
-export function useExportControllerExportTestPdf<TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError = void>(
- params?: ExportControllerExportTestPdfParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useExportControllerExportTestPdf<
+  TData = Awaited<ReturnType<typeof exportControllerExportTestPdf>>,
+  TError = void,
+>(
+  params?: ExportControllerExportTestPdfParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportTestPdf>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getExportControllerExportTestPdfQueryOptions(params, options);
 
-  const queryOptions = getExportControllerExportTestPdfQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * Generates and downloads a PDF document for the given proposal.
  * @summary Export proposal as PDF document
  */
 export const exportControllerExportPdf = (
-    id: string,
-    params?: ExportControllerExportPdfParams,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  params?: ExportControllerExportPdfParams,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<Blob>(
+    { url: `/api/proposals/${id}/export/pdf`, method: "GET", params, responseType: "blob", signal },
+    options,
+  );
+};
 
-
-      return api<Blob>(
-      {url: `http://localhost:8000/api/proposals/${id}/export/pdf`, method: 'GET',
-        params,
-        responseType: 'blob', signal
-    },
-      options);
-    }
-
-
-
-
-export const getExportControllerExportPdfQueryKey = (id: string,
-    params?: ExportControllerExportPdfParams,) => {
-    return [
-    `http://localhost:8000/api/proposals/${id}/export/pdf`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getExportControllerExportPdfQueryOptions = <TData = Awaited<ReturnType<typeof exportControllerExportPdf>>, TError = void>(id: string,
-    params?: ExportControllerExportPdfParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getExportControllerExportPdfQueryKey = (
+  id: string,
+  params?: ExportControllerExportPdfParams,
 ) => {
+  return [`/api/proposals/${id}/export/pdf`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getExportControllerExportPdfQueryOptions = <
+  TData = Awaited<ReturnType<typeof exportControllerExportPdf>>,
+  TError = void,
+>(
+  id: string,
+  params?: ExportControllerExportPdfParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getExportControllerExportPdfQueryKey(id,params);
+  const queryKey = queryOptions?.queryKey ?? getExportControllerExportPdfQueryKey(id, params);
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExportPdf>>> = ({
+    signal,
+  }) => exportControllerExportPdf(id, params, requestOptions, signal);
 
+  return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof exportControllerExportPdf>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExportPdf>>> = ({ signal }) => exportControllerExportPdf(id,params, requestOptions, signal);
+export type ExportControllerExportPdfQueryResult = NonNullable<
+  Awaited<ReturnType<typeof exportControllerExportPdf>>
+>;
+export type ExportControllerExportPdfQueryError = void;
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ExportControllerExportPdfQueryResult = NonNullable<Awaited<ReturnType<typeof exportControllerExportPdf>>>
-export type ExportControllerExportPdfQueryError = void
-
-
-export function useExportControllerExportPdf<TData = Awaited<ReturnType<typeof exportControllerExportPdf>>, TError = void>(
- id: string,
-    params: undefined |  ExportControllerExportPdfParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>> & Pick<
+export function useExportControllerExportPdf<
+  TData = Awaited<ReturnType<typeof exportControllerExportPdf>>,
+  TError = void,
+>(
+  id: string,
+  params: undefined | ExportControllerExportPdfParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof exportControllerExportPdf>>,
           TError,
           Awaited<ReturnType<typeof exportControllerExportPdf>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useExportControllerExportPdf<TData = Awaited<ReturnType<typeof exportControllerExportPdf>>, TError = void>(
- id: string,
-    params?: ExportControllerExportPdfParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useExportControllerExportPdf<
+  TData = Awaited<ReturnType<typeof exportControllerExportPdf>>,
+  TError = void,
+>(
+  id: string,
+  params?: ExportControllerExportPdfParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof exportControllerExportPdf>>,
           TError,
           Awaited<ReturnType<typeof exportControllerExportPdf>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useExportControllerExportPdf<TData = Awaited<ReturnType<typeof exportControllerExportPdf>>, TError = void>(
- id: string,
-    params?: ExportControllerExportPdfParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useExportControllerExportPdf<
+  TData = Awaited<ReturnType<typeof exportControllerExportPdf>>,
+  TError = void,
+>(
+  id: string,
+  params?: ExportControllerExportPdfParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Export proposal as PDF document
  */
 
-export function useExportControllerExportPdf<TData = Awaited<ReturnType<typeof exportControllerExportPdf>>, TError = void>(
- id: string,
-    params?: ExportControllerExportPdfParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useExportControllerExportPdf<
+  TData = Awaited<ReturnType<typeof exportControllerExportPdf>>,
+  TError = void,
+>(
+  id: string,
+  params?: ExportControllerExportPdfParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof exportControllerExportPdf>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getExportControllerExportPdfQueryOptions(id, params, options);
 
-  const queryOptions = getExportControllerExportPdfQueryOptions(id,params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
-

@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-// 1. Create the base instance
 /**
  * Pre-configured Axios instance for application-wide API requests.
  * Includes base URL from environment, content-type headers, and `withCredentials: true`
@@ -21,19 +20,29 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// 2. Request Interceptor: Cleaned up
 axiosInstance.interceptors.request.use(
   (config) => {
-    // We no longer manually attach the Authorization header here.
-    // The browser handles the HttpOnly cookie automatically.
     return config;
   },
   (error) => Promise.reject(error),
 );
-
-// 3. Response Interceptor: Global error handling
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Check if the response structure matches your NestJS TransformInterceptor
+    // It looks for { statusCode: ..., message: ..., data: data }
+    if (
+      response.data &&
+      typeof response.data === "object" &&
+      "statusCode" in response.data &&
+      "message" in response.data &&
+      "data" in response.data
+    ) {
+      // Unwrap the envelope: replace the whole response body with just the inner 'data'
+      response.data = response.data.data;
+    }
+
+    return response;
+  },
   async (error) => {
     // Catch 401 Unauthorized globally (e.g., expired cookie)
     if (error.response?.status === 401) {

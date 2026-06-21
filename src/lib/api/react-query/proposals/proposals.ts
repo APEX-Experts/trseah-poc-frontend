@@ -4,9 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import {
-  useQuery
-} from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -16,300 +14,452 @@ import type {
   QueryKey,
   UndefinedInitialDataOptions,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
   ComplianceItemResponseDto,
   PaginatedProposalsResponseDto,
   ProposalResponseDto,
-  ProposalsControllerListProposalsParams
-} from '../../../../types/api';
+  ProposalsControllerListProposalsParams,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-
 
 /**
  * Returns a paginated list of proposals for the user's organization.
  * @summary List proposals
  */
 export const proposalsControllerListProposals = (
-    params?: ProposalsControllerListProposalsParams,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  params?: ProposalsControllerListProposalsParams,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<PaginatedProposalsResponseDto>(
+    { url: `/api/proposals`, method: "GET", params, signal },
+    options,
+  );
+};
 
-
-      return api<PaginatedProposalsResponseDto>(
-      {url: `http://localhost:8000/api/proposals`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getProposalsControllerListProposalsQueryKey = (params?: ProposalsControllerListProposalsParams,) => {
-    return [
-    `http://localhost:8000/api/proposals`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getProposalsControllerListProposalsQueryOptions = <TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError = unknown>(params?: ProposalsControllerListProposalsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getProposalsControllerListProposalsQueryKey = (
+  params?: ProposalsControllerListProposalsParams,
 ) => {
+  return [`/api/proposals`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getProposalsControllerListProposalsQueryOptions = <
+  TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>,
+  TError = unknown,
+>(
+  params?: ProposalsControllerListProposalsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getProposalsControllerListProposalsQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getProposalsControllerListProposalsQueryKey(params);
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof proposalsControllerListProposals>>> = ({
+    signal,
+  }) => proposalsControllerListProposals(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof proposalsControllerListProposals>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof proposalsControllerListProposals>>> = ({ signal }) => proposalsControllerListProposals(params, requestOptions, signal);
+export type ProposalsControllerListProposalsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof proposalsControllerListProposals>>
+>;
+export type ProposalsControllerListProposalsQueryError = unknown;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ProposalsControllerListProposalsQueryResult = NonNullable<Awaited<ReturnType<typeof proposalsControllerListProposals>>>
-export type ProposalsControllerListProposalsQueryError = unknown
-
-
-export function useProposalsControllerListProposals<TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError = unknown>(
- params: undefined |  ProposalsControllerListProposalsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>> & Pick<
+export function useProposalsControllerListProposals<
+  TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>,
+  TError = unknown,
+>(
+  params: undefined | ProposalsControllerListProposalsParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof proposalsControllerListProposals>>,
           TError,
           Awaited<ReturnType<typeof proposalsControllerListProposals>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useProposalsControllerListProposals<TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError = unknown>(
- params?: ProposalsControllerListProposalsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useProposalsControllerListProposals<
+  TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>,
+  TError = unknown,
+>(
+  params?: ProposalsControllerListProposalsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof proposalsControllerListProposals>>,
           TError,
           Awaited<ReturnType<typeof proposalsControllerListProposals>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useProposalsControllerListProposals<TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError = unknown>(
- params?: ProposalsControllerListProposalsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useProposalsControllerListProposals<
+  TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>,
+  TError = unknown,
+>(
+  params?: ProposalsControllerListProposalsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary List proposals
  */
 
-export function useProposalsControllerListProposals<TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError = unknown>(
- params?: ProposalsControllerListProposalsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useProposalsControllerListProposals<
+  TData = Awaited<ReturnType<typeof proposalsControllerListProposals>>,
+  TError = unknown,
+>(
+  params?: ProposalsControllerListProposalsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerListProposals>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getProposalsControllerListProposalsQueryOptions(params, options);
 
-  const queryOptions = getProposalsControllerListProposalsQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * Retrieves details of a specific proposal, including all its sections.
  * @summary Get proposal details
  */
 export const proposalsControllerGetProposalDetails = (
-    id: string,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<ProposalResponseDto>({ url: `/api/proposals/${id}`, method: "GET", signal }, options);
+};
 
+export const getProposalsControllerGetProposalDetailsQueryKey = (id: string) => {
+  return [`/api/proposals/${id}`] as const;
+};
 
-      return api<ProposalResponseDto>(
-      {url: `http://localhost:8000/api/proposals/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getProposalsControllerGetProposalDetailsQueryKey = (id: string,) => {
-    return [
-    `http://localhost:8000/api/proposals/${id}`
-    ] as const;
-    }
-
-
-export const getProposalsControllerGetProposalDetailsQueryOptions = <TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getProposalsControllerGetProposalDetailsQueryOptions = <
+  TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getProposalsControllerGetProposalDetailsQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getProposalsControllerGetProposalDetailsQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>
+  > = ({ signal }) => proposalsControllerGetProposalDetails(id, requestOptions, signal);
 
+  return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type ProposalsControllerGetProposalDetailsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>
+>;
+export type ProposalsControllerGetProposalDetailsQueryError = unknown;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>> = ({ signal }) => proposalsControllerGetProposalDetails(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ProposalsControllerGetProposalDetailsQueryResult = NonNullable<Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>>
-export type ProposalsControllerGetProposalDetailsQueryError = unknown
-
-
-export function useProposalsControllerGetProposalDetails<TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError = unknown>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError, TData>> & Pick<
+export function useProposalsControllerGetProposalDetails<
+  TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
           TError,
           Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useProposalsControllerGetProposalDetails<TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useProposalsControllerGetProposalDetails<
+  TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
           TError,
           Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useProposalsControllerGetProposalDetails<TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useProposalsControllerGetProposalDetails<
+  TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get proposal details
  */
 
-export function useProposalsControllerGetProposalDetails<TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useProposalsControllerGetProposalDetails<
+  TData = Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetProposalDetails>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getProposalsControllerGetProposalDetailsQueryOptions(id, options);
 
-  const queryOptions = getProposalsControllerGetProposalDetailsQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * Retrieves the compliance checklist items associated with a proposal.
  * @summary Get proposal compliance checklist
  */
 export const proposalsControllerGetComplianceChecklist = (
-    id: string,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<ComplianceItemResponseDto[]>(
+    { url: `/api/proposals/${id}/compliance`, method: "GET", signal },
+    options,
+  );
+};
 
+export const getProposalsControllerGetComplianceChecklistQueryKey = (id: string) => {
+  return [`/api/proposals/${id}/compliance`] as const;
+};
 
-      return api<ComplianceItemResponseDto[]>(
-      {url: `http://localhost:8000/api/proposals/${id}/compliance`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getProposalsControllerGetComplianceChecklistQueryKey = (id: string,) => {
-    return [
-    `http://localhost:8000/api/proposals/${id}/compliance`
-    ] as const;
-    }
-
-
-export const getProposalsControllerGetComplianceChecklistQueryOptions = <TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getProposalsControllerGetComplianceChecklistQueryOptions = <
+  TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getProposalsControllerGetComplianceChecklistQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getProposalsControllerGetComplianceChecklistQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>
+  > = ({ signal }) => proposalsControllerGetComplianceChecklist(id, requestOptions, signal);
 
+  return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type ProposalsControllerGetComplianceChecklistQueryResult = NonNullable<
+  Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>
+>;
+export type ProposalsControllerGetComplianceChecklistQueryError = unknown;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>> = ({ signal }) => proposalsControllerGetComplianceChecklist(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ProposalsControllerGetComplianceChecklistQueryResult = NonNullable<Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>>
-export type ProposalsControllerGetComplianceChecklistQueryError = unknown
-
-
-export function useProposalsControllerGetComplianceChecklist<TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError = unknown>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError, TData>> & Pick<
+export function useProposalsControllerGetComplianceChecklist<
+  TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+  TError = unknown,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
           TError,
           Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useProposalsControllerGetComplianceChecklist<TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useProposalsControllerGetComplianceChecklist<
+  TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
           TError,
           Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useProposalsControllerGetComplianceChecklist<TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useProposalsControllerGetComplianceChecklist<
+  TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get proposal compliance checklist
  */
 
-export function useProposalsControllerGetComplianceChecklist<TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useProposalsControllerGetComplianceChecklist<
+  TData = Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof proposalsControllerGetComplianceChecklist>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getProposalsControllerGetComplianceChecklistQueryOptions(id, options);
 
-  const queryOptions = getProposalsControllerGetComplianceChecklistQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
-

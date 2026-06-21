@@ -8,54 +8,62 @@ import type {
   ComplianceItemResponseDto,
   PaginatedProposalsResponseDto,
   ProposalResponseDto,
-  ProposalsControllerListProposalsParams
-} from '../../../../types/api';
+  ProposalsControllerListProposalsParams,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-  export const getProposals = () => {
-/**
- * Returns a paginated list of proposals for the user's organization.
- * @summary List proposals
- */
-const proposalsControllerListProposals = (
+export const getProposals = () => {
+  /**
+   * Returns a paginated list of proposals for the user's organization.
+   * @summary List proposals
+   */
+  const proposalsControllerListProposals = (
     params?: ProposalsControllerListProposalsParams,
- options?: SecondParameter<typeof api<PaginatedProposalsResponseDto>>,) => {
-      return api<PaginatedProposalsResponseDto>(
-      {url: `http://localhost:8000/api/proposals`, method: 'GET',
-        params
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<PaginatedProposalsResponseDto>>,
+  ) => {
+    return api<PaginatedProposalsResponseDto>(
+      { url: `/api/proposals`, method: "GET", params },
+      options,
+    );
+  };
   /**
- * Retrieves details of a specific proposal, including all its sections.
- * @summary Get proposal details
- */
-const proposalsControllerGetProposalDetails = (
+   * Retrieves details of a specific proposal, including all its sections.
+   * @summary Get proposal details
+   */
+  const proposalsControllerGetProposalDetails = (
     id: string,
- options?: SecondParameter<typeof api<ProposalResponseDto>>,) => {
-      return api<ProposalResponseDto>(
-      {url: `http://localhost:8000/api/proposals/${id}`, method: 'GET'
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<ProposalResponseDto>>,
+  ) => {
+    return api<ProposalResponseDto>({ url: `/api/proposals/${id}`, method: "GET" }, options);
+  };
   /**
- * Retrieves the compliance checklist items associated with a proposal.
- * @summary Get proposal compliance checklist
- */
-const proposalsControllerGetComplianceChecklist = (
+   * Retrieves the compliance checklist items associated with a proposal.
+   * @summary Get proposal compliance checklist
+   */
+  const proposalsControllerGetComplianceChecklist = (
     id: string,
- options?: SecondParameter<typeof api<ComplianceItemResponseDto[]>>,) => {
-      return api<ComplianceItemResponseDto[]>(
-      {url: `http://localhost:8000/api/proposals/${id}/compliance`, method: 'GET'
-    },
-      options);
-    }
-  return {proposalsControllerListProposals,proposalsControllerGetProposalDetails,proposalsControllerGetComplianceChecklist}};
-export type ProposalsControllerListProposalsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProposals>['proposalsControllerListProposals']>>>
-export type ProposalsControllerGetProposalDetailsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProposals>['proposalsControllerGetProposalDetails']>>>
-export type ProposalsControllerGetComplianceChecklistResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProposals>['proposalsControllerGetComplianceChecklist']>>>
+    options?: SecondParameter<typeof api<ComplianceItemResponseDto[]>>,
+  ) => {
+    return api<ComplianceItemResponseDto[]>(
+      { url: `/api/proposals/${id}/compliance`, method: "GET" },
+      options,
+    );
+  };
+  return {
+    proposalsControllerListProposals,
+    proposalsControllerGetProposalDetails,
+    proposalsControllerGetComplianceChecklist,
+  };
+};
+export type ProposalsControllerListProposalsResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getProposals>["proposalsControllerListProposals"]>>
+>;
+export type ProposalsControllerGetProposalDetailsResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getProposals>["proposalsControllerGetProposalDetails"]>>
+>;
+export type ProposalsControllerGetComplianceChecklistResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getProposals>["proposalsControllerGetComplianceChecklist"]>>
+>;

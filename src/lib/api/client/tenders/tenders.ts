@@ -11,296 +11,354 @@ import type {
   TenderResponseDto,
   TendersControllerListTendersParams,
   TendersImportDto,
-  UpdateTenderDto
-} from '../../../../types/api';
+  UpdateTenderDto,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-  export const getTenders = () => {
-/**
- * Returns a paginated list of tenders, filterable by sector, region, type, status, budget, deadline, and keyword.
- * @summary List tenders
- */
-const tendersControllerListTenders = (
+export const getTenders = () => {
+  /**
+   * Returns a paginated list of tenders, filterable by sector, region, type, status, budget, deadline, and keyword.
+   * @summary List tenders
+   */
+  const tendersControllerListTenders = (
     params?: TendersControllerListTendersParams,
- options?: SecondParameter<typeof api<PaginatedTendersResponseDto>>,) => {
-      return api<PaginatedTendersResponseDto>(
-      {url: `http://localhost:8000/api/tenders`, method: 'GET',
-        params
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<PaginatedTendersResponseDto>>,
+  ) => {
+    return api<PaginatedTendersResponseDto>(
+      { url: `/api/tenders`, method: "GET", params },
+      options,
+    );
+  };
   /**
- * Retrieves complete details of a specific tender by its UUID.
- * @summary Get tender details
- */
-const tendersControllerGetTenderDetails = (
+   * Retrieves complete details of a specific tender by its UUID.
+   * @summary Get tender details
+   */
+  const tendersControllerGetTenderDetails = (
     id: string,
- options?: SecondParameter<typeof api<TenderResponseDto>>,) => {
-      return api<TenderResponseDto>(
-      {url: `http://localhost:8000/api/tenders/${id}`, method: 'GET'
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<TenderResponseDto>>,
+  ) => {
+    return api<TenderResponseDto>({ url: `/api/tenders/${id}`, method: "GET" }, options);
+  };
   /**
- * Creates a new tender. A valid PDF RFP (كراسة شروط) file must be attached as `rfpFile`.
- * @summary Admin: Create a new tender
- */
-const adminTendersControllerCreateTender = (
+   * Creates a new tender. A valid PDF RFP (كراسة شروط) file must be attached as `rfpFile`.
+   * @summary Admin: Create a new tender
+   */
+  const adminTendersControllerCreateTender = (
     createTenderWithRfpDto: CreateTenderWithRfpDto,
- options?: SecondParameter<typeof api<TenderResponseDto>>,) => {const formData = new FormData();
-formData.append(`externalId`, createTenderWithRfpDto.externalId);
-formData.append(`titleAr`, createTenderWithRfpDto.titleAr);
-if(createTenderWithRfpDto.titleEn !== undefined) {
- formData.append(`titleEn`, createTenderWithRfpDto.titleEn);
- }
-if(createTenderWithRfpDto.descriptionAr !== undefined) {
- formData.append(`descriptionAr`, createTenderWithRfpDto.descriptionAr);
- }
-if(createTenderWithRfpDto.descriptionEn !== undefined) {
- formData.append(`descriptionEn`, createTenderWithRfpDto.descriptionEn);
- }
-if(createTenderWithRfpDto.entityNameAr !== undefined) {
- formData.append(`entityNameAr`, createTenderWithRfpDto.entityNameAr);
- }
-if(createTenderWithRfpDto.entityNameEn !== undefined) {
- formData.append(`entityNameEn`, createTenderWithRfpDto.entityNameEn);
- }
-if(createTenderWithRfpDto.sector !== undefined) {
- formData.append(`sector`, createTenderWithRfpDto.sector);
- }
-if(createTenderWithRfpDto.region !== undefined) {
- formData.append(`region`, createTenderWithRfpDto.region);
- }
-if(createTenderWithRfpDto.tenderType !== undefined) {
- formData.append(`tenderType`, createTenderWithRfpDto.tenderType);
- }
-if(createTenderWithRfpDto.status !== undefined) {
- formData.append(`status`, createTenderWithRfpDto.status);
- }
-if(createTenderWithRfpDto.estimatedBudget !== undefined) {
- formData.append(`estimatedBudget`, createTenderWithRfpDto.estimatedBudget.toString())
- }
-if(createTenderWithRfpDto.documentPrice !== undefined) {
- formData.append(`documentPrice`, createTenderWithRfpDto.documentPrice.toString())
- }
-if(createTenderWithRfpDto.submissionDeadline !== undefined) {
- formData.append(`submissionDeadline`, createTenderWithRfpDto.submissionDeadline);
- }
-if(createTenderWithRfpDto.publishDate !== undefined) {
- formData.append(`publishDate`, createTenderWithRfpDto.publishDate);
- }
-if(createTenderWithRfpDto.contractDurationMonths !== undefined) {
- formData.append(`contractDurationMonths`, createTenderWithRfpDto.contractDurationMonths.toString())
- }
-if(createTenderWithRfpDto.targetSme !== undefined) {
- formData.append(`targetSme`, createTenderWithRfpDto.targetSme.toString())
- }
-if(createTenderWithRfpDto.localContentRequired !== undefined) {
- formData.append(`localContentRequired`, createTenderWithRfpDto.localContentRequired.toString())
- }
-if(createTenderWithRfpDto.metadata !== undefined) {
- formData.append(`metadata`, JSON.stringify(createTenderWithRfpDto.metadata));
- }
-if(createTenderWithRfpDto.tenderNumber !== undefined) {
- formData.append(`tenderNumber`, createTenderWithRfpDto.tenderNumber);
- }
-if(createTenderWithRfpDto.referenceNumber !== undefined) {
- formData.append(`referenceNumber`, createTenderWithRfpDto.referenceNumber);
- }
-if(createTenderWithRfpDto.tenderPurposeAr !== undefined) {
- formData.append(`tenderPurposeAr`, createTenderWithRfpDto.tenderPurposeAr);
- }
-if(createTenderWithRfpDto.tenderPurposeEn !== undefined) {
- formData.append(`tenderPurposeEn`, createTenderWithRfpDto.tenderPurposeEn);
- }
-if(createTenderWithRfpDto.contractDurationAr !== undefined) {
- formData.append(`contractDurationAr`, createTenderWithRfpDto.contractDurationAr);
- }
-if(createTenderWithRfpDto.contractDurationEn !== undefined) {
- formData.append(`contractDurationEn`, createTenderWithRfpDto.contractDurationEn);
- }
-if(createTenderWithRfpDto.insuranceRequired !== undefined) {
- formData.append(`insuranceRequired`, createTenderWithRfpDto.insuranceRequired.toString())
- }
-if(createTenderWithRfpDto.governmentEntityAr !== undefined) {
- formData.append(`governmentEntityAr`, createTenderWithRfpDto.governmentEntityAr);
- }
-if(createTenderWithRfpDto.governmentEntityEn !== undefined) {
- formData.append(`governmentEntityEn`, createTenderWithRfpDto.governmentEntityEn);
- }
-if(createTenderWithRfpDto.competentAuthorityAr !== undefined) {
- formData.append(`competentAuthorityAr`, createTenderWithRfpDto.competentAuthorityAr);
- }
-if(createTenderWithRfpDto.competentAuthorityEn !== undefined) {
- formData.append(`competentAuthorityEn`, createTenderWithRfpDto.competentAuthorityEn);
- }
-if(createTenderWithRfpDto.remainingTimeAr !== undefined) {
- formData.append(`remainingTimeAr`, createTenderWithRfpDto.remainingTimeAr);
- }
-if(createTenderWithRfpDto.remainingTimeEn !== undefined) {
- formData.append(`remainingTimeEn`, createTenderWithRfpDto.remainingTimeEn);
- }
-if(createTenderWithRfpDto.submissionMethodAr !== undefined) {
- formData.append(`submissionMethodAr`, createTenderWithRfpDto.submissionMethodAr);
- }
-if(createTenderWithRfpDto.submissionMethodEn !== undefined) {
- formData.append(`submissionMethodEn`, createTenderWithRfpDto.submissionMethodEn);
- }
-if(createTenderWithRfpDto.initialGuaranteeRequired !== undefined) {
- formData.append(`initialGuaranteeRequired`, createTenderWithRfpDto.initialGuaranteeRequired.toString())
- }
-if(createTenderWithRfpDto.initialGuaranteeAddressAr !== undefined) {
- formData.append(`initialGuaranteeAddressAr`, createTenderWithRfpDto.initialGuaranteeAddressAr);
- }
-if(createTenderWithRfpDto.initialGuaranteeAddressEn !== undefined) {
- formData.append(`initialGuaranteeAddressEn`, createTenderWithRfpDto.initialGuaranteeAddressEn);
- }
-if(createTenderWithRfpDto.finalGuarantee !== undefined) {
- formData.append(`finalGuarantee`, createTenderWithRfpDto.finalGuarantee.toString())
- }
-if(createTenderWithRfpDto.inquiriesDeadline !== undefined) {
- formData.append(`inquiriesDeadline`, createTenderWithRfpDto.inquiriesDeadline);
- }
-if(createTenderWithRfpDto.bidsOpeningDate !== undefined) {
- formData.append(`bidsOpeningDate`, createTenderWithRfpDto.bidsOpeningDate);
- }
-if(createTenderWithRfpDto.bidsEvaluationDate !== undefined) {
- formData.append(`bidsEvaluationDate`, createTenderWithRfpDto.bidsEvaluationDate);
- }
-if(createTenderWithRfpDto.suspensionPeriod !== undefined) {
- formData.append(`suspensionPeriod`, createTenderWithRfpDto.suspensionPeriod.toString())
- }
-if(createTenderWithRfpDto.expectedAwardDate !== undefined) {
- formData.append(`expectedAwardDate`, createTenderWithRfpDto.expectedAwardDate);
- }
-if(createTenderWithRfpDto.workStartDate !== undefined) {
- formData.append(`workStartDate`, createTenderWithRfpDto.workStartDate);
- }
-if(createTenderWithRfpDto.inquiriesStartDate !== undefined) {
- formData.append(`inquiriesStartDate`, createTenderWithRfpDto.inquiriesStartDate);
- }
-if(createTenderWithRfpDto.maxInquiriesResponseDuration !== undefined) {
- formData.append(`maxInquiriesResponseDuration`, createTenderWithRfpDto.maxInquiriesResponseDuration.toString())
- }
-if(createTenderWithRfpDto.bidsOpeningLocationAr !== undefined) {
- formData.append(`bidsOpeningLocationAr`, createTenderWithRfpDto.bidsOpeningLocationAr);
- }
-if(createTenderWithRfpDto.bidsOpeningLocationEn !== undefined) {
- formData.append(`bidsOpeningLocationEn`, createTenderWithRfpDto.bidsOpeningLocationEn);
- }
-if(createTenderWithRfpDto.classifications !== undefined) {
- formData.append(`classifications`, JSON.stringify(createTenderWithRfpDto.classifications));
- }
-if(createTenderWithRfpDto.executionLocationAr !== undefined) {
- formData.append(`executionLocationAr`, createTenderWithRfpDto.executionLocationAr);
- }
-if(createTenderWithRfpDto.executionLocationEn !== undefined) {
- formData.append(`executionLocationEn`, createTenderWithRfpDto.executionLocationEn);
- }
-if(createTenderWithRfpDto.detailsAr !== undefined) {
- formData.append(`detailsAr`, createTenderWithRfpDto.detailsAr);
- }
-if(createTenderWithRfpDto.detailsEn !== undefined) {
- formData.append(`detailsEn`, createTenderWithRfpDto.detailsEn);
- }
-if(createTenderWithRfpDto.tenderActivityAr !== undefined) {
- formData.append(`tenderActivityAr`, createTenderWithRfpDto.tenderActivityAr);
- }
-if(createTenderWithRfpDto.tenderActivityEn !== undefined) {
- formData.append(`tenderActivityEn`, createTenderWithRfpDto.tenderActivityEn);
- }
-if(createTenderWithRfpDto.includesSupplyItems !== undefined) {
- formData.append(`includesSupplyItems`, createTenderWithRfpDto.includesSupplyItems.toString())
- }
-if(createTenderWithRfpDto.includesConstructionWorks !== undefined) {
- formData.append(`includesConstructionWorks`, createTenderWithRfpDto.includesConstructionWorks.toString())
- }
-if(createTenderWithRfpDto.includesMaintenanceAndOperationWorks !== undefined) {
- formData.append(`includesMaintenanceAndOperationWorks`, createTenderWithRfpDto.includesMaintenanceAndOperationWorks.toString())
- }
-if(createTenderWithRfpDto.awardResults !== undefined) {
- formData.append(`awardResults`, JSON.stringify(createTenderWithRfpDto.awardResults));
- }
-if(createTenderWithRfpDto.localContentMechanisms !== undefined) {
- formData.append(`localContentMechanisms`, JSON.stringify(createTenderWithRfpDto.localContentMechanisms));
- }
-if(createTenderWithRfpDto.localContentTermsPdfUrl !== undefined) {
- formData.append(`localContentTermsPdfUrl`, createTenderWithRfpDto.localContentTermsPdfUrl);
- }
-formData.append(`rfpFile`, createTenderWithRfpDto.rfpFile);
-
-      return api<TenderResponseDto>(
-      {url: `http://localhost:8000/api/admin-api/tenders`, method: 'POST',
-      headers: {'Content-Type': 'multipart/form-data', },
-       data: formData
-    },
-      options);
+    options?: SecondParameter<typeof api<TenderResponseDto>>,
+  ) => {
+    const formData = new FormData();
+    formData.append(`externalId`, createTenderWithRfpDto.externalId);
+    formData.append(`titleAr`, createTenderWithRfpDto.titleAr);
+    if (createTenderWithRfpDto.titleEn !== undefined) {
+      formData.append(`titleEn`, createTenderWithRfpDto.titleEn);
     }
+    if (createTenderWithRfpDto.descriptionAr !== undefined) {
+      formData.append(`descriptionAr`, createTenderWithRfpDto.descriptionAr);
+    }
+    if (createTenderWithRfpDto.descriptionEn !== undefined) {
+      formData.append(`descriptionEn`, createTenderWithRfpDto.descriptionEn);
+    }
+    if (createTenderWithRfpDto.entityNameAr !== undefined) {
+      formData.append(`entityNameAr`, createTenderWithRfpDto.entityNameAr);
+    }
+    if (createTenderWithRfpDto.entityNameEn !== undefined) {
+      formData.append(`entityNameEn`, createTenderWithRfpDto.entityNameEn);
+    }
+    if (createTenderWithRfpDto.sector !== undefined) {
+      formData.append(`sector`, createTenderWithRfpDto.sector);
+    }
+    if (createTenderWithRfpDto.region !== undefined) {
+      formData.append(`region`, createTenderWithRfpDto.region);
+    }
+    if (createTenderWithRfpDto.tenderType !== undefined) {
+      formData.append(`tenderType`, createTenderWithRfpDto.tenderType);
+    }
+    if (createTenderWithRfpDto.status !== undefined) {
+      formData.append(`status`, createTenderWithRfpDto.status);
+    }
+    if (createTenderWithRfpDto.estimatedBudget !== undefined) {
+      formData.append(`estimatedBudget`, createTenderWithRfpDto.estimatedBudget.toString());
+    }
+    if (createTenderWithRfpDto.documentPrice !== undefined) {
+      formData.append(`documentPrice`, createTenderWithRfpDto.documentPrice.toString());
+    }
+    if (createTenderWithRfpDto.submissionDeadline !== undefined) {
+      formData.append(`submissionDeadline`, createTenderWithRfpDto.submissionDeadline);
+    }
+    if (createTenderWithRfpDto.publishDate !== undefined) {
+      formData.append(`publishDate`, createTenderWithRfpDto.publishDate);
+    }
+    if (createTenderWithRfpDto.contractDurationMonths !== undefined) {
+      formData.append(
+        `contractDurationMonths`,
+        createTenderWithRfpDto.contractDurationMonths.toString(),
+      );
+    }
+    if (createTenderWithRfpDto.targetSme !== undefined) {
+      formData.append(`targetSme`, createTenderWithRfpDto.targetSme.toString());
+    }
+    if (createTenderWithRfpDto.localContentRequired !== undefined) {
+      formData.append(
+        `localContentRequired`,
+        createTenderWithRfpDto.localContentRequired.toString(),
+      );
+    }
+    if (createTenderWithRfpDto.metadata !== undefined) {
+      formData.append(`metadata`, JSON.stringify(createTenderWithRfpDto.metadata));
+    }
+    if (createTenderWithRfpDto.tenderNumber !== undefined) {
+      formData.append(`tenderNumber`, createTenderWithRfpDto.tenderNumber);
+    }
+    if (createTenderWithRfpDto.referenceNumber !== undefined) {
+      formData.append(`referenceNumber`, createTenderWithRfpDto.referenceNumber);
+    }
+    if (createTenderWithRfpDto.tenderPurposeAr !== undefined) {
+      formData.append(`tenderPurposeAr`, createTenderWithRfpDto.tenderPurposeAr);
+    }
+    if (createTenderWithRfpDto.tenderPurposeEn !== undefined) {
+      formData.append(`tenderPurposeEn`, createTenderWithRfpDto.tenderPurposeEn);
+    }
+    if (createTenderWithRfpDto.contractDurationAr !== undefined) {
+      formData.append(`contractDurationAr`, createTenderWithRfpDto.contractDurationAr);
+    }
+    if (createTenderWithRfpDto.contractDurationEn !== undefined) {
+      formData.append(`contractDurationEn`, createTenderWithRfpDto.contractDurationEn);
+    }
+    if (createTenderWithRfpDto.insuranceRequired !== undefined) {
+      formData.append(`insuranceRequired`, createTenderWithRfpDto.insuranceRequired.toString());
+    }
+    if (createTenderWithRfpDto.governmentEntityAr !== undefined) {
+      formData.append(`governmentEntityAr`, createTenderWithRfpDto.governmentEntityAr);
+    }
+    if (createTenderWithRfpDto.governmentEntityEn !== undefined) {
+      formData.append(`governmentEntityEn`, createTenderWithRfpDto.governmentEntityEn);
+    }
+    if (createTenderWithRfpDto.competentAuthorityAr !== undefined) {
+      formData.append(`competentAuthorityAr`, createTenderWithRfpDto.competentAuthorityAr);
+    }
+    if (createTenderWithRfpDto.competentAuthorityEn !== undefined) {
+      formData.append(`competentAuthorityEn`, createTenderWithRfpDto.competentAuthorityEn);
+    }
+    if (createTenderWithRfpDto.remainingTimeAr !== undefined) {
+      formData.append(`remainingTimeAr`, createTenderWithRfpDto.remainingTimeAr);
+    }
+    if (createTenderWithRfpDto.remainingTimeEn !== undefined) {
+      formData.append(`remainingTimeEn`, createTenderWithRfpDto.remainingTimeEn);
+    }
+    if (createTenderWithRfpDto.submissionMethodAr !== undefined) {
+      formData.append(`submissionMethodAr`, createTenderWithRfpDto.submissionMethodAr);
+    }
+    if (createTenderWithRfpDto.submissionMethodEn !== undefined) {
+      formData.append(`submissionMethodEn`, createTenderWithRfpDto.submissionMethodEn);
+    }
+    if (createTenderWithRfpDto.initialGuaranteeRequired !== undefined) {
+      formData.append(
+        `initialGuaranteeRequired`,
+        createTenderWithRfpDto.initialGuaranteeRequired.toString(),
+      );
+    }
+    if (createTenderWithRfpDto.initialGuaranteeAddressAr !== undefined) {
+      formData.append(
+        `initialGuaranteeAddressAr`,
+        createTenderWithRfpDto.initialGuaranteeAddressAr,
+      );
+    }
+    if (createTenderWithRfpDto.initialGuaranteeAddressEn !== undefined) {
+      formData.append(
+        `initialGuaranteeAddressEn`,
+        createTenderWithRfpDto.initialGuaranteeAddressEn,
+      );
+    }
+    if (createTenderWithRfpDto.finalGuarantee !== undefined) {
+      formData.append(`finalGuarantee`, createTenderWithRfpDto.finalGuarantee.toString());
+    }
+    if (createTenderWithRfpDto.inquiriesDeadline !== undefined) {
+      formData.append(`inquiriesDeadline`, createTenderWithRfpDto.inquiriesDeadline);
+    }
+    if (createTenderWithRfpDto.bidsOpeningDate !== undefined) {
+      formData.append(`bidsOpeningDate`, createTenderWithRfpDto.bidsOpeningDate);
+    }
+    if (createTenderWithRfpDto.bidsEvaluationDate !== undefined) {
+      formData.append(`bidsEvaluationDate`, createTenderWithRfpDto.bidsEvaluationDate);
+    }
+    if (createTenderWithRfpDto.suspensionPeriod !== undefined) {
+      formData.append(`suspensionPeriod`, createTenderWithRfpDto.suspensionPeriod.toString());
+    }
+    if (createTenderWithRfpDto.expectedAwardDate !== undefined) {
+      formData.append(`expectedAwardDate`, createTenderWithRfpDto.expectedAwardDate);
+    }
+    if (createTenderWithRfpDto.workStartDate !== undefined) {
+      formData.append(`workStartDate`, createTenderWithRfpDto.workStartDate);
+    }
+    if (createTenderWithRfpDto.inquiriesStartDate !== undefined) {
+      formData.append(`inquiriesStartDate`, createTenderWithRfpDto.inquiriesStartDate);
+    }
+    if (createTenderWithRfpDto.maxInquiriesResponseDuration !== undefined) {
+      formData.append(
+        `maxInquiriesResponseDuration`,
+        createTenderWithRfpDto.maxInquiriesResponseDuration.toString(),
+      );
+    }
+    if (createTenderWithRfpDto.bidsOpeningLocationAr !== undefined) {
+      formData.append(`bidsOpeningLocationAr`, createTenderWithRfpDto.bidsOpeningLocationAr);
+    }
+    if (createTenderWithRfpDto.bidsOpeningLocationEn !== undefined) {
+      formData.append(`bidsOpeningLocationEn`, createTenderWithRfpDto.bidsOpeningLocationEn);
+    }
+    if (createTenderWithRfpDto.classifications !== undefined) {
+      formData.append(`classifications`, JSON.stringify(createTenderWithRfpDto.classifications));
+    }
+    if (createTenderWithRfpDto.executionLocationAr !== undefined) {
+      formData.append(`executionLocationAr`, createTenderWithRfpDto.executionLocationAr);
+    }
+    if (createTenderWithRfpDto.executionLocationEn !== undefined) {
+      formData.append(`executionLocationEn`, createTenderWithRfpDto.executionLocationEn);
+    }
+    if (createTenderWithRfpDto.detailsAr !== undefined) {
+      formData.append(`detailsAr`, createTenderWithRfpDto.detailsAr);
+    }
+    if (createTenderWithRfpDto.detailsEn !== undefined) {
+      formData.append(`detailsEn`, createTenderWithRfpDto.detailsEn);
+    }
+    if (createTenderWithRfpDto.tenderActivityAr !== undefined) {
+      formData.append(`tenderActivityAr`, createTenderWithRfpDto.tenderActivityAr);
+    }
+    if (createTenderWithRfpDto.tenderActivityEn !== undefined) {
+      formData.append(`tenderActivityEn`, createTenderWithRfpDto.tenderActivityEn);
+    }
+    if (createTenderWithRfpDto.includesSupplyItems !== undefined) {
+      formData.append(`includesSupplyItems`, createTenderWithRfpDto.includesSupplyItems.toString());
+    }
+    if (createTenderWithRfpDto.includesConstructionWorks !== undefined) {
+      formData.append(
+        `includesConstructionWorks`,
+        createTenderWithRfpDto.includesConstructionWorks.toString(),
+      );
+    }
+    if (createTenderWithRfpDto.includesMaintenanceAndOperationWorks !== undefined) {
+      formData.append(
+        `includesMaintenanceAndOperationWorks`,
+        createTenderWithRfpDto.includesMaintenanceAndOperationWorks.toString(),
+      );
+    }
+    if (createTenderWithRfpDto.awardResults !== undefined) {
+      formData.append(`awardResults`, JSON.stringify(createTenderWithRfpDto.awardResults));
+    }
+    if (createTenderWithRfpDto.localContentMechanisms !== undefined) {
+      formData.append(
+        `localContentMechanisms`,
+        JSON.stringify(createTenderWithRfpDto.localContentMechanisms),
+      );
+    }
+    if (createTenderWithRfpDto.localContentTermsPdfUrl !== undefined) {
+      formData.append(`localContentTermsPdfUrl`, createTenderWithRfpDto.localContentTermsPdfUrl);
+    }
+    formData.append(`rfpFile`, createTenderWithRfpDto.rfpFile);
+
+    return api<TenderResponseDto>(
+      {
+        url: `/api/admin-api/tenders`,
+        method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
+        data: formData,
+      },
+      options,
+    );
+  };
   /**
- * Allows an administrator to modify details of an existing tender.
- * @summary Admin: Update an existing tender
- */
-const adminTendersControllerUpdateTender = (
+   * Allows an administrator to modify details of an existing tender.
+   * @summary Admin: Update an existing tender
+   */
+  const adminTendersControllerUpdateTender = (
     id: string,
     updateTenderDto: UpdateTenderDto,
- options?: SecondParameter<typeof api<TenderResponseDto>>,) => {
-      return api<TenderResponseDto>(
-      {url: `http://localhost:8000/api/admin-api/tenders/${id}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: updateTenderDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<TenderResponseDto>>,
+  ) => {
+    return api<TenderResponseDto>(
+      {
+        url: `/api/admin-api/tenders/${id}`,
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        data: updateTenderDto,
+      },
+      options,
+    );
+  };
   /**
- * Allows an administrator to soft-delete a tender from the system.
- * @summary Admin: Delete a tender
- */
-const adminTendersControllerDeleteTender = (
+   * Allows an administrator to soft-delete a tender from the system.
+   * @summary Admin: Delete a tender
+   */
+  const adminTendersControllerDeleteTender = (
     id: string,
- options?: SecondParameter<typeof api<void>>,) => {
-      return api<void>(
-      {url: `http://localhost:8000/api/admin-api/tenders/${id}`, method: 'DELETE'
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<void>>,
+  ) => {
+    return api<void>({ url: `/api/admin-api/tenders/${id}`, method: "DELETE" }, options);
+  };
   /**
- * Upload a JSON or CSV file containing a list of tenders to import in bulk. Existing tenders with matching external IDs will be updated.
- * @summary Admin: Bulk import tenders
- */
-const adminTendersControllerImportTenders = (
+   * Upload a JSON or CSV file containing a list of tenders to import in bulk. Existing tenders with matching external IDs will be updated.
+   * @summary Admin: Bulk import tenders
+   */
+  const adminTendersControllerImportTenders = (
     tendersImportDto: TendersImportDto,
- options?: SecondParameter<typeof api<AdminTendersControllerImportTenders200>>,) => {const formData = new FormData();
-formData.append(`file`, tendersImportDto.file);
+    options?: SecondParameter<typeof api<AdminTendersControllerImportTenders200>>,
+  ) => {
+    const formData = new FormData();
+    formData.append(`file`, tendersImportDto.file);
 
-      return api<AdminTendersControllerImportTenders200>(
-      {url: `http://localhost:8000/api/admin-api/tenders/import`, method: 'POST',
-      headers: {'Content-Type': 'multipart/form-data', },
-       data: formData
-    },
-      options);
-    }
+    return api<AdminTendersControllerImportTenders200>(
+      {
+        url: `/api/admin-api/tenders/import`,
+        method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
+        data: formData,
+      },
+      options,
+    );
+  };
   /**
- * Manually publishes 2-3 random tenders from seed data for demo purposes.
- * @summary Trigger simulated tender feed
- */
-const adminTendersControllerTriggerSimulatedFeed = (
-
- options?: SecondParameter<typeof api<TenderResponseDto[]>>,) => {
-      return api<TenderResponseDto[]>(
-      {url: `http://localhost:8000/api/admin-api/tenders/simulated-feed`, method: 'GET'
-    },
-      options);
-    }
-  return {tendersControllerListTenders,tendersControllerGetTenderDetails,adminTendersControllerCreateTender,adminTendersControllerUpdateTender,adminTendersControllerDeleteTender,adminTendersControllerImportTenders,adminTendersControllerTriggerSimulatedFeed}};
-export type TendersControllerListTendersResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getTenders>['tendersControllerListTenders']>>>
-export type TendersControllerGetTenderDetailsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getTenders>['tendersControllerGetTenderDetails']>>>
-export type AdminTendersControllerCreateTenderResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getTenders>['adminTendersControllerCreateTender']>>>
-export type AdminTendersControllerUpdateTenderResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getTenders>['adminTendersControllerUpdateTender']>>>
-export type AdminTendersControllerDeleteTenderResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getTenders>['adminTendersControllerDeleteTender']>>>
-export type AdminTendersControllerImportTendersResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getTenders>['adminTendersControllerImportTenders']>>>
-export type AdminTendersControllerTriggerSimulatedFeedResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getTenders>['adminTendersControllerTriggerSimulatedFeed']>>>
+   * Manually publishes 2-3 random tenders from seed data for demo purposes.
+   * @summary Trigger simulated tender feed
+   */
+  const adminTendersControllerTriggerSimulatedFeed = (
+    options?: SecondParameter<typeof api<TenderResponseDto[]>>,
+  ) => {
+    return api<TenderResponseDto[]>(
+      { url: `/api/admin-api/tenders/simulated-feed`, method: "GET" },
+      options,
+    );
+  };
+  return {
+    tendersControllerListTenders,
+    tendersControllerGetTenderDetails,
+    adminTendersControllerCreateTender,
+    adminTendersControllerUpdateTender,
+    adminTendersControllerDeleteTender,
+    adminTendersControllerImportTenders,
+    adminTendersControllerTriggerSimulatedFeed,
+  };
+};
+export type TendersControllerListTendersResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getTenders>["tendersControllerListTenders"]>>
+>;
+export type TendersControllerGetTenderDetailsResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getTenders>["tendersControllerGetTenderDetails"]>>
+>;
+export type AdminTendersControllerCreateTenderResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getTenders>["adminTendersControllerCreateTender"]>>
+>;
+export type AdminTendersControllerUpdateTenderResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getTenders>["adminTendersControllerUpdateTender"]>>
+>;
+export type AdminTendersControllerDeleteTenderResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getTenders>["adminTendersControllerDeleteTender"]>>
+>;
+export type AdminTendersControllerImportTendersResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getTenders>["adminTendersControllerImportTenders"]>>
+>;
+export type AdminTendersControllerTriggerSimulatedFeedResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getTenders>["adminTendersControllerTriggerSimulatedFeed"]>>
+>;

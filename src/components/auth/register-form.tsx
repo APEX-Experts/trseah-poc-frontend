@@ -31,11 +31,14 @@ export function RegisterForm({ onTabChange }: RegisterFormProps) {
     firstName: string;
     lastName: string;
   }) => {
-    const response = await register({ data: values });
-
-    if (response.statusCode === 201) {
-      router.push(`/auth/verify-email?email=${encodeURIComponent(values.email)}`);
-    }
+    await register(
+      { data: values },
+      {
+        onSuccess: () => {
+          router.push(`/auth/verify-email?email=${encodeURIComponent(values.email)}`);
+        },
+      },
+    );
   };
 
   const footerContent = (

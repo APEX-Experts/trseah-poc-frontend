@@ -13,173 +13,220 @@ import type {
   OrganizationResponseDto,
   PastProjectResponseDto,
   TeamMemberResponseDto,
-  UpdateOrganizationDto
-} from '../../../../types/api';
+  UpdateOrganizationDto,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-  export const getOrganizations = () => {
-/**
- * @summary Register a new organization
- */
-const organizationsControllerCreate = (
+export const getOrganizations = () => {
+  /**
+   * @summary Register a new organization
+   */
+  const organizationsControllerCreate = (
     createOrganizationDto: CreateOrganizationDto,
- options?: SecondParameter<typeof api<OrganizationResponseDto>>,) => {
-      return api<OrganizationResponseDto>(
-      {url: `http://localhost:8000/api/organizations`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createOrganizationDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<OrganizationResponseDto>>,
+  ) => {
+    return api<OrganizationResponseDto>(
+      {
+        url: `/api/organizations`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: createOrganizationDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary Get current user's organization profile
- */
-const organizationsControllerGetMe = (
-
- options?: SecondParameter<typeof api<OrganizationResponseDto>>,) => {
-      return api<OrganizationResponseDto>(
-      {url: `http://localhost:8000/api/organizations/me`, method: 'GET'
-    },
-      options);
-    }
+   * @summary Get current user's organization profile
+   */
+  const organizationsControllerGetMe = (
+    options?: SecondParameter<typeof api<OrganizationResponseDto>>,
+  ) => {
+    return api<OrganizationResponseDto>({ url: `/api/organizations/me`, method: "GET" }, options);
+  };
   /**
- * @summary Update organization basic info
- */
-const organizationsControllerUpdateMe = (
+   * @summary Update organization basic info
+   */
+  const organizationsControllerUpdateMe = (
     updateOrganizationDto: UpdateOrganizationDto,
- options?: SecondParameter<typeof api<OrganizationResponseDto>>,) => {
-      return api<OrganizationResponseDto>(
-      {url: `http://localhost:8000/api/organizations/me`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: updateOrganizationDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<OrganizationResponseDto>>,
+  ) => {
+    return api<OrganizationResponseDto>(
+      {
+        url: `/api/organizations/me`,
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        data: updateOrganizationDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary Upload an organization document (strictly PDF) and optional logo
- */
-const organizationsControllerUploadDocument = (
+   * @summary Upload an organization document (strictly PDF) and optional logo
+   */
+  const organizationsControllerUploadDocument = (
     createDocumentDto: CreateDocumentDto,
- options?: SecondParameter<typeof api<OrgDocumentResponseDto>>,) => {const formData = new FormData();
-formData.append(`file`, createDocumentDto.file);
-if(createDocumentDto.logo !== undefined) {
- formData.append(`logo`, createDocumentDto.logo);
- }
-formData.append(`nameAr`, createDocumentDto.nameAr);
-if(createDocumentDto.nameEn !== undefined) {
- formData.append(`nameEn`, createDocumentDto.nameEn);
- }
-if(createDocumentDto.documentType !== undefined) {
- formData.append(`documentType`, createDocumentDto.documentType);
- }
-
-      return api<OrgDocumentResponseDto>(
-      {url: `http://localhost:8000/api/organizations/me/documents`, method: 'POST',
-      headers: {'Content-Type': 'multipart/form-data', },
-       data: formData
-    },
-      options);
+    options?: SecondParameter<typeof api<OrgDocumentResponseDto>>,
+  ) => {
+    const formData = new FormData();
+    formData.append(`file`, createDocumentDto.file);
+    if (createDocumentDto.logo !== undefined) {
+      formData.append(`logo`, createDocumentDto.logo);
     }
-  /**
- * @summary List organization documents
- */
-const organizationsControllerListDocuments = (
-
- options?: SecondParameter<typeof api<OrgDocumentResponseDto[]>>,) => {
-      return api<OrgDocumentResponseDto[]>(
-      {url: `http://localhost:8000/api/organizations/me/documents`, method: 'GET'
-    },
-      options);
+    formData.append(`nameAr`, createDocumentDto.nameAr);
+    if (createDocumentDto.nameEn !== undefined) {
+      formData.append(`nameEn`, createDocumentDto.nameEn);
     }
+    if (createDocumentDto.documentType !== undefined) {
+      formData.append(`documentType`, createDocumentDto.documentType);
+    }
+
+    return api<OrgDocumentResponseDto>(
+      {
+        url: `/api/organizations/me/documents`,
+        method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
+        data: formData,
+      },
+      options,
+    );
+  };
   /**
- * @summary Delete organization document
- */
-const organizationsControllerDeleteDocument = (
+   * @summary List organization documents
+   */
+  const organizationsControllerListDocuments = (
+    options?: SecondParameter<typeof api<OrgDocumentResponseDto[]>>,
+  ) => {
+    return api<OrgDocumentResponseDto[]>(
+      { url: `/api/organizations/me/documents`, method: "GET" },
+      options,
+    );
+  };
+  /**
+   * @summary Delete organization document
+   */
+  const organizationsControllerDeleteDocument = (
     id: string,
- options?: SecondParameter<typeof api<void>>,) => {
-      return api<void>(
-      {url: `http://localhost:8000/api/organizations/me/documents/${id}`, method: 'DELETE'
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<void>>,
+  ) => {
+    return api<void>({ url: `/api/organizations/me/documents/${id}`, method: "DELETE" }, options);
+  };
   /**
- * @summary Add a team member with optional CV PDF upload
- */
-const organizationsControllerAddTeamMember = (
+   * @summary Add a team member with optional CV PDF upload
+   */
+  const organizationsControllerAddTeamMember = (
     createTeamMemberDto: CreateTeamMemberDto,
- options?: SecondParameter<typeof api<TeamMemberResponseDto>>,) => {const formData = new FormData();
-if(createTeamMemberDto.file !== undefined) {
- formData.append(`file`, createTeamMemberDto.file);
- }
-formData.append(`nameAr`, createTeamMemberDto.nameAr);
-if(createTeamMemberDto.nameEn !== undefined) {
- formData.append(`nameEn`, createTeamMemberDto.nameEn);
- }
-if(createTeamMemberDto.roleAr !== undefined) {
- formData.append(`roleAr`, createTeamMemberDto.roleAr);
- }
-if(createTeamMemberDto.roleEn !== undefined) {
- formData.append(`roleEn`, createTeamMemberDto.roleEn);
- }
-if(createTeamMemberDto.yearsOfExperience !== undefined) {
- formData.append(`yearsOfExperience`, createTeamMemberDto.yearsOfExperience.toString())
- }
-
-      return api<TeamMemberResponseDto>(
-      {url: `http://localhost:8000/api/organizations/me/team`, method: 'POST',
-      headers: {'Content-Type': 'multipart/form-data', },
-       data: formData
-    },
-      options);
+    options?: SecondParameter<typeof api<TeamMemberResponseDto>>,
+  ) => {
+    const formData = new FormData();
+    if (createTeamMemberDto.file !== undefined) {
+      formData.append(`file`, createTeamMemberDto.file);
     }
-  /**
- * @summary List team members
- */
-const organizationsControllerListTeam = (
-
- options?: SecondParameter<typeof api<TeamMemberResponseDto[]>>,) => {
-      return api<TeamMemberResponseDto[]>(
-      {url: `http://localhost:8000/api/organizations/me/team`, method: 'GET'
-    },
-      options);
+    formData.append(`nameAr`, createTeamMemberDto.nameAr);
+    if (createTeamMemberDto.nameEn !== undefined) {
+      formData.append(`nameEn`, createTeamMemberDto.nameEn);
     }
+    if (createTeamMemberDto.roleAr !== undefined) {
+      formData.append(`roleAr`, createTeamMemberDto.roleAr);
+    }
+    if (createTeamMemberDto.roleEn !== undefined) {
+      formData.append(`roleEn`, createTeamMemberDto.roleEn);
+    }
+    if (createTeamMemberDto.yearsOfExperience !== undefined) {
+      formData.append(`yearsOfExperience`, createTeamMemberDto.yearsOfExperience.toString());
+    }
+
+    return api<TeamMemberResponseDto>(
+      {
+        url: `/api/organizations/me/team`,
+        method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
+        data: formData,
+      },
+      options,
+    );
+  };
   /**
- * @summary Add a past project
- */
-const organizationsControllerAddProject = (
+   * @summary List team members
+   */
+  const organizationsControllerListTeam = (
+    options?: SecondParameter<typeof api<TeamMemberResponseDto[]>>,
+  ) => {
+    return api<TeamMemberResponseDto[]>(
+      { url: `/api/organizations/me/team`, method: "GET" },
+      options,
+    );
+  };
+  /**
+   * @summary Add a past project
+   */
+  const organizationsControllerAddProject = (
     createProjectDto: CreateProjectDto,
- options?: SecondParameter<typeof api<PastProjectResponseDto>>,) => {
-      return api<PastProjectResponseDto>(
-      {url: `http://localhost:8000/api/organizations/me/projects`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createProjectDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<PastProjectResponseDto>>,
+  ) => {
+    return api<PastProjectResponseDto>(
+      {
+        url: `/api/organizations/me/projects`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: createProjectDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary List past projects
- */
-const organizationsControllerListProjects = (
-
- options?: SecondParameter<typeof api<PastProjectResponseDto[]>>,) => {
-      return api<PastProjectResponseDto[]>(
-      {url: `http://localhost:8000/api/organizations/me/projects`, method: 'GET'
-    },
-      options);
-    }
-  return {organizationsControllerCreate,organizationsControllerGetMe,organizationsControllerUpdateMe,organizationsControllerUploadDocument,organizationsControllerListDocuments,organizationsControllerDeleteDocument,organizationsControllerAddTeamMember,organizationsControllerListTeam,organizationsControllerAddProject,organizationsControllerListProjects}};
-export type OrganizationsControllerCreateResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerCreate']>>>
-export type OrganizationsControllerGetMeResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerGetMe']>>>
-export type OrganizationsControllerUpdateMeResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerUpdateMe']>>>
-export type OrganizationsControllerUploadDocumentResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerUploadDocument']>>>
-export type OrganizationsControllerListDocumentsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerListDocuments']>>>
-export type OrganizationsControllerDeleteDocumentResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerDeleteDocument']>>>
-export type OrganizationsControllerAddTeamMemberResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerAddTeamMember']>>>
-export type OrganizationsControllerListTeamResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerListTeam']>>>
-export type OrganizationsControllerAddProjectResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerAddProject']>>>
-export type OrganizationsControllerListProjectsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrganizations>['organizationsControllerListProjects']>>>
+   * @summary List past projects
+   */
+  const organizationsControllerListProjects = (
+    options?: SecondParameter<typeof api<PastProjectResponseDto[]>>,
+  ) => {
+    return api<PastProjectResponseDto[]>(
+      { url: `/api/organizations/me/projects`, method: "GET" },
+      options,
+    );
+  };
+  return {
+    organizationsControllerCreate,
+    organizationsControllerGetMe,
+    organizationsControllerUpdateMe,
+    organizationsControllerUploadDocument,
+    organizationsControllerListDocuments,
+    organizationsControllerDeleteDocument,
+    organizationsControllerAddTeamMember,
+    organizationsControllerListTeam,
+    organizationsControllerAddProject,
+    organizationsControllerListProjects,
+  };
+};
+export type OrganizationsControllerCreateResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerCreate"]>>
+>;
+export type OrganizationsControllerGetMeResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerGetMe"]>>
+>;
+export type OrganizationsControllerUpdateMeResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerUpdateMe"]>>
+>;
+export type OrganizationsControllerUploadDocumentResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerUploadDocument"]>>
+>;
+export type OrganizationsControllerListDocumentsResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerListDocuments"]>>
+>;
+export type OrganizationsControllerDeleteDocumentResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerDeleteDocument"]>>
+>;
+export type OrganizationsControllerAddTeamMemberResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerAddTeamMember"]>>
+>;
+export type OrganizationsControllerListTeamResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerListTeam"]>>
+>;
+export type OrganizationsControllerAddProjectResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerAddProject"]>>
+>;
+export type OrganizationsControllerListProjectsResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerListProjects"]>>
+>;

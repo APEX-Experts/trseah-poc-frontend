@@ -4,10 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -20,8 +17,8 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
   ApiErrorResponseDto,
@@ -32,395 +29,545 @@ import type {
   PaymentsControllerRefund200,
   RefundPaymentDto,
   WebhooksControllerHandleStripeWebhook200,
-  WebhooksControllerHandleStripeWebhookBody
-} from '../../../../types/api';
+  WebhooksControllerHandleStripeWebhookBody,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-
 
 /**
  * @summary List all registered payment providers
  */
 export const paymentsControllerListProviders = (
-
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return api<PaymentsControllerListProviders200>(
-      {url: `http://localhost:8000/api/payments/providers`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return api<PaymentsControllerListProviders200>(
+    { url: `/api/payments/providers`, method: "GET", signal },
+    options,
+  );
+};
 
 export const getPaymentsControllerListProvidersQueryKey = () => {
-    return [
-    `http://localhost:8000/api/payments/providers`
-    ] as const;
-    }
+  return [`/api/payments/providers`] as const;
+};
 
+export const getPaymentsControllerListProvidersQueryOptions = <
+  TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>,
+  TError = ApiErrorResponseDto,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>
+  >;
+  request?: SecondParameter<typeof api>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getPaymentsControllerListProvidersQueryOptions = <TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError = ApiErrorResponseDto>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>>, request?: SecondParameter<typeof api>}
-) => {
+  const queryKey = queryOptions?.queryKey ?? getPaymentsControllerListProvidersQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof paymentsControllerListProviders>>> = ({
+    signal,
+  }) => paymentsControllerListProviders(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getPaymentsControllerListProvidersQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof paymentsControllerListProviders>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type PaymentsControllerListProvidersQueryResult = NonNullable<
+  Awaited<ReturnType<typeof paymentsControllerListProviders>>
+>;
+export type PaymentsControllerListProvidersQueryError = ApiErrorResponseDto;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof paymentsControllerListProviders>>> = ({ signal }) => paymentsControllerListProviders(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PaymentsControllerListProvidersQueryResult = NonNullable<Awaited<ReturnType<typeof paymentsControllerListProviders>>>
-export type PaymentsControllerListProvidersQueryError = ApiErrorResponseDto
-
-
-export function usePaymentsControllerListProviders<TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError = ApiErrorResponseDto>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>> & Pick<
+export function usePaymentsControllerListProviders<
+  TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>,
+  TError = ApiErrorResponseDto,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof paymentsControllerListProviders>>,
           TError,
           Awaited<ReturnType<typeof paymentsControllerListProviders>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePaymentsControllerListProviders<TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError = ApiErrorResponseDto>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function usePaymentsControllerListProviders<
+  TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>,
+  TError = ApiErrorResponseDto,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof paymentsControllerListProviders>>,
           TError,
           Awaited<ReturnType<typeof paymentsControllerListProviders>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePaymentsControllerListProviders<TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError = ApiErrorResponseDto>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function usePaymentsControllerListProviders<
+  TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>,
+  TError = ApiErrorResponseDto,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary List all registered payment providers
  */
 
-export function usePaymentsControllerListProviders<TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError = ApiErrorResponseDto>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function usePaymentsControllerListProviders<
+  TData = Awaited<ReturnType<typeof paymentsControllerListProviders>>,
+  TError = ApiErrorResponseDto,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerListProviders>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getPaymentsControllerListProvidersQueryOptions(options);
 
-  const queryOptions = getPaymentsControllerListProvidersQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * @summary Create a payment intent via a specific provider
  */
 export const paymentsControllerCreatePayment = (
-    provider: 'stripe' | 'paymob' | 'mock',
-    createPaymentDto: CreatePaymentDto,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  provider: "stripe" | "paymob" | "mock",
+  createPaymentDto: CreatePaymentDto,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return api<PaymentsControllerCreatePayment201>(
-      {url: `http://localhost:8000/api/payments/${provider}/create`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createPaymentDto, signal
+  return api<PaymentsControllerCreatePayment201>(
+    {
+      url: `/api/payments/${provider}/create`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: createPaymentDto,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPaymentsControllerCreatePaymentMutationOptions = <
+  TError = ApiErrorResponseDto,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof paymentsControllerCreatePayment>>,
+    TError,
+    { provider: "stripe" | "paymob" | "mock"; data: CreatePaymentDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof paymentsControllerCreatePayment>>,
+  TError,
+  { provider: "stripe" | "paymob" | "mock"; data: CreatePaymentDto },
+  TContext
+> => {
+  const mutationKey = ["paymentsControllerCreatePayment"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof paymentsControllerCreatePayment>>,
+    { provider: "stripe" | "paymob" | "mock"; data: CreatePaymentDto }
+  > = (props) => {
+    const { provider, data } = props ?? {};
 
-export const getPaymentsControllerCreatePaymentMutationOptions = <TError = ApiErrorResponseDto,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof paymentsControllerCreatePayment>>, TError,{provider: 'stripe' | 'paymob' | 'mock';data: CreatePaymentDto}, TContext>, request?: SecondParameter<typeof api>}
-): UseMutationOptions<Awaited<ReturnType<typeof paymentsControllerCreatePayment>>, TError,{provider: 'stripe' | 'paymob' | 'mock';data: CreatePaymentDto}, TContext> => {
+    return paymentsControllerCreatePayment(provider, data, requestOptions);
+  };
 
-const mutationKey = ['paymentsControllerCreatePayment'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  return { mutationFn, ...mutationOptions };
+};
 
+export type PaymentsControllerCreatePaymentMutationResult = NonNullable<
+  Awaited<ReturnType<typeof paymentsControllerCreatePayment>>
+>;
+export type PaymentsControllerCreatePaymentMutationBody = CreatePaymentDto;
+export type PaymentsControllerCreatePaymentMutationError = ApiErrorResponseDto;
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof paymentsControllerCreatePayment>>, {provider: 'stripe' | 'paymob' | 'mock';data: CreatePaymentDto}> = (props) => {
-          const {provider,data} = props ?? {};
-
-          return  paymentsControllerCreatePayment(provider,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PaymentsControllerCreatePaymentMutationResult = NonNullable<Awaited<ReturnType<typeof paymentsControllerCreatePayment>>>
-    export type PaymentsControllerCreatePaymentMutationBody = CreatePaymentDto
-    export type PaymentsControllerCreatePaymentMutationError = ApiErrorResponseDto
-
-    /**
+/**
  * @summary Create a payment intent via a specific provider
  */
-export const usePaymentsControllerCreatePayment = <TError = ApiErrorResponseDto,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof paymentsControllerCreatePayment>>, TError,{provider: 'stripe' | 'paymob' | 'mock';data: CreatePaymentDto}, TContext>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof paymentsControllerCreatePayment>>,
-        TError,
-        {provider: 'stripe' | 'paymob' | 'mock';data: CreatePaymentDto},
-        TContext
-      > => {
-      return useMutation(getPaymentsControllerCreatePaymentMutationOptions(options), queryClient);
-    }
-    /**
+export const usePaymentsControllerCreatePayment = <
+  TError = ApiErrorResponseDto,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof paymentsControllerCreatePayment>>,
+      TError,
+      { provider: "stripe" | "paymob" | "mock"; data: CreatePaymentDto },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof paymentsControllerCreatePayment>>,
+  TError,
+  { provider: "stripe" | "paymob" | "mock"; data: CreatePaymentDto },
+  TContext
+> => {
+  return useMutation(getPaymentsControllerCreatePaymentMutationOptions(options), queryClient);
+};
+/**
  * @summary Get payment status from a specific provider
  */
 export const paymentsControllerGetPaymentStatus = (
-    provider: 'stripe' | 'paymob' | 'mock',
-    transactionId: string,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  provider: "stripe" | "paymob" | "mock",
+  transactionId: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<PaymentsControllerGetPaymentStatus200>(
+    { url: `/api/payments/${provider}/status/${transactionId}`, method: "GET", signal },
+    options,
+  );
+};
 
-
-      return api<PaymentsControllerGetPaymentStatus200>(
-      {url: `http://localhost:8000/api/payments/${provider}/status/${transactionId}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getPaymentsControllerGetPaymentStatusQueryKey = (provider: 'stripe' | 'paymob' | 'mock',
-    transactionId: string,) => {
-    return [
-    `http://localhost:8000/api/payments/${provider}/status/${transactionId}`
-    ] as const;
-    }
-
-
-export const getPaymentsControllerGetPaymentStatusQueryOptions = <TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError = ApiErrorResponseDto>(provider: 'stripe' | 'paymob' | 'mock',
-    transactionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getPaymentsControllerGetPaymentStatusQueryKey = (
+  provider: "stripe" | "paymob" | "mock",
+  transactionId: string,
 ) => {
+  return [`/api/payments/${provider}/status/${transactionId}`] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getPaymentsControllerGetPaymentStatusQueryOptions = <
+  TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>,
+  TError = ApiErrorResponseDto,
+>(
+  provider: "stripe" | "paymob" | "mock",
+  transactionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getPaymentsControllerGetPaymentStatusQueryKey(provider,transactionId);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getPaymentsControllerGetPaymentStatusQueryKey(provider, transactionId);
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>> = ({
+    signal,
+  }) => paymentsControllerGetPaymentStatus(provider, transactionId, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!(provider && transactionId),
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>> = ({ signal }) => paymentsControllerGetPaymentStatus(provider,transactionId, requestOptions, signal);
+export type PaymentsControllerGetPaymentStatusQueryResult = NonNullable<
+  Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>
+>;
+export type PaymentsControllerGetPaymentStatusQueryError = ApiErrorResponseDto;
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: !!(provider && transactionId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PaymentsControllerGetPaymentStatusQueryResult = NonNullable<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>>
-export type PaymentsControllerGetPaymentStatusQueryError = ApiErrorResponseDto
-
-
-export function usePaymentsControllerGetPaymentStatus<TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError = ApiErrorResponseDto>(
- provider: 'stripe' | 'paymob' | 'mock',
-    transactionId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>> & Pick<
+export function usePaymentsControllerGetPaymentStatus<
+  TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>,
+  TError = ApiErrorResponseDto,
+>(
+  provider: "stripe" | "paymob" | "mock",
+  transactionId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>,
           TError,
           Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePaymentsControllerGetPaymentStatus<TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError = ApiErrorResponseDto>(
- provider: 'stripe' | 'paymob' | 'mock',
-    transactionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function usePaymentsControllerGetPaymentStatus<
+  TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>,
+  TError = ApiErrorResponseDto,
+>(
+  provider: "stripe" | "paymob" | "mock",
+  transactionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>,
           TError,
           Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePaymentsControllerGetPaymentStatus<TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError = ApiErrorResponseDto>(
- provider: 'stripe' | 'paymob' | 'mock',
-    transactionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function usePaymentsControllerGetPaymentStatus<
+  TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>,
+  TError = ApiErrorResponseDto,
+>(
+  provider: "stripe" | "paymob" | "mock",
+  transactionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get payment status from a specific provider
  */
 
-export function usePaymentsControllerGetPaymentStatus<TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError = ApiErrorResponseDto>(
- provider: 'stripe' | 'paymob' | 'mock',
-    transactionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function usePaymentsControllerGetPaymentStatus<
+  TData = Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>,
+  TError = ApiErrorResponseDto,
+>(
+  provider: "stripe" | "paymob" | "mock",
+  transactionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof paymentsControllerGetPaymentStatus>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getPaymentsControllerGetPaymentStatusQueryOptions(
+    provider,
+    transactionId,
+    options,
+  );
 
-  const queryOptions = getPaymentsControllerGetPaymentStatusQueryOptions(provider,transactionId,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * @summary Issue a refund via a specific provider
  */
 export const paymentsControllerRefund = (
-    provider: 'stripe' | 'paymob' | 'mock',
-    refundPaymentDto: RefundPaymentDto,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  provider: "stripe" | "paymob" | "mock",
+  refundPaymentDto: RefundPaymentDto,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return api<PaymentsControllerRefund200>(
-      {url: `http://localhost:8000/api/payments/${provider}/refund`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: refundPaymentDto, signal
+  return api<PaymentsControllerRefund200>(
+    {
+      url: `/api/payments/${provider}/refund`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: refundPaymentDto,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPaymentsControllerRefundMutationOptions = <
+  TError = ApiErrorResponseDto,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof paymentsControllerRefund>>,
+    TError,
+    { provider: "stripe" | "paymob" | "mock"; data: RefundPaymentDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof paymentsControllerRefund>>,
+  TError,
+  { provider: "stripe" | "paymob" | "mock"; data: RefundPaymentDto },
+  TContext
+> => {
+  const mutationKey = ["paymentsControllerRefund"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof paymentsControllerRefund>>,
+    { provider: "stripe" | "paymob" | "mock"; data: RefundPaymentDto }
+  > = (props) => {
+    const { provider, data } = props ?? {};
 
-export const getPaymentsControllerRefundMutationOptions = <TError = ApiErrorResponseDto,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof paymentsControllerRefund>>, TError,{provider: 'stripe' | 'paymob' | 'mock';data: RefundPaymentDto}, TContext>, request?: SecondParameter<typeof api>}
-): UseMutationOptions<Awaited<ReturnType<typeof paymentsControllerRefund>>, TError,{provider: 'stripe' | 'paymob' | 'mock';data: RefundPaymentDto}, TContext> => {
+    return paymentsControllerRefund(provider, data, requestOptions);
+  };
 
-const mutationKey = ['paymentsControllerRefund'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  return { mutationFn, ...mutationOptions };
+};
 
+export type PaymentsControllerRefundMutationResult = NonNullable<
+  Awaited<ReturnType<typeof paymentsControllerRefund>>
+>;
+export type PaymentsControllerRefundMutationBody = RefundPaymentDto;
+export type PaymentsControllerRefundMutationError = ApiErrorResponseDto;
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof paymentsControllerRefund>>, {provider: 'stripe' | 'paymob' | 'mock';data: RefundPaymentDto}> = (props) => {
-          const {provider,data} = props ?? {};
-
-          return  paymentsControllerRefund(provider,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PaymentsControllerRefundMutationResult = NonNullable<Awaited<ReturnType<typeof paymentsControllerRefund>>>
-    export type PaymentsControllerRefundMutationBody = RefundPaymentDto
-    export type PaymentsControllerRefundMutationError = ApiErrorResponseDto
-
-    /**
+/**
  * @summary Issue a refund via a specific provider
  */
-export const usePaymentsControllerRefund = <TError = ApiErrorResponseDto,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof paymentsControllerRefund>>, TError,{provider: 'stripe' | 'paymob' | 'mock';data: RefundPaymentDto}, TContext>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof paymentsControllerRefund>>,
-        TError,
-        {provider: 'stripe' | 'paymob' | 'mock';data: RefundPaymentDto},
-        TContext
-      > => {
-      return useMutation(getPaymentsControllerRefundMutationOptions(options), queryClient);
-    }
-    /**
+export const usePaymentsControllerRefund = <TError = ApiErrorResponseDto, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof paymentsControllerRefund>>,
+      TError,
+      { provider: "stripe" | "paymob" | "mock"; data: RefundPaymentDto },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof paymentsControllerRefund>>,
+  TError,
+  { provider: "stripe" | "paymob" | "mock"; data: RefundPaymentDto },
+  TContext
+> => {
+  return useMutation(getPaymentsControllerRefundMutationOptions(options), queryClient);
+};
+/**
  * @summary Handle incoming Stripe webhooks
  */
 export const webhooksControllerHandleStripeWebhook = (
-    webhooksControllerHandleStripeWebhookBody: WebhooksControllerHandleStripeWebhookBody,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  webhooksControllerHandleStripeWebhookBody: WebhooksControllerHandleStripeWebhookBody,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return api<WebhooksControllerHandleStripeWebhook200>(
-      {url: `http://localhost:8000/api/webhooks/payments/stripe`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: webhooksControllerHandleStripeWebhookBody, signal
+  return api<WebhooksControllerHandleStripeWebhook200>(
+    {
+      url: `/api/webhooks/payments/stripe`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: webhooksControllerHandleStripeWebhookBody,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getWebhooksControllerHandleStripeWebhookMutationOptions = <
+  TError = ApiErrorResponseDto,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>,
+    TError,
+    { data: WebhooksControllerHandleStripeWebhookBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>,
+  TError,
+  { data: WebhooksControllerHandleStripeWebhookBody },
+  TContext
+> => {
+  const mutationKey = ["webhooksControllerHandleStripeWebhook"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>,
+    { data: WebhooksControllerHandleStripeWebhookBody }
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getWebhooksControllerHandleStripeWebhookMutationOptions = <TError = ApiErrorResponseDto,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>, TError,{data: WebhooksControllerHandleStripeWebhookBody}, TContext>, request?: SecondParameter<typeof api>}
-): UseMutationOptions<Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>, TError,{data: WebhooksControllerHandleStripeWebhookBody}, TContext> => {
+    return webhooksControllerHandleStripeWebhook(data, requestOptions);
+  };
 
-const mutationKey = ['webhooksControllerHandleStripeWebhook'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  return { mutationFn, ...mutationOptions };
+};
 
+export type WebhooksControllerHandleStripeWebhookMutationResult = NonNullable<
+  Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>
+>;
+export type WebhooksControllerHandleStripeWebhookMutationBody =
+  WebhooksControllerHandleStripeWebhookBody;
+export type WebhooksControllerHandleStripeWebhookMutationError = ApiErrorResponseDto;
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>, {data: WebhooksControllerHandleStripeWebhookBody}> = (props) => {
-          const {data} = props ?? {};
-
-          return  webhooksControllerHandleStripeWebhook(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type WebhooksControllerHandleStripeWebhookMutationResult = NonNullable<Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>>
-    export type WebhooksControllerHandleStripeWebhookMutationBody = WebhooksControllerHandleStripeWebhookBody
-    export type WebhooksControllerHandleStripeWebhookMutationError = ApiErrorResponseDto
-
-    /**
+/**
  * @summary Handle incoming Stripe webhooks
  */
-export const useWebhooksControllerHandleStripeWebhook = <TError = ApiErrorResponseDto,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>, TError,{data: WebhooksControllerHandleStripeWebhookBody}, TContext>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>,
-        TError,
-        {data: WebhooksControllerHandleStripeWebhookBody},
-        TContext
-      > => {
-      return useMutation(getWebhooksControllerHandleStripeWebhookMutationOptions(options), queryClient);
-    }
+export const useWebhooksControllerHandleStripeWebhook = <
+  TError = ApiErrorResponseDto,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>,
+      TError,
+      { data: WebhooksControllerHandleStripeWebhookBody },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof webhooksControllerHandleStripeWebhook>>,
+  TError,
+  { data: WebhooksControllerHandleStripeWebhookBody },
+  TContext
+> => {
+  return useMutation(getWebhooksControllerHandleStripeWebhookMutationOptions(options), queryClient);
+};

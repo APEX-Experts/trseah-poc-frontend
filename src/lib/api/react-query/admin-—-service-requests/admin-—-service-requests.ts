@@ -4,10 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -20,8 +17,8 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
   AdminRequestsControllerGenerateInvoice200,
@@ -30,329 +27,485 @@ import type {
   AdminRequestsControllerListRequests200,
   AdminRequestsControllerListRequestsParams,
   AdminRequestsControllerReviewRequest200,
-  ReviewRequestDto
-} from '../../../../types/api';
+  ReviewRequestDto,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-
 
 /**
  * Retrieves all service requests in the platform, filterable by status.
  * @summary List all service requests (Admin)
  */
 export const adminRequestsControllerListRequests = (
-    params?: AdminRequestsControllerListRequestsParams,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  params?: AdminRequestsControllerListRequestsParams,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<AdminRequestsControllerListRequests200>(
+    { url: `/api/admin-api/requests`, method: "GET", params, signal },
+    options,
+  );
+};
 
-
-      return api<AdminRequestsControllerListRequests200>(
-      {url: `http://localhost:8000/api/admin-api/requests`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getAdminRequestsControllerListRequestsQueryKey = (params?: AdminRequestsControllerListRequestsParams,) => {
-    return [
-    `http://localhost:8000/api/admin-api/requests`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getAdminRequestsControllerListRequestsQueryOptions = <TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError = void>(params?: AdminRequestsControllerListRequestsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getAdminRequestsControllerListRequestsQueryKey = (
+  params?: AdminRequestsControllerListRequestsParams,
 ) => {
+  return [`/api/admin-api/requests`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getAdminRequestsControllerListRequestsQueryOptions = <
+  TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+  TError = void,
+>(
+  params?: AdminRequestsControllerListRequestsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getAdminRequestsControllerListRequestsQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getAdminRequestsControllerListRequestsQueryKey(params);
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof adminRequestsControllerListRequests>>> = ({
+    signal,
+  }) => adminRequestsControllerListRequests(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof adminRequestsControllerListRequests>>> = ({ signal }) => adminRequestsControllerListRequests(params, requestOptions, signal);
+export type AdminRequestsControllerListRequestsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof adminRequestsControllerListRequests>>
+>;
+export type AdminRequestsControllerListRequestsQueryError = void;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AdminRequestsControllerListRequestsQueryResult = NonNullable<Awaited<ReturnType<typeof adminRequestsControllerListRequests>>>
-export type AdminRequestsControllerListRequestsQueryError = void
-
-
-export function useAdminRequestsControllerListRequests<TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError = void>(
- params: undefined |  AdminRequestsControllerListRequestsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError, TData>> & Pick<
+export function useAdminRequestsControllerListRequests<
+  TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+  TError = void,
+>(
+  params: undefined | AdminRequestsControllerListRequestsParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
           TError,
           Awaited<ReturnType<typeof adminRequestsControllerListRequests>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAdminRequestsControllerListRequests<TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError = void>(
- params?: AdminRequestsControllerListRequestsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useAdminRequestsControllerListRequests<
+  TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+  TError = void,
+>(
+  params?: AdminRequestsControllerListRequestsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
           TError,
           Awaited<ReturnType<typeof adminRequestsControllerListRequests>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAdminRequestsControllerListRequests<TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError = void>(
- params?: AdminRequestsControllerListRequestsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useAdminRequestsControllerListRequests<
+  TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+  TError = void,
+>(
+  params?: AdminRequestsControllerListRequestsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary List all service requests (Admin)
  */
 
-export function useAdminRequestsControllerListRequests<TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError = void>(
- params?: AdminRequestsControllerListRequestsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerListRequests>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useAdminRequestsControllerListRequests<
+  TData = Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+  TError = void,
+>(
+  params?: AdminRequestsControllerListRequestsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerListRequests>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getAdminRequestsControllerListRequestsQueryOptions(params, options);
 
-  const queryOptions = getAdminRequestsControllerListRequestsQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * Retrieves the complete service request details including the current organizational profile, active team members, and past projects.
  * @summary Get request details with organization profile (Admin)
  */
 export const adminRequestsControllerGetRequestDetail = (
-    id: string,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<AdminRequestsControllerGetRequestDetail200>(
+    { url: `/api/admin-api/requests/${id}`, method: "GET", signal },
+    options,
+  );
+};
 
+export const getAdminRequestsControllerGetRequestDetailQueryKey = (id: string) => {
+  return [`/api/admin-api/requests/${id}`] as const;
+};
 
-      return api<AdminRequestsControllerGetRequestDetail200>(
-      {url: `http://localhost:8000/api/admin-api/requests/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getAdminRequestsControllerGetRequestDetailQueryKey = (id: string,) => {
-    return [
-    `http://localhost:8000/api/admin-api/requests/${id}`
-    ] as const;
-    }
-
-
-export const getAdminRequestsControllerGetRequestDetailQueryOptions = <TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError = void>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getAdminRequestsControllerGetRequestDetailQueryOptions = <
+  TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getAdminRequestsControllerGetRequestDetailQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getAdminRequestsControllerGetRequestDetailQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>
+  > = ({ signal }) => adminRequestsControllerGetRequestDetail(id, requestOptions, signal);
 
+  return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type AdminRequestsControllerGetRequestDetailQueryResult = NonNullable<
+  Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>
+>;
+export type AdminRequestsControllerGetRequestDetailQueryError = void;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>> = ({ signal }) => adminRequestsControllerGetRequestDetail(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AdminRequestsControllerGetRequestDetailQueryResult = NonNullable<Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>>
-export type AdminRequestsControllerGetRequestDetailQueryError = void
-
-
-export function useAdminRequestsControllerGetRequestDetail<TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError = void>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError, TData>> & Pick<
+export function useAdminRequestsControllerGetRequestDetail<
+  TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+  TError = void,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
           TError,
           Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAdminRequestsControllerGetRequestDetail<TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError = void>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useAdminRequestsControllerGetRequestDetail<
+  TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
           TError,
           Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAdminRequestsControllerGetRequestDetail<TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError = void>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useAdminRequestsControllerGetRequestDetail<
+  TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get request details with organization profile (Admin)
  */
 
-export function useAdminRequestsControllerGetRequestDetail<TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError = void>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useAdminRequestsControllerGetRequestDetail<
+  TData = Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminRequestsControllerGetRequestDetail>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getAdminRequestsControllerGetRequestDetailQueryOptions(id, options);
 
-  const queryOptions = getAdminRequestsControllerGetRequestDetailQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * Submit an accept or decline decision. Accepting triggers invoice generation, declining triggers a decline notification email.
  * @summary Submit review decision for a service request (Admin)
  */
 export const adminRequestsControllerReviewRequest = (
-    id: string,
-    reviewRequestDto: ReviewRequestDto,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  reviewRequestDto: ReviewRequestDto,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return api<AdminRequestsControllerReviewRequest200>(
-      {url: `http://localhost:8000/api/admin-api/requests/${id}/review`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: reviewRequestDto, signal
+  return api<AdminRequestsControllerReviewRequest200>(
+    {
+      url: `/api/admin-api/requests/${id}/review`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: reviewRequestDto,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getAdminRequestsControllerReviewRequestMutationOptions = <
+  TError = void,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>,
+    TError,
+    { id: string; data: ReviewRequestDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>,
+  TError,
+  { id: string; data: ReviewRequestDto },
+  TContext
+> => {
+  const mutationKey = ["adminRequestsControllerReviewRequest"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>,
+    { id: string; data: ReviewRequestDto }
+  > = (props) => {
+    const { id, data } = props ?? {};
 
-export const getAdminRequestsControllerReviewRequestMutationOptions = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>, TError,{id: string;data: ReviewRequestDto}, TContext>, request?: SecondParameter<typeof api>}
-): UseMutationOptions<Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>, TError,{id: string;data: ReviewRequestDto}, TContext> => {
+    return adminRequestsControllerReviewRequest(id, data, requestOptions);
+  };
 
-const mutationKey = ['adminRequestsControllerReviewRequest'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  return { mutationFn, ...mutationOptions };
+};
 
+export type AdminRequestsControllerReviewRequestMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>
+>;
+export type AdminRequestsControllerReviewRequestMutationBody = ReviewRequestDto;
+export type AdminRequestsControllerReviewRequestMutationError = void;
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>, {id: string;data: ReviewRequestDto}> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  adminRequestsControllerReviewRequest(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AdminRequestsControllerReviewRequestMutationResult = NonNullable<Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>>
-    export type AdminRequestsControllerReviewRequestMutationBody = ReviewRequestDto
-    export type AdminRequestsControllerReviewRequestMutationError = void
-
-    /**
+/**
  * @summary Submit review decision for a service request (Admin)
  */
-export const useAdminRequestsControllerReviewRequest = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>, TError,{id: string;data: ReviewRequestDto}, TContext>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>,
-        TError,
-        {id: string;data: ReviewRequestDto},
-        TContext
-      > => {
-      return useMutation(getAdminRequestsControllerReviewRequestMutationOptions(options), queryClient);
-    }
-    /**
+export const useAdminRequestsControllerReviewRequest = <TError = void, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>,
+      TError,
+      { id: string; data: ReviewRequestDto },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof adminRequestsControllerReviewRequest>>,
+  TError,
+  { id: string; data: ReviewRequestDto },
+  TContext
+> => {
+  return useMutation(getAdminRequestsControllerReviewRequestMutationOptions(options), queryClient);
+};
+/**
  * Triggers the PDF rendering via Puppeteer, uploads the file to storage, and sends the notification email containing the payment simulation link.
  * @summary Generate invoice PDF and notify user (Admin)
  */
 export const adminRequestsControllerGenerateInvoice = (
-    id: string,
-    params: AdminRequestsControllerGenerateInvoiceParams,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  params: AdminRequestsControllerGenerateInvoiceParams,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<AdminRequestsControllerGenerateInvoice200>(
+    { url: `/api/admin-api/requests/${id}/invoice`, method: "POST", params, signal },
+    options,
+  );
+};
 
+export const getAdminRequestsControllerGenerateInvoiceMutationOptions = <
+  TError = void,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>,
+    TError,
+    { id: string; params: AdminRequestsControllerGenerateInvoiceParams },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>,
+  TError,
+  { id: string; params: AdminRequestsControllerGenerateInvoiceParams },
+  TContext
+> => {
+  const mutationKey = ["adminRequestsControllerGenerateInvoice"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-      return api<AdminRequestsControllerGenerateInvoice200>(
-      {url: `http://localhost:8000/api/admin-api/requests/${id}/invoice`, method: 'POST',
-        params, signal
-    },
-      options);
-    }
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>,
+    { id: string; params: AdminRequestsControllerGenerateInvoiceParams }
+  > = (props) => {
+    const { id, params } = props ?? {};
 
+    return adminRequestsControllerGenerateInvoice(id, params, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getAdminRequestsControllerGenerateInvoiceMutationOptions = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>, TError,{id: string;params: AdminRequestsControllerGenerateInvoiceParams}, TContext>, request?: SecondParameter<typeof api>}
-): UseMutationOptions<Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>, TError,{id: string;params: AdminRequestsControllerGenerateInvoiceParams}, TContext> => {
+export type AdminRequestsControllerGenerateInvoiceMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>
+>;
 
-const mutationKey = ['adminRequestsControllerGenerateInvoice'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type AdminRequestsControllerGenerateInvoiceMutationError = void;
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>, {id: string;params: AdminRequestsControllerGenerateInvoiceParams}> = (props) => {
-          const {id,params} = props ?? {};
-
-          return  adminRequestsControllerGenerateInvoice(id,params,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AdminRequestsControllerGenerateInvoiceMutationResult = NonNullable<Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>>
-
-    export type AdminRequestsControllerGenerateInvoiceMutationError = void
-
-    /**
+/**
  * @summary Generate invoice PDF and notify user (Admin)
  */
-export const useAdminRequestsControllerGenerateInvoice = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>, TError,{id: string;params: AdminRequestsControllerGenerateInvoiceParams}, TContext>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>,
-        TError,
-        {id: string;params: AdminRequestsControllerGenerateInvoiceParams},
-        TContext
-      > => {
-      return useMutation(getAdminRequestsControllerGenerateInvoiceMutationOptions(options), queryClient);
-    }
+export const useAdminRequestsControllerGenerateInvoice = <TError = void, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>,
+      TError,
+      { id: string; params: AdminRequestsControllerGenerateInvoiceParams },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof adminRequestsControllerGenerateInvoice>>,
+  TError,
+  { id: string; params: AdminRequestsControllerGenerateInvoiceParams },
+  TContext
+> => {
+  return useMutation(
+    getAdminRequestsControllerGenerateInvoiceMutationOptions(options),
+    queryClient,
+  );
+};
