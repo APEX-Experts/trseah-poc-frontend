@@ -8,16 +8,16 @@
 /**
  * Current status of the payment
  */
-export type PaymentStatusResultDtoStatus = typeof PaymentStatusResultDtoStatus[keyof typeof PaymentStatusResultDtoStatus];
-
+export type PaymentStatusResultDtoStatus =
+  (typeof PaymentStatusResultDtoStatus)[keyof typeof PaymentStatusResultDtoStatus];
 
 export const PaymentStatusResultDtoStatus = {
-  pending: 'pending',
-  processing: 'processing',
-  succeeded: 'succeeded',
-  failed: 'failed',
-  cancelled: 'cancelled',
-  refunded: 'refunded',
-  skipped: 'skipped',
-  processed: 'processed',
+  pending: "pending",
+  processing: "processing",
+  succeeded: "succeeded",
+  failed: "failed",
+  cancelled: "cancelled",
+  refunded: "refunded",
+  skipped: "skipped",
+  processed: "processed",
 } as const;

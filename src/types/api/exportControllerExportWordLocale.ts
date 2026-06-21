@@ -5,10 +5,10 @@
  * OpenAPI spec version: 1.0
  */
 
-export type ExportControllerExportWordLocale = typeof ExportControllerExportWordLocale[keyof typeof ExportControllerExportWordLocale];
-
+export type ExportControllerExportWordLocale =
+  (typeof ExportControllerExportWordLocale)[keyof typeof ExportControllerExportWordLocale];
 
 export const ExportControllerExportWordLocale = {
-  ar: 'ar',
-  en: 'en',
+  ar: "ar",
+  en: "en",
 } as const;

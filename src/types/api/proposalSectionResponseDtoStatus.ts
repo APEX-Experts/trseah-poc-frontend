@@ -5,12 +5,12 @@
  * OpenAPI spec version: 1.0
  */
 
-export type ProposalSectionResponseDtoStatus = typeof ProposalSectionResponseDtoStatus[keyof typeof ProposalSectionResponseDtoStatus];
-
+export type ProposalSectionResponseDtoStatus =
+  (typeof ProposalSectionResponseDtoStatus)[keyof typeof ProposalSectionResponseDtoStatus];
 
 export const ProposalSectionResponseDtoStatus = {
-  empty: 'empty',
-  generating: 'generating',
-  completed: 'completed',
-  failed: 'failed',
+  empty: "empty",
+  generating: "generating",
+  completed: "completed",
+  failed: "failed",
 } as const;

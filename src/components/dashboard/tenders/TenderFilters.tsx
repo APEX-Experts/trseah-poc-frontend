@@ -1,7 +1,10 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { TendersControllerListTendersStatus } from "@/types/api";
+import {
+  TendersControllerListTendersStatus,
+  TendersControllerListTendersSortBy,
+} from "@/types/api";
 import { Search } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
@@ -21,6 +24,8 @@ interface TenderFiltersProps {
   setMinBudget: (val: number | undefined) => void;
   maxBudget: number | undefined;
   setMaxBudget: (val: number | undefined) => void;
+  sortBy: TendersControllerListTendersSortBy | undefined;
+  setSortBy: (val: TendersControllerListTendersSortBy | undefined) => void;
   onFilterChange: () => void;
 }
 
@@ -39,6 +44,8 @@ export default function TenderFilters({
   setMinBudget,
   maxBudget,
   setMaxBudget,
+  sortBy,
+  setSortBy,
   onFilterChange,
 }: TenderFiltersProps) {
   const t = useTranslations("TendersList");
@@ -108,6 +115,9 @@ export default function TenderFilters({
       setLocalMinBudget("");
       setLocalMaxBudget("");
     }
+    if (key === "sortBy") {
+      setSortBy(undefined);
+    }
     setActiveDropdown(null);
     onFilterChange();
   };
@@ -119,6 +129,49 @@ export default function TenderFilters({
     { value: "awarded", labelEn: "Awarded", labelAr: "تمت الترسية" },
     { value: "canceled", labelEn: "Canceled", labelAr: "ملغاة" },
   ];
+
+  const sortByOptions = [
+    {
+      value: "publishDate:desc",
+      labelEn: "Publish Date: Newest First",
+      labelAr: "تاريخ الطرح: الأحدث أولاً",
+    },
+    {
+      value: "publishDate:asc",
+      labelEn: "Publish Date: Oldest First",
+      labelAr: "تاريخ الطرح: الأقدم أولاً",
+    },
+    {
+      value: "submissionDeadline:asc",
+      labelEn: "Deadline: Nearest First",
+      labelAr: "آخر موعد: الأقرب أولاً",
+    },
+    {
+      value: "submissionDeadline:desc",
+      labelEn: "Deadline: Furthest First",
+      labelAr: "آخر موعد: الأبعد أولاً",
+    },
+    {
+      value: "estimatedBudget:desc",
+      labelEn: "Budget: High to Low",
+      labelAr: "الميزانية: من الأعلى للأقل",
+    },
+    {
+      value: "estimatedBudget:asc",
+      labelEn: "Budget: Low to High",
+      labelAr: "الميزانية: من الأقل للأعلى",
+    },
+    {
+      value: "createdAt:desc",
+      labelEn: "Created Date: Newest First",
+      labelAr: "تاريخ الإضافة: الأحدث أولاً",
+    },
+    {
+      value: "createdAt:asc",
+      labelEn: "Created Date: Oldest First",
+      labelAr: "تاريخ الإضافة: الأقدم أولاً",
+    },
+  ] as const;
 
   const getFilterButtonLabel = (key: string) => {
     switch (key) {
@@ -145,6 +198,12 @@ export default function TenderFilters({
           return `${t("filters.budget")}: <= ${maxBudget?.toLocaleString()}`;
         }
         return t("filters.budget");
+      case "sortBy":
+        if (sortBy) {
+          const opt = sortByOptions.find((o) => o.value === sortBy);
+          return `${t("filters.sortBy")}: ${locale === "ar" ? opt?.labelAr : opt?.labelEn}`;
+        }
+        return t("filters.sortBy");
       default:
         return "";
     }
@@ -157,7 +216,8 @@ export default function TenderFilters({
     type !== undefined ||
     status !== undefined ||
     minBudget !== undefined ||
-    maxBudget !== undefined;
+    maxBudget !== undefined ||
+    sortBy !== undefined;
 
   const handleClearAll = () => {
     setSearchQuery("");
@@ -172,6 +232,7 @@ export default function TenderFilters({
     setMaxBudget(undefined);
     setLocalMinBudget("");
     setLocalMaxBudget("");
+    setSortBy(undefined);
     onFilterChange();
   };
 
@@ -194,14 +255,15 @@ export default function TenderFilters({
 
       {/* Filter Row - Positioned Under Search Input */}
       <div className="flex flex-wrap items-center gap-2">
-        {["region", "sector", "type", "status", "budget"].map((filterKey) => {
+        {["region", "sector", "type", "status", "budget", "sortBy"].map((filterKey) => {
           const isActive = activeDropdown === filterKey;
           const hasValue =
             (filterKey === "sector" && sector !== undefined) ||
             (filterKey === "region" && region !== undefined) ||
             (filterKey === "type" && type !== undefined) ||
             (filterKey === "status" && status !== undefined) ||
-            (filterKey === "budget" && (minBudget !== undefined || maxBudget !== undefined));
+            (filterKey === "budget" && (minBudget !== undefined || maxBudget !== undefined)) ||
+            (filterKey === "sortBy" && sortBy !== undefined);
 
           return (
             <div key={filterKey} className="relative">
@@ -256,7 +318,7 @@ export default function TenderFilters({
               {isActive && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setActiveDropdown(null)} />
-                  <div className="absolute z-50 mt-2 min-w-[260px] bg-white rounded-xl border border-neutral-200 shadow-xl p-4 animate-in fade-in slide-in-from-top-1 duration-200 end-0">
+                  <div className="absolute z-50 mt-2 min-w-[260px] bg-white rounded-xl border border-neutral-200 shadow-xl p-4 animate-in fade-in slide-in-from-top-1 duration-200 inset-e-0">
                     {/* Text Inputs for Region, Sector, Type */}
                     {(filterKey === "region" || filterKey === "sector" || filterKey === "type") && (
                       <div className="space-y-3">
@@ -312,6 +374,50 @@ export default function TenderFilters({
                               key={opt.value}
                               onClick={() => {
                                 setStatus(opt.value as TendersControllerListTendersStatus);
+                                setActiveDropdown(null);
+                                onFilterChange();
+                              }}
+                              className={`w-full text-start px-3 py-2 text-sm hover:bg-neutral-50 rounded-lg flex items-center justify-between transition-colors ${
+                                isSelected
+                                  ? "text-primary-800 bg-primary-50/50 font-semibold"
+                                  : "text-neutral-700"
+                              }`}
+                            >
+                              <span>{locale === "ar" ? opt.labelAr : opt.labelEn}</span>
+                              {isSelected && (
+                                <svg
+                                  className="w-4 h-4 text-primary-600"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2.5"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Dropdown list for Sort By */}
+                    {filterKey === "sortBy" && (
+                      <div className="space-y-1">
+                        <label className="block text-xs font-semibold text-neutral-500 uppercase tracking-wider px-2 pb-2">
+                          {t("filters.sortBy")}
+                        </label>
+                        {sortByOptions.map((opt) => {
+                          const isSelected = sortBy === opt.value;
+                          return (
+                            <button
+                              key={opt.value}
+                              onClick={() => {
+                                setSortBy(opt.value as TendersControllerListTendersSortBy);
                                 setActiveDropdown(null);
                                 onFilterChange();
                               }}

@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { MessageResponseDto } from './messageResponseDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { MessageResponseDto } from "./messageResponseDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type AuthControllerLogout200 = SuccessResponseDto & {
   statusCode: number;

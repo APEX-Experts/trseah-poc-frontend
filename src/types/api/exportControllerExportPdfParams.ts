@@ -4,11 +4,11 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ExportControllerExportPdfLocale } from './exportControllerExportPdfLocale';
+import type { ExportControllerExportPdfLocale } from "./exportControllerExportPdfLocale";
 
 export type ExportControllerExportPdfParams = {
-/**
- * The locale for the exported document (defaults to ar)
- */
-locale?: ExportControllerExportPdfLocale;
+  /**
+   * The locale for the exported document (defaults to ar)
+   */
+  locale?: ExportControllerExportPdfLocale;
 };

@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { PaymentStatusResultDto } from './paymentStatusResultDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { PaymentStatusResultDto } from "./paymentStatusResultDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type PaymentsControllerGetPaymentStatus200 = SuccessResponseDto & {
   statusCode: number;

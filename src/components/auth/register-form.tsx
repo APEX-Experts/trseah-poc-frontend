@@ -3,7 +3,8 @@
 import { GenericForm } from "@/components/landing/layout/generic-form";
 import { useAuthControllerRegister } from "@/hooks/use-auth";
 import { useRouter } from "@/i18n/navigation";
-import { getErrorMessage } from "@/lib/api-utils";
+import { ApiErrorResponseDto } from "@/types/api";
+import { AxiosError } from "axios";
 import { useTranslations } from "next-intl";
 import * as z from "zod";
 import { AuthFormTemplate } from "./auth-form-template";
@@ -15,7 +16,12 @@ export interface RegisterFormProps {
 export function RegisterForm({ onTabChange }: RegisterFormProps) {
   const t = useTranslations("Register");
   const router = useRouter();
-  const { mutateAsync: register, isPending, error, data, reset } = useAuthControllerRegister();
+  const {
+    mutateAsync: register,
+    isPending,
+    isError,
+    reset,
+  } = useAuthControllerRegister<AxiosError<ApiErrorResponseDto>>();
   const rootT = useTranslations();
   const registerSchema = z.object({
     email: z.email(rootT("validation.invalidEmail")),
@@ -23,7 +29,7 @@ export function RegisterForm({ onTabChange }: RegisterFormProps) {
     firstName: z.string().min(1, rootT("validation.firstNameRequired")),
     lastName: z.string().min(1, rootT("validation.lastNameRequired")),
   });
-  const errorMessage = getErrorMessage(error, data);
+  const errorMessage = isError ? t("error") : undefined;
 
   const handleSubmit = async (values: {
     email: string;

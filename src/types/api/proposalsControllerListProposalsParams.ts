@@ -6,14 +6,14 @@
  */
 
 export type ProposalsControllerListProposalsParams = {
-/**
- * The page number to retrieve
- * @minimum 1
- */
-page?: number;
-/**
- * The number of items to retrieve per page
- * @minimum 1
- */
-limit?: number;
+  /**
+   * The page number to retrieve
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * The number of items to retrieve per page
+   * @minimum 1
+   */
+  limit?: number;
 };

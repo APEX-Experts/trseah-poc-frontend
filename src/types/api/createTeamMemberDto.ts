@@ -9,28 +9,28 @@ export interface CreateTeamMemberDto {
   /** The PDF CV file to upload for the team member */
   file?: Blob;
   /**
-     * The Arabic name of the team member
-     * @maxLength 255
-     */
+   * The Arabic name of the team member
+   * @maxLength 255
+   */
   nameAr: string;
   /**
-     * The English name of the team member
-     * @maxLength 255
-     */
+   * The English name of the team member
+   * @maxLength 255
+   */
   nameEn?: string;
   /**
-     * The Arabic role/title of the team member
-     * @maxLength 255
-     */
+   * The Arabic role/title of the team member
+   * @maxLength 255
+   */
   roleAr?: string;
   /**
-     * The English role/title of the team member
-     * @maxLength 255
-     */
+   * The English role/title of the team member
+   * @maxLength 255
+   */
   roleEn?: string;
   /**
-     * Years of experience of the team member
-     * @minimum 0
-     */
+   * Years of experience of the team member
+   * @minimum 0
+   */
   yearsOfExperience?: number;
 }

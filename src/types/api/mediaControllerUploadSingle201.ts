@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { FileResponseDto } from './fileResponseDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { FileResponseDto } from "./fileResponseDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type MediaControllerUploadSingle201 = SuccessResponseDto & {
   statusCode: number;

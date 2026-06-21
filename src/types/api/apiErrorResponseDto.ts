@@ -4,7 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ApiErrorResponseDtoStatusCode } from './apiErrorResponseDtoStatusCode';
+import type { ApiErrorResponseDtoStatusCode } from "./apiErrorResponseDtoStatusCode";
 
 export interface ApiErrorResponseDto {
   /** The HTTP status code */

@@ -13,20 +13,20 @@ export interface FileResponseDto {
   /** File MIME type */
   mimetype: string;
   /**
-     * Entity tag of the stored resource
-     * @nullable
-     */
+   * Entity tag of the stored resource
+   * @nullable
+   */
   etag?: string | null;
   /**
-     * Last modification date of the resource
-     * @nullable
-     */
+   * Last modification date of the resource
+   * @nullable
+   */
   lastModified?: string | null;
   /** Public URL to access the file */
   url: string;
   /**
-     * Public URL to access the thumbnail (if generated)
-     * @nullable
-     */
+   * Public URL to access the thumbnail (if generated)
+   * @nullable
+   */
   thumbnailUrl?: string | null;
 }

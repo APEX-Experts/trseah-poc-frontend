@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { PaginatedTendersResponseDtoMeta } from './paginatedTendersResponseDtoMeta';
-import type { TenderResponseDto } from './tenderResponseDto';
+import type { PaginatedTendersResponseDtoMeta } from "./paginatedTendersResponseDtoMeta";
+import type { TenderResponseDto } from "./tenderResponseDto";
 
 export interface PaginatedTendersResponseDto {
   data: TenderResponseDto[];

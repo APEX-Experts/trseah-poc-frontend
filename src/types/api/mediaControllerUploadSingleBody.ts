@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { MediaControllerUploadSingleBodyFolder } from './mediaControllerUploadSingleBodyFolder';
-import type { MediaControllerUploadSingleBodyVisibility } from './mediaControllerUploadSingleBodyVisibility';
+import type { MediaControllerUploadSingleBodyFolder } from "./mediaControllerUploadSingleBodyFolder";
+import type { MediaControllerUploadSingleBodyVisibility } from "./mediaControllerUploadSingleBodyVisibility";
 
 export type MediaControllerUploadSingleBody = {
   file: Blob;

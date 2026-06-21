@@ -5,11 +5,11 @@
  * OpenAPI spec version: 1.0
  */
 
-export type ProvidersResponseDtoProvidersItem = typeof ProvidersResponseDtoProvidersItem[keyof typeof ProvidersResponseDtoProvidersItem];
-
+export type ProvidersResponseDtoProvidersItem =
+  (typeof ProvidersResponseDtoProvidersItem)[keyof typeof ProvidersResponseDtoProvidersItem];
 
 export const ProvidersResponseDtoProvidersItem = {
-  stripe: 'stripe',
-  paymob: 'paymob',
-  mock: 'mock',
+  stripe: "stripe",
+  paymob: "paymob",
+  mock: "mock",
 } as const;

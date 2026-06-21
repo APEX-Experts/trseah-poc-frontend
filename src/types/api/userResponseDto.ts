@@ -4,7 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { UserResponseDtoLocale } from './userResponseDtoLocale';
+import type { UserResponseDtoLocale } from "./userResponseDtoLocale";
 
 export interface UserResponseDto {
   /** The unique identifier of the user */
@@ -12,14 +12,14 @@ export interface UserResponseDto {
   /** The email address of the user */
   email: string;
   /**
-     * The first name of the user
-     * @nullable
-     */
+   * The first name of the user
+   * @nullable
+   */
   firstName?: string | null;
   /**
-     * The last name of the user
-     * @nullable
-     */
+   * The last name of the user
+   * @nullable
+   */
   lastName?: string | null;
   /** Whether the user email is verified */
   isVerified: boolean;

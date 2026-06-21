@@ -5,10 +5,10 @@
  * OpenAPI spec version: 1.0
  */
 
-export type ExportControllerExportPdfLocale = typeof ExportControllerExportPdfLocale[keyof typeof ExportControllerExportPdfLocale];
-
+export type ExportControllerExportPdfLocale =
+  (typeof ExportControllerExportPdfLocale)[keyof typeof ExportControllerExportPdfLocale];
 
 export const ExportControllerExportPdfLocale = {
-  ar: 'ar',
-  en: 'en',
+  ar: "ar",
+  en: "en",
 } as const;

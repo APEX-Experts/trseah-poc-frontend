@@ -5,16 +5,16 @@
  * OpenAPI spec version: 1.0
  */
 
-export type ServiceRequestResponseDtoStatus = typeof ServiceRequestResponseDtoStatus[keyof typeof ServiceRequestResponseDtoStatus];
-
+export type ServiceRequestResponseDtoStatus =
+  (typeof ServiceRequestResponseDtoStatus)[keyof typeof ServiceRequestResponseDtoStatus];
 
 export const ServiceRequestResponseDtoStatus = {
-  pending: 'pending',
-  under_review: 'under_review',
-  declined: 'declined',
-  approved: 'approved',
-  invoiced: 'invoiced',
-  paid: 'paid',
-  in_progress: 'in_progress',
-  delivered: 'delivered',
+  pending: "pending",
+  under_review: "under_review",
+  declined: "declined",
+  approved: "approved",
+  invoiced: "invoiced",
+  paid: "paid",
+  in_progress: "in_progress",
+  delivered: "delivered",
 } as const;

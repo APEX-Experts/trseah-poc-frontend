@@ -4,7 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { SuccessResponseDtoData } from './successResponseDtoData';
+import type { SuccessResponseDtoData } from "./successResponseDtoData";
 
 export interface SuccessResponseDto {
   /** The HTTP status code */

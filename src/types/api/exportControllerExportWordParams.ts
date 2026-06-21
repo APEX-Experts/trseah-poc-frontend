@@ -4,11 +4,11 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ExportControllerExportWordLocale } from './exportControllerExportWordLocale';
+import type { ExportControllerExportWordLocale } from "./exportControllerExportWordLocale";
 
 export type ExportControllerExportWordParams = {
-/**
- * The locale for the exported document (defaults to ar)
- */
-locale?: ExportControllerExportWordLocale;
+  /**
+   * The locale for the exported document (defaults to ar)
+   */
+  locale?: ExportControllerExportWordLocale;
 };

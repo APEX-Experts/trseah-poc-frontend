@@ -8,10 +8,9 @@
 /**
  * The preferred language of the user
  */
-export type UpdateUserDtoLocale = typeof UpdateUserDtoLocale[keyof typeof UpdateUserDtoLocale];
-
+export type UpdateUserDtoLocale = (typeof UpdateUserDtoLocale)[keyof typeof UpdateUserDtoLocale];
 
 export const UpdateUserDtoLocale = {
-  en: 'en',
-  ar: 'ar',
+  en: "en",
+  ar: "ar",
 } as const;

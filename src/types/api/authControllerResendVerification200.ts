@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { RegisterResponseDto } from './registerResponseDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { RegisterResponseDto } from "./registerResponseDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type AuthControllerResendVerification200 = SuccessResponseDto & {
   statusCode: number;

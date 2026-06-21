@@ -5,16 +5,16 @@
  * OpenAPI spec version: 1.0
  */
 
-export type AdminRequestsControllerListRequestsStatus = typeof AdminRequestsControllerListRequestsStatus[keyof typeof AdminRequestsControllerListRequestsStatus];
-
+export type AdminRequestsControllerListRequestsStatus =
+  (typeof AdminRequestsControllerListRequestsStatus)[keyof typeof AdminRequestsControllerListRequestsStatus];
 
 export const AdminRequestsControllerListRequestsStatus = {
-  pending: 'pending',
-  under_review: 'under_review',
-  declined: 'declined',
-  approved: 'approved',
-  invoiced: 'invoiced',
-  paid: 'paid',
-  in_progress: 'in_progress',
-  delivered: 'delivered',
+  pending: "pending",
+  under_review: "under_review",
+  declined: "declined",
+  approved: "approved",
+  invoiced: "invoiced",
+  paid: "paid",
+  in_progress: "in_progress",
+  delivered: "delivered",
 } as const;

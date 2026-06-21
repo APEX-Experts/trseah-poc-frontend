@@ -8,10 +8,10 @@
 /**
  * File visibility
  */
-export type MediaControllerUploadSingleBodyVisibility = typeof MediaControllerUploadSingleBodyVisibility[keyof typeof MediaControllerUploadSingleBodyVisibility];
-
+export type MediaControllerUploadSingleBodyVisibility =
+  (typeof MediaControllerUploadSingleBodyVisibility)[keyof typeof MediaControllerUploadSingleBodyVisibility];
 
 export const MediaControllerUploadSingleBodyVisibility = {
-  public: 'public',
-  private: 'private',
+  public: "public",
+  private: "private",
 } as const;

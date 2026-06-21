@@ -8,11 +8,11 @@
 /**
  * Status of the refund
  */
-export type RefundResultDtoStatus = typeof RefundResultDtoStatus[keyof typeof RefundResultDtoStatus];
-
+export type RefundResultDtoStatus =
+  (typeof RefundResultDtoStatus)[keyof typeof RefundResultDtoStatus];
 
 export const RefundResultDtoStatus = {
-  succeeded: 'succeeded',
-  pending: 'pending',
-  failed: 'failed',
+  succeeded: "succeeded",
+  pending: "pending",
+  failed: "failed",
 } as const;

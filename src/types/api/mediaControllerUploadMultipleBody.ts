@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { MediaControllerUploadMultipleBodyFolder } from './mediaControllerUploadMultipleBodyFolder';
-import type { MediaControllerUploadMultipleBodyVisibility } from './mediaControllerUploadMultipleBodyVisibility';
+import type { MediaControllerUploadMultipleBodyFolder } from "./mediaControllerUploadMultipleBodyFolder";
+import type { MediaControllerUploadMultipleBodyVisibility } from "./mediaControllerUploadMultipleBodyVisibility";
 
 export type MediaControllerUploadMultipleBody = {
   files: Blob[];

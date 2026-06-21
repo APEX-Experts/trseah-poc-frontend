@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { PaginatedRequestsResponseDto } from './paginatedRequestsResponseDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { PaginatedRequestsResponseDto } from "./paginatedRequestsResponseDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type AdminRequestsControllerListRequests200 = SuccessResponseDto & {
   statusCode: number;

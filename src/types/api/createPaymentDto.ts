@@ -4,7 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { CreatePaymentDtoMetadata } from './createPaymentDtoMetadata';
+import type { CreatePaymentDtoMetadata } from "./createPaymentDtoMetadata";
 
 export interface CreatePaymentDto {
   /** Amount in the smallest currency unit (e.g., 1000 = $10.00 USD). */

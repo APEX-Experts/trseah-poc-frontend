@@ -4,7 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { RefundResultDtoStatus } from './refundResultDtoStatus';
+import type { RefundResultDtoStatus } from "./refundResultDtoStatus";
 
 export interface RefundResultDto {
   /** The provider-assigned refund ID */

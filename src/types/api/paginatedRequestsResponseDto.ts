@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { PaginationMetaDto } from './paginationMetaDto';
-import type { ServiceRequestResponseDto } from './serviceRequestResponseDto';
+import type { PaginationMetaDto } from "./paginationMetaDto";
+import type { ServiceRequestResponseDto } from "./serviceRequestResponseDto";
 
 export interface PaginatedRequestsResponseDto {
   /** The list of service requests */

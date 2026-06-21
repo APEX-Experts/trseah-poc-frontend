@@ -4,7 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { CreateServiceRequestDtoRfpSourceType } from './createServiceRequestDtoRfpSourceType';
+import type { CreateServiceRequestDtoRfpSourceType } from "./createServiceRequestDtoRfpSourceType";
 
 export interface CreateServiceRequestDto {
   /** The RFP PDF document file to upload */

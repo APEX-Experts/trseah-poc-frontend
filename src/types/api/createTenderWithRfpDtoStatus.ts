@@ -8,13 +8,13 @@
 /**
  * Status of the tender
  */
-export type CreateTenderWithRfpDtoStatus = typeof CreateTenderWithRfpDtoStatus[keyof typeof CreateTenderWithRfpDtoStatus];
-
+export type CreateTenderWithRfpDtoStatus =
+  (typeof CreateTenderWithRfpDtoStatus)[keyof typeof CreateTenderWithRfpDtoStatus];
 
 export const CreateTenderWithRfpDtoStatus = {
-  open: 'open',
-  closed: 'closed',
-  under_review: 'under_review',
-  awarded: 'awarded',
-  canceled: 'canceled',
+  open: "open",
+  closed: "closed",
+  under_review: "under_review",
+  awarded: "awarded",
+  canceled: "canceled",
 } as const;

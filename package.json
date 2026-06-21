@@ -14,7 +14,7 @@
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:rebuild": "docker compose down -v && docker compose build && docker compose up -d",
-    "generate:orval": "orval"
+    "generate:orval": "orval && prettier --write ./src/lib/api ./src/types/api"
   },
   "dependencies": {
     "@faker-js/faker": "^10.4.0",

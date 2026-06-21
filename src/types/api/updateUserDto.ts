@@ -4,15 +4,15 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { UpdateUserDtoLocale } from './updateUserDtoLocale';
+import type { UpdateUserDtoLocale } from "./updateUserDtoLocale";
 
 export interface UpdateUserDto {
   /** The email address of the user */
   email?: string;
   /**
-     * The password of the user (min 6 characters)
-     * @minLength 6
-     */
+   * The password of the user (min 6 characters)
+   * @minLength 6
+   */
   password?: string;
   /** The first name of the user */
   firstName?: string;

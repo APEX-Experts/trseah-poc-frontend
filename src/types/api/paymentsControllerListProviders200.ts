@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ProvidersResponseDto } from './providersResponseDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { ProvidersResponseDto } from "./providersResponseDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type PaymentsControllerListProviders200 = SuccessResponseDto & {
   statusCode: number;

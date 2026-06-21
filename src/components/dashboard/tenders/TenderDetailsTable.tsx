@@ -1,6 +1,7 @@
 "use client";
 
 import { TenderResponseDto } from "@/types/api";
+import { Download } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 interface TenderDetailsTableProps {
@@ -58,6 +59,9 @@ export default function TenderDetailsTable({ tender }: TenderDetailsTableProps) 
     return val ? t("yes") : t("no");
   };
 
+  const bookletUrl = tender.rfpFileUrl;
+  const localContentTermsUrl = tender.localContentTermsPdfUrl;
+
   // Define details table items dynamically
   const detailsItems = [
     { label: t("tenderNumber"), value: tender.tenderNumber },
@@ -91,6 +95,38 @@ export default function TenderDetailsTable({ tender }: TenderDetailsTableProps) 
     {
       label: t("suspensionPeriod"),
       value: tender.suspensionPeriod ? `${tender.suspensionPeriod} ${t("days")}` : undefined,
+    },
+    {
+      label: t("bookletFile"),
+      value: bookletUrl ? (
+        <a
+          href={bookletUrl}
+          target="_blank"
+          rel="noreferrer"
+          download
+          className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 border border-primary-200 hover:bg-primary-100/80 text-primary-800 rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer"
+        >
+          <Download className="w-3.5 h-3.5" />
+          <span>{locale === "ar" ? "تحميل كراسة الشروط" : "Download Booklet"}</span>
+        </a>
+      ) : null,
+    },
+    {
+      label: t("localContentTerms"),
+      value: localContentTermsUrl ? (
+        <a
+          href={localContentTermsUrl}
+          target="_blank"
+          rel="noreferrer"
+          download
+          className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 border border-primary-200 hover:bg-primary-100/80 text-primary-800 rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer"
+        >
+          <Download className="w-3.5 h-3.5" />
+          <span>
+            {locale === "ar" ? "تحميل شروط المحتوى المحلي" : "Download Local Content Terms"}
+          </span>
+        </a>
+      ) : null,
     },
   ].filter((item) => item.value !== undefined && item.value !== null && item.value !== "");
 

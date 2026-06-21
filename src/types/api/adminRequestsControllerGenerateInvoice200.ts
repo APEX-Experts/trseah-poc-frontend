@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ServiceRequestResponseDto } from './serviceRequestResponseDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { ServiceRequestResponseDto } from "./serviceRequestResponseDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type AdminRequestsControllerGenerateInvoice200 = SuccessResponseDto & {
   statusCode: number;

@@ -4,16 +4,16 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { RegisterDtoLocale } from './registerDtoLocale';
+import type { RegisterDtoLocale } from "./registerDtoLocale";
 
 export interface RegisterDto {
   /** The email address of the user */
   email: string;
   /**
-     * The password of the user (8-32 characters)
-     * @minLength 8
-     * @maxLength 32
-     */
+   * The password of the user (8-32 characters)
+   * @minLength 8
+   * @maxLength 32
+   */
   password: string;
   /** The first name of the user */
   firstName?: string;

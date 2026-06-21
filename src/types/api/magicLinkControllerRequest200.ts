@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { RequestMagicLinkResponseDto } from './requestMagicLinkResponseDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { RequestMagicLinkResponseDto } from "./requestMagicLinkResponseDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type MagicLinkControllerRequest200 = SuccessResponseDto & {
   statusCode: number;

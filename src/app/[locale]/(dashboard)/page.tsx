@@ -1,7 +1,10 @@
 "use client";
 
 import { useTendersControllerListTenders } from "@/lib/api/react-query/tenders/tenders";
-import { TendersControllerListTendersStatus } from "@/types/api";
+import {
+  TendersControllerListTendersStatus,
+  TendersControllerListTendersSortBy,
+} from "@/types/api";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import TenderCard from "@/components/dashboard/tenders/TenderCard";
@@ -21,6 +24,7 @@ export default function TendersListPage() {
   const [status, setStatus] = useState<TendersControllerListTendersStatus | undefined>(undefined);
   const [minBudget, setMinBudget] = useState<number | undefined>(undefined);
   const [maxBudget, setMaxBudget] = useState<number | undefined>(undefined);
+  const [sortBy, setSortBy] = useState<TendersControllerListTendersSortBy | undefined>(undefined);
 
   // Debounce search query changes to avoid flooding the API
   useEffect(() => {
@@ -44,6 +48,7 @@ export default function TendersListPage() {
     status,
     minBudget,
     maxBudget,
+    sortBy,
   });
 
   const tenders = response?.data || [];
@@ -56,7 +61,7 @@ export default function TendersListPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="pt-12 pb-24 px-6 md:px-12 relative">
+      <div className="pt-0 pb-24 px-6 md:px-12 relative">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <h1 className="h2 ">{t("title")}</h1>
@@ -86,6 +91,8 @@ export default function TendersListPage() {
           setMinBudget={setMinBudget}
           maxBudget={maxBudget}
           setMaxBudget={setMaxBudget}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
           onFilterChange={handleFilterChange}
         />
 

@@ -8,10 +8,10 @@
 /**
  * The preferred language of the user
  */
-export type UserResponseDtoLocale = typeof UserResponseDtoLocale[keyof typeof UserResponseDtoLocale];
-
+export type UserResponseDtoLocale =
+  (typeof UserResponseDtoLocale)[keyof typeof UserResponseDtoLocale];
 
 export const UserResponseDtoLocale = {
-  en: 'en',
-  ar: 'ar',
+  en: "en",
+  ar: "ar",
 } as const;
