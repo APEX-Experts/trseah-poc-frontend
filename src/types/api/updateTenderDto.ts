@@ -4,11 +4,11 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { UpdateTenderDtoAwardResults } from './updateTenderDtoAwardResults';
-import type { UpdateTenderDtoClassifications } from './updateTenderDtoClassifications';
-import type { UpdateTenderDtoLocalContentMechanisms } from './updateTenderDtoLocalContentMechanisms';
-import type { UpdateTenderDtoMetadata } from './updateTenderDtoMetadata';
-import type { UpdateTenderDtoStatus } from './updateTenderDtoStatus';
+import type { UpdateTenderDtoAwardResults } from "./updateTenderDtoAwardResults";
+import type { UpdateTenderDtoClassifications } from "./updateTenderDtoClassifications";
+import type { UpdateTenderDtoLocalContentMechanisms } from "./updateTenderDtoLocalContentMechanisms";
+import type { UpdateTenderDtoMetadata } from "./updateTenderDtoMetadata";
+import type { UpdateTenderDtoStatus } from "./updateTenderDtoStatus";
 
 export interface UpdateTenderDto {
   /** External ID of the tender */
@@ -25,12 +25,18 @@ export interface UpdateTenderDto {
   entityNameAr?: string;
   /** English entity name */
   entityNameEn?: string;
-  /** Sector of the tender */
-  sector?: string;
-  /** Region of the tender */
-  region?: string;
-  /** Tender type */
-  tenderType?: string;
+  /** Arabic sector of the tender */
+  sectorAr?: string;
+  /** English sector of the tender */
+  sectorEn?: string;
+  /** Arabic region of the tender */
+  regionAr?: string;
+  /** English region of the tender */
+  regionEn?: string;
+  /** Arabic tender type */
+  tenderTypeAr?: string;
+  /** English tender type */
+  tenderTypeEn?: string;
   /** Status of the tender */
   status?: UpdateTenderDtoStatus;
   /** Estimated budget */

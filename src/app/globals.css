@@ -161,10 +161,10 @@
   --input: #043d3626;
   --ring: var(--accent-300);
 
-  --chart-1: var(--primary-500);
+  --chart-1: var(--primary-800);
   --chart-1-foreground: var(--primary-50);
-  --chart-2: var(--primary-50);
-  --chart-2-foreground: var(--primary-500);
+  --chart-2: var(--primary-100);
+  --chart-2-foreground: var(--primary-800);
   --chart-3: var(--primary-300);
   --chart-3-foreground: var(--neutral-600);
   --chart-4: var(--primary-400);

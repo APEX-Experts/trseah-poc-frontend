@@ -35,7 +35,7 @@ import { api } from "../../../apiClient";
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 /**
- * Returns a paginated list of tenders, filterable by sector, region, type, status, budget, deadline, and keyword.
+ * Returns a paginated list of tenders, filterable by sector, region, type, status, budget, deadline, and keyword, and sortable by publishDate, submissionDeadline, estimatedBudget, and createdAt.
  * @summary List tenders
  */
 export const tendersControllerListTenders = (
@@ -324,14 +324,23 @@ export const adminTendersControllerCreateTender = (
   if (createTenderWithRfpDto.entityNameEn !== undefined) {
     formData.append(`entityNameEn`, createTenderWithRfpDto.entityNameEn);
   }
-  if (createTenderWithRfpDto.sector !== undefined) {
-    formData.append(`sector`, createTenderWithRfpDto.sector);
+  if (createTenderWithRfpDto.sectorAr !== undefined) {
+    formData.append(`sectorAr`, createTenderWithRfpDto.sectorAr);
   }
-  if (createTenderWithRfpDto.region !== undefined) {
-    formData.append(`region`, createTenderWithRfpDto.region);
+  if (createTenderWithRfpDto.sectorEn !== undefined) {
+    formData.append(`sectorEn`, createTenderWithRfpDto.sectorEn);
   }
-  if (createTenderWithRfpDto.tenderType !== undefined) {
-    formData.append(`tenderType`, createTenderWithRfpDto.tenderType);
+  if (createTenderWithRfpDto.regionAr !== undefined) {
+    formData.append(`regionAr`, createTenderWithRfpDto.regionAr);
+  }
+  if (createTenderWithRfpDto.regionEn !== undefined) {
+    formData.append(`regionEn`, createTenderWithRfpDto.regionEn);
+  }
+  if (createTenderWithRfpDto.tenderTypeAr !== undefined) {
+    formData.append(`tenderTypeAr`, createTenderWithRfpDto.tenderTypeAr);
+  }
+  if (createTenderWithRfpDto.tenderTypeEn !== undefined) {
+    formData.append(`tenderTypeEn`, createTenderWithRfpDto.tenderTypeEn);
   }
   if (createTenderWithRfpDto.status !== undefined) {
     formData.append(`status`, createTenderWithRfpDto.status);

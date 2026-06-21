@@ -27,6 +27,18 @@ export interface TenderResponseDto {
   /** @nullable */
   entityNameEn?: string | null;
   /** @nullable */
+  sectorAr?: string | null;
+  /** @nullable */
+  sectorEn?: string | null;
+  /** @nullable */
+  regionAr?: string | null;
+  /** @nullable */
+  regionEn?: string | null;
+  /** @nullable */
+  tenderTypeAr?: string | null;
+  /** @nullable */
+  tenderTypeEn?: string | null;
+  /** @nullable */
   sector?: string | null;
   /** @nullable */
   region?: string | null;

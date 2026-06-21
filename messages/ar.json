@@ -355,5 +355,42 @@
       "subtitle": "PDF, JPG, DOC أو XLSX"
     },
     "progress": "الخطوة {currentStep} من {maxSteps}"
+  },
+  "TendersList": {
+    "title": "قائمة المنافسات",
+    "subtitle": "{count} منافسة حكومية نشطة عبر مختلف الجهات",
+    "applyToTender": "التقديم على منافسة",
+    "saved": "حفظ ({count})",
+    "searchPlaceholder": "ابحث باسم منافسة أو كلمة مفتاحية",
+    "filters": {
+      "region": "المنطقة",
+      "sector": "القطاع",
+      "type": "النوع",
+      "status": "الحالة",
+      "budget": "الميزانية",
+      "date": "تاريخ الطرح",
+      "deadline": "آخر موعد",
+      "clearAll": "إعادة ضبط الفلاتر"
+    },
+    "card": {
+      "remainingDays": "متبقي {days} يوم",
+      "remainingTime": "الوقت المتبقي",
+      "aiScore": "درجة الذكاء الاصطناعي",
+      "highRecommendation": "توصية عالية",
+      "viewDetails": "عرض التفاصيل",
+      "save": "حفظ",
+      "isSaved": "تم الحفظ",
+      "projectBudget": "ميزانية المشروع",
+      "sar": "ريال",
+      "status": {
+        "open": "نشطة",
+        "closed": "مغلقة",
+        "under_review": "تحت المراجعة",
+        "awarded": "تمت الترسية",
+        "canceled": "ملغاة"
+      }
+    },
+    "noResult": "لا يوجد نتائج",
+    "loading": "جاري التحميل..."
   }
 }

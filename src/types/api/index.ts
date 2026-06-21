@@ -129,6 +129,7 @@ export * from "./tenderResponseDtoLocalContentMechanisms";
 export * from "./tenderResponseDtoMetadata";
 export * from "./tenderResponseDtoStatus";
 export * from "./tendersControllerListTendersParams";
+export * from "./tendersControllerListTendersSortBy";
 export * from "./tendersControllerListTendersStatus";
 export * from "./tendersImportDto";
 export * from "./updateOrganizationDto";

@@ -352,5 +352,42 @@
       "subtitle": "PDF, JPG, DOC or XLSX"
     },
     "progress": "Step {currentStep} of {maxSteps}"
+  },
+  "TendersList": {
+    "title": "Tenders List",
+    "subtitle": "{count} active government tenders across different entities",
+    "applyToTender": "Apply to Tender",
+    "saved": "Saved ({count})",
+    "searchPlaceholder": "Search by tender name or keyword.",
+    "filters": {
+      "region": "Region",
+      "sector": "Sector",
+      "type": "Type",
+      "status": "Status",
+      "budget": "Budget",
+      "date": "Publish Date",
+      "deadline": "Deadline",
+      "clearAll": "Clear all filters"
+    },
+    "card": {
+      "remainingDays": "{days} days remaining",
+      "remainingTime": "Time Remaining",
+      "aiScore": "AI Score",
+      "highRecommendation": "High Recommendation",
+      "viewDetails": "View Details",
+      "save": "Save",
+      "isSaved": "Saved",
+      "projectBudget": "Project Budget",
+      "sar": "SAR",
+      "status": {
+        "open": "Open",
+        "closed": "Closed",
+        "under_review": "Under Review",
+        "awarded": "Awarded",
+        "canceled": "Canceled"
+      }
+    },
+    "noResult": "No results found",
+    "loading": "Loading..."
   }
 }
