@@ -8,6 +8,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { OnboardingFooter } from "./onboarding-footer";
 import { formatBytes } from "@/lib/utils";
+import { AutoNamedDocumentType, DOCUMENT_TYPE_LABELS } from "@/constants";
 
 const DOCUMENT_TYPES = [
   "companyProfile",
@@ -48,12 +49,17 @@ export function StepDocuments() {
       return;
     }
 
+    const labels =
+      activeUploadType !== "other"
+        ? DOCUMENT_TYPE_LABELS[activeUploadType as AutoNamedDocumentType]
+        : null;
+
     const newDoc: LocalDoc = {
-      id: crypto.randomUUID(), // Generate local ID
+      id: crypto.randomUUID(),
       file,
-      nameAr: "",
-      nameEn: "",
       documentType: activeUploadType,
+      nameAr: labels?.ar ?? "",
+      nameEn: labels?.en ?? "",
     };
 
     setLocalDocs((prev) => [...prev, newDoc]);
@@ -78,8 +84,14 @@ export function StepDocuments() {
   };
 
   const handleTypeChange = (id: string, newType: string) => {
+    const labels =
+      newType !== "other" ? DOCUMENT_TYPE_LABELS[newType as AutoNamedDocumentType] : null;
     setLocalDocs((prev) =>
-      prev.map((doc) => (doc.id === id ? { ...doc, documentType: newType } : doc)),
+      prev.map((doc) =>
+        doc.id === id
+          ? { ...doc, documentType: newType, nameAr: labels?.ar ?? "", nameEn: labels?.en ?? "" }
+          : doc,
+      ),
     );
   };
 

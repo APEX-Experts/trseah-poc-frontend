@@ -4,11 +4,11 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { CreateTenderWithRfpDtoAwardResults } from './createTenderWithRfpDtoAwardResults';
-import type { CreateTenderWithRfpDtoClassifications } from './createTenderWithRfpDtoClassifications';
-import type { CreateTenderWithRfpDtoLocalContentMechanisms } from './createTenderWithRfpDtoLocalContentMechanisms';
-import type { CreateTenderWithRfpDtoMetadata } from './createTenderWithRfpDtoMetadata';
-import type { CreateTenderWithRfpDtoStatus } from './createTenderWithRfpDtoStatus';
+import type { CreateTenderWithRfpDtoAwardResults } from "./createTenderWithRfpDtoAwardResults";
+import type { CreateTenderWithRfpDtoClassifications } from "./createTenderWithRfpDtoClassifications";
+import type { CreateTenderWithRfpDtoLocalContentMechanisms } from "./createTenderWithRfpDtoLocalContentMechanisms";
+import type { CreateTenderWithRfpDtoMetadata } from "./createTenderWithRfpDtoMetadata";
+import type { CreateTenderWithRfpDtoStatus } from "./createTenderWithRfpDtoStatus";
 
 export interface CreateTenderWithRfpDto {
   /** External ID of the tender */
@@ -25,12 +25,18 @@ export interface CreateTenderWithRfpDto {
   entityNameAr?: string;
   /** English entity name */
   entityNameEn?: string;
-  /** Sector of the tender */
-  sector?: string;
-  /** Region of the tender */
-  region?: string;
-  /** Tender type */
-  tenderType?: string;
+  /** Arabic sector of the tender */
+  sectorAr?: string;
+  /** English sector of the tender */
+  sectorEn?: string;
+  /** Arabic region of the tender */
+  regionAr?: string;
+  /** English region of the tender */
+  regionEn?: string;
+  /** Arabic tender type */
+  tenderTypeAr?: string;
+  /** English tender type */
+  tenderTypeEn?: string;
   /** Status of the tender */
   status?: CreateTenderWithRfpDtoStatus;
   /** Estimated budget */

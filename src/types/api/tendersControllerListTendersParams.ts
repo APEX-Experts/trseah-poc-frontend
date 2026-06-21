@@ -4,53 +4,58 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { TendersControllerListTendersStatus } from './tendersControllerListTendersStatus';
+import type { TendersControllerListTendersSortBy } from "./tendersControllerListTendersSortBy";
+import type { TendersControllerListTendersStatus } from "./tendersControllerListTendersStatus";
 
 export type TendersControllerListTendersParams = {
-/**
- * The page number to retrieve
- * @minimum 1
- */
-page?: number;
-/**
- * The number of items to retrieve per page
- * @minimum 1
- */
-limit?: number;
-/**
- * Filter by sector (e.g. IT, Construction)
- */
-sector?: string;
-/**
- * Filter by region (e.g. Riyadh, Jeddah, National)
- */
-region?: string;
-/**
- * Filter by tender type (e.g. Public Tender, Limited Tender)
- */
-type?: string;
-/**
- * Filter by status
- */
-status?: TendersControllerListTendersStatus;
-/**
- * Minimum budget
- */
-minBudget?: number;
-/**
- * Maximum budget
- */
-maxBudget?: number;
-/**
- * Minimum deadline (ISO 8601 Date String)
- */
-minDeadline?: string;
-/**
- * Maximum deadline (ISO 8601 Date String)
- */
-maxDeadline?: string;
-/**
- * Keyword search in title (Ar & En)
- */
-keyword?: string;
+  /**
+   * The page number to retrieve
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * The number of items to retrieve per page
+   * @minimum 1
+   */
+  limit?: number;
+  /**
+   * Filter by sector (e.g. IT, Construction)
+   */
+  sector?: string;
+  /**
+   * Filter by region (e.g. Riyadh, Jeddah, National)
+   */
+  region?: string;
+  /**
+   * Filter by tender type (e.g. Public Tender, Limited Tender)
+   */
+  type?: string;
+  /**
+   * Filter by status
+   */
+  status?: TendersControllerListTendersStatus;
+  /**
+   * Minimum budget
+   */
+  minBudget?: number;
+  /**
+   * Maximum budget
+   */
+  maxBudget?: number;
+  /**
+   * Minimum deadline (ISO 8601 Date String)
+   */
+  minDeadline?: string;
+  /**
+   * Maximum deadline (ISO 8601 Date String)
+   */
+  maxDeadline?: string;
+  /**
+   * Keyword search in title (Ar & En)
+   */
+  keyword?: string;
+  /**
+   * Sort by field and direction
+   */
+  sortBy?: TendersControllerListTendersSortBy;
 };

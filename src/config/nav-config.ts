@@ -1,4 +1,4 @@
-import { LayoutDashboard, Settings, User, LucideIcon } from "lucide-react";
+import { LayoutDashboard, LucideIcon } from "lucide-react";
 
 export interface NavItem {
   label: string;
@@ -24,16 +24,6 @@ export const navConfig: NavConfig = {
       label: "Home",
       href: "/",
       icon: LayoutDashboard,
-    },
-    {
-      label: "Profile",
-      href: "/profile",
-      icon: User,
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-      icon: Settings,
     },
   ],
 };

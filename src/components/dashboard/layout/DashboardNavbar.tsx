@@ -11,20 +11,21 @@ import { Link } from "@/i18n/navigation";
 import { Separator } from "@/components/ui/separator";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { useAuthAndLogout } from "@/hooks/use-auth";
+import { UnwrapEnvelope } from "@/lib/apiClient";
 import { AuthControllerGetProfile200 } from "@/types/api";
 
 export function DashboardNavbar({
   initialProfileData,
   hideSidebarTrigger = false,
 }: {
-  initialProfileData: AuthControllerGetProfile200;
+  initialProfileData: UnwrapEnvelope<AuthControllerGetProfile200>;
   hideSidebarTrigger?: boolean;
 }) {
   const [searchOpen, setSearchOpen] = useState(false); // Global search state
   const { handleLogout, isPending, user } = useAuthAndLogout(initialProfileData);
 
   return (
-    <header className="sticky top-0 z-10 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+    <header className="sticky top-0 z-20 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
         {/* Brand Logo & Main Nav */}
         <div className="flex items-center gap-2">

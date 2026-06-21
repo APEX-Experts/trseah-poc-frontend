@@ -3,6 +3,7 @@ import {
   useAuthControllerGetProfile,
   useAuthControllerLogout,
 } from "@/lib/api/react-query/auth/auth";
+import { UnwrapEnvelope } from "@/lib/apiClient";
 import { AuthControllerGetProfile200 } from "@/types/api";
 
 export {
@@ -23,7 +24,9 @@ export {
 
 export const GOOGLE_AUTH_URL = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/auth/google`;
 
-export const useAuthAndLogout = (initialProfileData?: AuthControllerGetProfile200) => {
+export const useAuthAndLogout = (
+  initialProfileData?: UnwrapEnvelope<AuthControllerGetProfile200>,
+) => {
   const { data, isLoading, error } = useAuthControllerGetProfile({
     query: {
       initialData: initialProfileData,
@@ -45,7 +48,7 @@ export const useAuthAndLogout = (initialProfileData?: AuthControllerGetProfile20
   const handleLogout = () => {
     logout();
   };
-  const user = data?.data;
+  const user = data;
 
   return {
     user,
@@ -53,6 +56,6 @@ export const useAuthAndLogout = (initialProfileData?: AuthControllerGetProfile20
     error,
     handleLogout,
     isPending,
-    statusCode: data?.statusCode,
+    statusCode: error?.statusCode,
   };
 };

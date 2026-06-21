@@ -1,6 +1,7 @@
 import { Locale } from "@/i18n/routing";
 import { getAuth } from "@/lib/api/client/auth/auth";
 import { getOrganizations } from "@/lib/api/client/organizations/organizations";
+import { UnwrapEnvelope } from "@/lib/apiClient";
 import { AuthControllerGetProfile200 } from "@/types/api";
 import { isAxiosError } from "axios";
 import { cookies } from "next/headers";
@@ -18,7 +19,7 @@ export default async function getInitialData({
   locale: Locale;
   checkOrganization?: boolean;
 }) {
-  let initialProfileData: AuthControllerGetProfile200 | undefined = undefined;
+  let initialProfileData: UnwrapEnvelope<AuthControllerGetProfile200> | undefined = undefined;
   let defaultOpen = true;
   let redirectObject: RedirectObject | null = null;
 

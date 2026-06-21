@@ -14,6 +14,7 @@ import {
 import { navConfig } from "@/config/nav-config";
 import { useAuthAndLogout } from "@/hooks/use-auth";
 import { Link, usePathname } from "@/i18n/navigation";
+import { UnwrapEnvelope } from "@/lib/apiClient";
 import { cn } from "@/lib/utils";
 import { AuthControllerGetProfile200 } from "@/types/api";
 import { useLocale, useTranslations } from "next-intl";
@@ -22,7 +23,7 @@ import { ProfileDropdown } from "./ProfileDropdown";
 export function AppSidebar({
   initialProfileData,
 }: {
-  initialProfileData: AuthControllerGetProfile200;
+  initialProfileData: UnwrapEnvelope<AuthControllerGetProfile200>;
 }) {
   const t = useTranslations("AppSidebar");
   const locale = useLocale();
