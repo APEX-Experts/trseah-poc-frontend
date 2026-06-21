@@ -124,7 +124,8 @@
     "loading": "جاري التحميل...",
     "error": "خطأ: {message}",
     "notAuthorized": "غير مصرح لك بالوصول إلى هذه الصفحة.",
-    "logOut": "تسجيل خروج"
+    "logOut": "تسجيل خروج",
+    "MyRequests": "طلباتي"
   },
   "Search": {
     "placeholderShort": "بحث في المنافسات والطلبات...",
@@ -313,7 +314,8 @@
       "saveDraft": "حفظ المسودة",
       "progress": "التقدم",
       "saving": "جاري الحفظ...",
-      "upload": "رفع"
+      "upload": "رفع",
+      "submitting": "جاري الإرسال..."
     },
     "Documents": {
       "title": "الوثائق المطلوبة",
@@ -351,7 +353,10 @@
       "rejected": "مرفوض",
       "required": "مطلوب",
       "validationError": "يرجى ملء جميع الحقول",
-      "submitError": "حدث خطأ أثناء إرسال البيانات"
+      "submitError": "حدث خطأ أثناء إرسال البيانات",
+      "loading": "جاري التحميل...",
+      "created": "تم الإرسال بنجاح",
+      "submitFailed": "يرجى مراجعة البيانات وإعادة المحاولة"
     },
     "Dropzone": {
       "title": "رفع أو إسقاط الملفات هنا",
@@ -362,7 +367,7 @@
   "TendersList": {
     "title": "قائمة المنافسات",
     "subtitle": "{count} منافسة حكومية نشطة عبر مختلف الجهات",
-    "applyToTender": "التقديم على منافسة",
+    "applyToTender": "طلب إنشاء عرض فني",
     "saved": "حفظ ({count})",
     "searchPlaceholder": "ابحث باسم منافسة أو كلمة مفتاحية",
     "filters": {
@@ -400,7 +405,7 @@
   "TenderDetails": {
     "back": "العودة للمنافسات",
     "downloadRfp": "تحميل كراسة الشروط",
-    "applyToTender": "التقديم على منافسة",
+    "applyToTender": "طلب إنشاء عرض فني",
     "financialDetails": "المعلومات المالية",
     "budget": "الميزانية التقديرية",
     "documentPrice": "سعر كراسة الشروط",
@@ -451,5 +456,67 @@
     "months": "شهر",
     "bookletFile": "كراسة الشروط",
     "localContentTerms": "شروط المحتوى المحلي"
+  },
+  "ServiceRequests": {
+    "title": "طلب خدمة جديد",
+    "subtitle": "طلب إعداد عرض فني لمنافسة حكومية",
+    "myRequestsTitle": "طلباتي",
+    "myRequestsSubtitle": "متابعة حالة طلبات العروض الفنية الخاصة بك",
+    "createNew": "إنشاء طلب جديد",
+    "step1": "معلومات الطلب",
+    "step2": "اختيار وتفاصيل المنافسة",
+    "step3": "المراجعة والتأكيد",
+    "organizationDataTitle": "معلومات المنشأة",
+    "organizationDataDesc": "تحقق من معلومات ملفك التعريفي أو حدثها قبل تقديم الطلب.",
+    "selectTenderTitle": "اختيار وتفاصيل المنافسة",
+    "selectTenderDesc": "اختر منافسة مطروحة على المنصة أو ارفع ملفات منافسة خارجية.",
+    "rfpSource": "مصدر كراسة الشروط",
+    "listedTenderOption": "منافسة من المنصة",
+    "externalTenderOption": "رفع منافسة خارجية",
+    "searchTenderPlaceholder": "ابحث في المنافسات المطروحة...",
+    "externalDescriptionLabel": "وصف المنافسة",
+    "externalDescriptionPlaceholder": "اكتب تفاصيل نطاق العمل ومواصفات المنافسة الخارجية...",
+    "rfpDocumentLabel": "ملف كراسة الشروط الأساسي (PDF/DOCX)",
+    "rfpDocumentPlaceholder": "ارفع مستند كراسة الشروط الأساسي للمنافسة",
+    "additionalFilesLabel": "المستندات الإضافية (اختياري)",
+    "additionalFilesPlaceholder": "ارفع أي وثائق إضافية، مخططات، أو نماذج ملحقة...",
+    "reviewTitle": "مراجعة وإرسال الطلب",
+    "reviewDesc": "يرجى مراجعة تفاصيل طلبك بدقة قبل إرساله للمنصة.",
+    "selectedTenderSummary": "المنافسة المختارة",
+    "externalTenderSummary": "تفاصيل المنافسة الخارجية",
+    "orgSummary": "المنشأة المقدمة للطلب",
+    "noRequests": "لا توجد طلبات سابقة. اضغط على الزر أعلاه لتقديم أول طلب لك.",
+    "uploadSupplementary": "رفع المستندات الداعمة",
+    "uploadPDFDOCX": "ارفع ملفات بصيغة PDF أو DOCX.",
+    "delete": "حذف",
+    "deleteConfirm": "هل أنت متأكد من رغبتك في حذف طلب الخدمة هذا؟",
+    "id": "رقم الطلب",
+    "tender": "المنافسة / الوصف",
+    "status": "الحالة",
+    "date": "تاريخ التقديم",
+    "actions": "الإجراءات",
+    "statuses": {
+      "pending": "قيد الانتظار",
+      "under_review": "تحت المراجعة",
+      "declined": "مرفوض",
+      "approved": "مقبول",
+      "invoiced": "تمت الفوترة",
+      "paid": "مدفوع",
+      "in_progress": "قيد العمل",
+      "delivered": "تم التسليم"
+    },
+    "errors": {
+      "tenderRequired": "يرجى اختيار منافسة من المنصة.",
+      "externalRequired": "يرجى إدخال وصف للمنافسة أو رفع ملف كراسة الشروط.",
+      "submitFailed": "فشل إرسال الطلب. يرجى المحاولة مرة أخرى.",
+      "loadFailed": "فشل تحميل البيانات. يرجى إعادة المحاولة.",
+      "patchFailed": "فشل تحديث بيانات المنشأة. يرجى التحقق من الحقول.",
+      "deleteFailed": "فشل حذف طلب الخدمة. يرجى المحاولة مرة أخرى."
+    },
+    "success": {
+      "created": "تم إرسال طلب الخدمة بنجاح!",
+      "patched": "تم تحديث بيانات المنشأة بنجاح!",
+      "deleted": "تم حذف طلب الخدمة بنجاح!"
+    }
   }
 }

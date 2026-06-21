@@ -18,7 +18,7 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 export const getServiceRequests = () => {
   /**
-   * Accepts an RFP file upload (PDF only) or a tender link. If the source type is external, either description or file is required.
+   * Accepts media files upload or a tender link. If the source type is external, either description or at least one file is required.
    * @summary Submit a new service request
    */
   const requestsControllerCreateRequest = (
@@ -28,6 +28,9 @@ export const getServiceRequests = () => {
     const formData = new FormData();
     if (createServiceRequestDto.file !== undefined) {
       formData.append(`file`, createServiceRequestDto.file);
+    }
+    if (createServiceRequestDto.files !== undefined) {
+      createServiceRequestDto.files.forEach((value) => formData.append(`files`, value));
     }
     formData.append(`rfpSourceType`, createServiceRequestDto.rfpSourceType);
     if (createServiceRequestDto.tenderId !== undefined) {
@@ -84,6 +87,19 @@ export const getServiceRequests = () => {
     return api<ServiceRequestResponseDto>({ url: `/api/requests/${id}`, method: "GET" }, options);
   };
   /**
+   * Deletes a service request if it belongs to the user organization and is not paid or in progress.
+   * @summary Delete a service request
+   */
+  const requestsControllerDeleteRequest = (
+    id: string,
+    options?: SecondParameter<typeof api<ServiceRequestResponseDto>>,
+  ) => {
+    return api<ServiceRequestResponseDto>(
+      { url: `/api/requests/${id}`, method: "DELETE" },
+      options,
+    );
+  };
+  /**
    * Marks a service request as paid and triggers the proposal creation job.
    * @summary Simulate service request payment
    */
@@ -101,6 +117,7 @@ export const getServiceRequests = () => {
     requestsControllerListRequests,
     requestsControllerListAllRequests,
     requestsControllerGetRequestDetails,
+    requestsControllerDeleteRequest,
     requestsControllerPayRequest,
   };
 };
@@ -115,6 +132,9 @@ export type RequestsControllerListAllRequestsResult = NonNullable<
 >;
 export type RequestsControllerGetRequestDetailsResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerGetRequestDetails"]>>
+>;
+export type RequestsControllerDeleteRequestResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerDeleteRequest"]>>
 >;
 export type RequestsControllerPayRequestResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerPayRequest"]>>

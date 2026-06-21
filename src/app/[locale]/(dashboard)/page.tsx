@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import TenderCard from "@/components/dashboard/tenders/TenderCard";
 import TenderFilters from "@/components/dashboard/tenders/TenderFilters";
 import TenderPagination from "@/components/dashboard/tenders/TenderPagination";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function TendersListPage() {
   const t = useTranslations("TendersList");
@@ -60,62 +61,64 @@ export default function TendersListPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="pt-0 pb-24 px-6 md:px-12 relative">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <h1 className="h2 ">{t("title")}</h1>
-            {totalCount || totalCount === 0 ? (
-              <p className="text-neutral-400">{t("subtitle", { count: totalCount })}</p>
-            ) : (
-              <p className="text-neutral-400">{t("loading")}</p>
-            )}
+    <PageContainer>
+      <div className="min-h-screen bg-background">
+        <div className="pt-0 pb-24 px-6 md:px-12 relative">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-2">
+              <h1 className="h2 ">{t("title")}</h1>
+              {totalCount || totalCount === 0 ? (
+                <p className="text-neutral-400">{t("subtitle", { count: totalCount })}</p>
+              ) : (
+                <p className="text-neutral-400">{t("loading")}</p>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Main Content & Search Overlay */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 -mt-16 relative z-10 space-y-6">
-        <TenderFilters
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          sector={sector}
-          setSector={setSector}
-          region={region}
-          setRegion={setRegion}
-          type={type}
-          setType={setType}
-          status={status}
-          setStatus={setStatus}
-          minBudget={minBudget}
-          setMinBudget={setMinBudget}
-          maxBudget={maxBudget}
-          setMaxBudget={setMaxBudget}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-          onFilterChange={handleFilterChange}
-        />
+        {/* Main Content & Search Overlay */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 -mt-16 relative z-10 space-y-6">
+          <TenderFilters
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            sector={sector}
+            setSector={setSector}
+            region={region}
+            setRegion={setRegion}
+            type={type}
+            setType={setType}
+            status={status}
+            setStatus={setStatus}
+            minBudget={minBudget}
+            setMinBudget={setMinBudget}
+            maxBudget={maxBudget}
+            setMaxBudget={setMaxBudget}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            onFilterChange={handleFilterChange}
+          />
 
-        {/* Tenders List */}
-        <div className="space-y-4 pb-12">
-          {isLoading ? (
-            <div className="flex justify-center p-12">
-              <span className="text-primary-800">{t("loading")}</span>
-            </div>
-          ) : tenders && tenders.length > 0 ? (
-            tenders.map((tender) => <TenderCard key={tender.id} tender={tender} />)
-          ) : (
-            <div className="flex justify-center p-12">
-              <span className="text-primary-800">{t("noResult")}</span>
-            </div>
+          {/* Tenders List */}
+          <div className="space-y-4 pb-12">
+            {isLoading ? (
+              <div className="flex justify-center p-12">
+                <span className="text-primary-800">{t("loading")}</span>
+              </div>
+            ) : tenders && tenders.length > 0 ? (
+              tenders.map((tender) => <TenderCard key={tender.id} tender={tender} />)
+            ) : (
+              <div className="flex justify-center p-12">
+                <span className="text-primary-800">{t("noResult")}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Pagination Controls */}
+          {!isLoading && tenders.length > 0 && (
+            <TenderPagination page={page} setPage={setPage} totalPages={totalPages} />
           )}
         </div>
-
-        {/* Pagination Controls */}
-        {!isLoading && tenders.length > 0 && (
-          <TenderPagination page={page} setPage={setPage} totalPages={totalPages} />
-        )}
       </div>
-    </div>
+    </PageContainer>
   );
 }

@@ -16,6 +16,7 @@ export interface AdminRequestDetailResponseDto {
   tenderId?: string | null;
   /** @nullable */
   rfpFileUrl?: string | null;
+  mediaUrls: string[];
   rfpSourceType: string;
   /** @nullable */
   rfpExternalDescription?: string | null;

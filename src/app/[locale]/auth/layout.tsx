@@ -30,7 +30,7 @@ export default async function AuthLayout({ children }: Readonly<{ children: Reac
         <section className="hidden lg:flex lg:w-1/2 bg-primary-800 text-white p-12 xl:p-16 flex-col justify-between overflow-hidden select-none sticky max-h-screen">
           {/* Decorative ambient gradients */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(26,158,138,0.15),transparent_60%)] pointer-events-none" />
-          <div className="absolute -bottom-48 -left-48 w-96 h-96 bg-primary-700/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-48 -inset-s-48 w-96 h-96 bg-primary-700/20 rounded-full blur-3xl pointer-events-none" />
 
           {/* Logo at the top of the info panel */}
           <div className="relative z-10">

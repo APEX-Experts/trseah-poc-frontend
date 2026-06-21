@@ -1,6 +1,5 @@
 import { AppSidebar } from "@/components/dashboard/layout/AppSidebar";
 import { DashboardNavbar } from "@/components/dashboard/layout/DashboardNavbar";
-import { PageContainer } from "@/components/layout/PageContainer";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { redirect } from "@/i18n/navigation";
 import { Locale } from "@/i18n/routing";
@@ -36,9 +35,7 @@ export default async function DashboardLayout({
       <AppSidebar initialProfileData={initialProfileData} />
       <div className="flex w-full flex-col flex-1">
         <DashboardNavbar initialProfileData={initialProfileData} />
-        <main className="flex-1">
-          <PageContainer>{children}</PageContainer>
-        </main>
+        <main className="flex-1">{children}</main>
       </div>
     </SidebarProvider>
   );

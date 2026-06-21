@@ -9,6 +9,8 @@ import type { CreateServiceRequestDtoRfpSourceType } from "./createServiceReques
 export interface CreateServiceRequestDto {
   /** The RFP PDF document file to upload */
   file?: Blob;
+  /** Additional media/documents to upload */
+  files?: Blob[];
   /** Source type of RFP */
   rfpSourceType: CreateServiceRequestDtoRfpSourceType;
   /** The ID of the tender, if from platform */
