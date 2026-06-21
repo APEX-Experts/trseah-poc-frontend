@@ -30,10 +30,7 @@ export default function MagicLinkRequestPage() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = async (values: { email: string }) => {
-    const response = await requestMagicLink({ data: values });
-    if (response.statusCode === 200) {
-      setIsSuccess(true);
-    }
+    await requestMagicLink({ data: values }, { onSuccess: () => setIsSuccess(true) });
   };
 
   if (isSuccess) {

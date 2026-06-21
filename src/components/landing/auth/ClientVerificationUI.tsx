@@ -55,12 +55,16 @@ export default function ClientVerificationUI({
     }
 
     try {
-      const response = await resendVerification({ data: { email: resendEmail } });
-      if (response.statusCode === 200) {
-        toast.success(t("verification.verificationEmailSent"));
-        setIsDialogOpen(false);
-        setResendEmail("");
-      }
+      await resendVerification(
+        { data: { email: resendEmail } },
+        {
+          onSuccess: () => {
+            toast.success(t("verification.verificationEmailSent"));
+            setIsDialogOpen(false);
+            setResendEmail("");
+          },
+        },
+      );
     } catch (err) {
       console.error("Resend error:", err);
     }

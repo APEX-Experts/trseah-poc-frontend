@@ -4,10 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -20,8 +17,8 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
   AdminTendersControllerImportTenders200,
@@ -30,731 +27,952 @@ import type {
   TenderResponseDto,
   TendersControllerListTendersParams,
   TendersImportDto,
-  UpdateTenderDto
-} from '../../../../types/api';
+  UpdateTenderDto,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-
 
 /**
  * Returns a paginated list of tenders, filterable by sector, region, type, status, budget, deadline, and keyword.
  * @summary List tenders
  */
 export const tendersControllerListTenders = (
-    params?: TendersControllerListTendersParams,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  params?: TendersControllerListTendersParams,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<PaginatedTendersResponseDto>(
+    { url: `/api/tenders`, method: "GET", params, signal },
+    options,
+  );
+};
 
-
-      return api<PaginatedTendersResponseDto>(
-      {url: `http://localhost:8000/api/tenders`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getTendersControllerListTendersQueryKey = (params?: TendersControllerListTendersParams,) => {
-    return [
-    `http://localhost:8000/api/tenders`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getTendersControllerListTendersQueryOptions = <TData = Awaited<ReturnType<typeof tendersControllerListTenders>>, TError = unknown>(params?: TendersControllerListTendersParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getTendersControllerListTendersQueryKey = (
+  params?: TendersControllerListTendersParams,
 ) => {
+  return [`/api/tenders`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getTendersControllerListTendersQueryOptions = <
+  TData = Awaited<ReturnType<typeof tendersControllerListTenders>>,
+  TError = unknown,
+>(
+  params?: TendersControllerListTendersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getTendersControllerListTendersQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getTendersControllerListTendersQueryKey(params);
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof tendersControllerListTenders>>> = ({
+    signal,
+  }) => tendersControllerListTenders(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof tendersControllerListTenders>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tendersControllerListTenders>>> = ({ signal }) => tendersControllerListTenders(params, requestOptions, signal);
+export type TendersControllerListTendersQueryResult = NonNullable<
+  Awaited<ReturnType<typeof tendersControllerListTenders>>
+>;
+export type TendersControllerListTendersQueryError = unknown;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TendersControllerListTendersQueryResult = NonNullable<Awaited<ReturnType<typeof tendersControllerListTenders>>>
-export type TendersControllerListTendersQueryError = unknown
-
-
-export function useTendersControllerListTenders<TData = Awaited<ReturnType<typeof tendersControllerListTenders>>, TError = unknown>(
- params: undefined |  TendersControllerListTendersParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>> & Pick<
+export function useTendersControllerListTenders<
+  TData = Awaited<ReturnType<typeof tendersControllerListTenders>>,
+  TError = unknown,
+>(
+  params: undefined | TendersControllerListTendersParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof tendersControllerListTenders>>,
           TError,
           Awaited<ReturnType<typeof tendersControllerListTenders>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTendersControllerListTenders<TData = Awaited<ReturnType<typeof tendersControllerListTenders>>, TError = unknown>(
- params?: TendersControllerListTendersParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useTendersControllerListTenders<
+  TData = Awaited<ReturnType<typeof tendersControllerListTenders>>,
+  TError = unknown,
+>(
+  params?: TendersControllerListTendersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof tendersControllerListTenders>>,
           TError,
           Awaited<ReturnType<typeof tendersControllerListTenders>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTendersControllerListTenders<TData = Awaited<ReturnType<typeof tendersControllerListTenders>>, TError = unknown>(
- params?: TendersControllerListTendersParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useTendersControllerListTenders<
+  TData = Awaited<ReturnType<typeof tendersControllerListTenders>>,
+  TError = unknown,
+>(
+  params?: TendersControllerListTendersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary List tenders
  */
 
-export function useTendersControllerListTenders<TData = Awaited<ReturnType<typeof tendersControllerListTenders>>, TError = unknown>(
- params?: TendersControllerListTendersParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useTendersControllerListTenders<
+  TData = Awaited<ReturnType<typeof tendersControllerListTenders>>,
+  TError = unknown,
+>(
+  params?: TendersControllerListTendersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerListTenders>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getTendersControllerListTendersQueryOptions(params, options);
 
-  const queryOptions = getTendersControllerListTendersQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * Retrieves complete details of a specific tender by its UUID.
  * @summary Get tender details
  */
 export const tendersControllerGetTenderDetails = (
-    id: string,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<TenderResponseDto>({ url: `/api/tenders/${id}`, method: "GET", signal }, options);
+};
 
+export const getTendersControllerGetTenderDetailsQueryKey = (id: string) => {
+  return [`/api/tenders/${id}`] as const;
+};
 
-      return api<TenderResponseDto>(
-      {url: `http://localhost:8000/api/tenders/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getTendersControllerGetTenderDetailsQueryKey = (id: string,) => {
-    return [
-    `http://localhost:8000/api/tenders/${id}`
-    ] as const;
-    }
-
-
-export const getTendersControllerGetTenderDetailsQueryOptions = <TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>>, request?: SecondParameter<typeof api>}
+export const getTendersControllerGetTenderDetailsQueryOptions = <
+  TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getTendersControllerGetTenderDetailsQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getTendersControllerGetTenderDetailsQueryKey(id);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>> = ({
+    signal,
+  }) => tendersControllerGetTenderDetails(id, requestOptions, signal);
 
+  return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type TendersControllerGetTenderDetailsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>
+>;
+export type TendersControllerGetTenderDetailsQueryError = unknown;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>> = ({ signal }) => tendersControllerGetTenderDetails(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TendersControllerGetTenderDetailsQueryResult = NonNullable<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>>
-export type TendersControllerGetTenderDetailsQueryError = unknown
-
-
-export function useTendersControllerGetTenderDetails<TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError = unknown>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>> & Pick<
+export function useTendersControllerGetTenderDetails<
+  TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>,
           TError,
           Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTendersControllerGetTenderDetails<TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useTendersControllerGetTenderDetails<
+  TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>,
           TError,
           Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTendersControllerGetTenderDetails<TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useTendersControllerGetTenderDetails<
+  TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get tender details
  */
 
-export function useTendersControllerGetTenderDetails<TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useTendersControllerGetTenderDetails<
+  TData = Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>,
+  TError = unknown,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof tendersControllerGetTenderDetails>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getTendersControllerGetTenderDetailsQueryOptions(id, options);
 
-  const queryOptions = getTendersControllerGetTenderDetailsQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
 
 /**
  * Creates a new tender. A valid PDF RFP (كراسة شروط) file must be attached as `rfpFile`.
  * @summary Admin: Create a new tender
  */
 export const adminTendersControllerCreateTender = (
-    createTenderWithRfpDto: CreateTenderWithRfpDto,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  createTenderWithRfpDto: CreateTenderWithRfpDto,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  const formData = new FormData();
+  formData.append(`externalId`, createTenderWithRfpDto.externalId);
+  formData.append(`titleAr`, createTenderWithRfpDto.titleAr);
+  if (createTenderWithRfpDto.titleEn !== undefined) {
+    formData.append(`titleEn`, createTenderWithRfpDto.titleEn);
+  }
+  if (createTenderWithRfpDto.descriptionAr !== undefined) {
+    formData.append(`descriptionAr`, createTenderWithRfpDto.descriptionAr);
+  }
+  if (createTenderWithRfpDto.descriptionEn !== undefined) {
+    formData.append(`descriptionEn`, createTenderWithRfpDto.descriptionEn);
+  }
+  if (createTenderWithRfpDto.entityNameAr !== undefined) {
+    formData.append(`entityNameAr`, createTenderWithRfpDto.entityNameAr);
+  }
+  if (createTenderWithRfpDto.entityNameEn !== undefined) {
+    formData.append(`entityNameEn`, createTenderWithRfpDto.entityNameEn);
+  }
+  if (createTenderWithRfpDto.sector !== undefined) {
+    formData.append(`sector`, createTenderWithRfpDto.sector);
+  }
+  if (createTenderWithRfpDto.region !== undefined) {
+    formData.append(`region`, createTenderWithRfpDto.region);
+  }
+  if (createTenderWithRfpDto.tenderType !== undefined) {
+    formData.append(`tenderType`, createTenderWithRfpDto.tenderType);
+  }
+  if (createTenderWithRfpDto.status !== undefined) {
+    formData.append(`status`, createTenderWithRfpDto.status);
+  }
+  if (createTenderWithRfpDto.estimatedBudget !== undefined) {
+    formData.append(`estimatedBudget`, createTenderWithRfpDto.estimatedBudget.toString());
+  }
+  if (createTenderWithRfpDto.documentPrice !== undefined) {
+    formData.append(`documentPrice`, createTenderWithRfpDto.documentPrice.toString());
+  }
+  if (createTenderWithRfpDto.submissionDeadline !== undefined) {
+    formData.append(`submissionDeadline`, createTenderWithRfpDto.submissionDeadline);
+  }
+  if (createTenderWithRfpDto.publishDate !== undefined) {
+    formData.append(`publishDate`, createTenderWithRfpDto.publishDate);
+  }
+  if (createTenderWithRfpDto.contractDurationMonths !== undefined) {
+    formData.append(
+      `contractDurationMonths`,
+      createTenderWithRfpDto.contractDurationMonths.toString(),
+    );
+  }
+  if (createTenderWithRfpDto.targetSme !== undefined) {
+    formData.append(`targetSme`, createTenderWithRfpDto.targetSme.toString());
+  }
+  if (createTenderWithRfpDto.localContentRequired !== undefined) {
+    formData.append(`localContentRequired`, createTenderWithRfpDto.localContentRequired.toString());
+  }
+  if (createTenderWithRfpDto.metadata !== undefined) {
+    formData.append(`metadata`, JSON.stringify(createTenderWithRfpDto.metadata));
+  }
+  if (createTenderWithRfpDto.tenderNumber !== undefined) {
+    formData.append(`tenderNumber`, createTenderWithRfpDto.tenderNumber);
+  }
+  if (createTenderWithRfpDto.referenceNumber !== undefined) {
+    formData.append(`referenceNumber`, createTenderWithRfpDto.referenceNumber);
+  }
+  if (createTenderWithRfpDto.tenderPurposeAr !== undefined) {
+    formData.append(`tenderPurposeAr`, createTenderWithRfpDto.tenderPurposeAr);
+  }
+  if (createTenderWithRfpDto.tenderPurposeEn !== undefined) {
+    formData.append(`tenderPurposeEn`, createTenderWithRfpDto.tenderPurposeEn);
+  }
+  if (createTenderWithRfpDto.contractDurationAr !== undefined) {
+    formData.append(`contractDurationAr`, createTenderWithRfpDto.contractDurationAr);
+  }
+  if (createTenderWithRfpDto.contractDurationEn !== undefined) {
+    formData.append(`contractDurationEn`, createTenderWithRfpDto.contractDurationEn);
+  }
+  if (createTenderWithRfpDto.insuranceRequired !== undefined) {
+    formData.append(`insuranceRequired`, createTenderWithRfpDto.insuranceRequired.toString());
+  }
+  if (createTenderWithRfpDto.governmentEntityAr !== undefined) {
+    formData.append(`governmentEntityAr`, createTenderWithRfpDto.governmentEntityAr);
+  }
+  if (createTenderWithRfpDto.governmentEntityEn !== undefined) {
+    formData.append(`governmentEntityEn`, createTenderWithRfpDto.governmentEntityEn);
+  }
+  if (createTenderWithRfpDto.competentAuthorityAr !== undefined) {
+    formData.append(`competentAuthorityAr`, createTenderWithRfpDto.competentAuthorityAr);
+  }
+  if (createTenderWithRfpDto.competentAuthorityEn !== undefined) {
+    formData.append(`competentAuthorityEn`, createTenderWithRfpDto.competentAuthorityEn);
+  }
+  if (createTenderWithRfpDto.remainingTimeAr !== undefined) {
+    formData.append(`remainingTimeAr`, createTenderWithRfpDto.remainingTimeAr);
+  }
+  if (createTenderWithRfpDto.remainingTimeEn !== undefined) {
+    formData.append(`remainingTimeEn`, createTenderWithRfpDto.remainingTimeEn);
+  }
+  if (createTenderWithRfpDto.submissionMethodAr !== undefined) {
+    formData.append(`submissionMethodAr`, createTenderWithRfpDto.submissionMethodAr);
+  }
+  if (createTenderWithRfpDto.submissionMethodEn !== undefined) {
+    formData.append(`submissionMethodEn`, createTenderWithRfpDto.submissionMethodEn);
+  }
+  if (createTenderWithRfpDto.initialGuaranteeRequired !== undefined) {
+    formData.append(
+      `initialGuaranteeRequired`,
+      createTenderWithRfpDto.initialGuaranteeRequired.toString(),
+    );
+  }
+  if (createTenderWithRfpDto.initialGuaranteeAddressAr !== undefined) {
+    formData.append(`initialGuaranteeAddressAr`, createTenderWithRfpDto.initialGuaranteeAddressAr);
+  }
+  if (createTenderWithRfpDto.initialGuaranteeAddressEn !== undefined) {
+    formData.append(`initialGuaranteeAddressEn`, createTenderWithRfpDto.initialGuaranteeAddressEn);
+  }
+  if (createTenderWithRfpDto.finalGuarantee !== undefined) {
+    formData.append(`finalGuarantee`, createTenderWithRfpDto.finalGuarantee.toString());
+  }
+  if (createTenderWithRfpDto.inquiriesDeadline !== undefined) {
+    formData.append(`inquiriesDeadline`, createTenderWithRfpDto.inquiriesDeadline);
+  }
+  if (createTenderWithRfpDto.bidsOpeningDate !== undefined) {
+    formData.append(`bidsOpeningDate`, createTenderWithRfpDto.bidsOpeningDate);
+  }
+  if (createTenderWithRfpDto.bidsEvaluationDate !== undefined) {
+    formData.append(`bidsEvaluationDate`, createTenderWithRfpDto.bidsEvaluationDate);
+  }
+  if (createTenderWithRfpDto.suspensionPeriod !== undefined) {
+    formData.append(`suspensionPeriod`, createTenderWithRfpDto.suspensionPeriod.toString());
+  }
+  if (createTenderWithRfpDto.expectedAwardDate !== undefined) {
+    formData.append(`expectedAwardDate`, createTenderWithRfpDto.expectedAwardDate);
+  }
+  if (createTenderWithRfpDto.workStartDate !== undefined) {
+    formData.append(`workStartDate`, createTenderWithRfpDto.workStartDate);
+  }
+  if (createTenderWithRfpDto.inquiriesStartDate !== undefined) {
+    formData.append(`inquiriesStartDate`, createTenderWithRfpDto.inquiriesStartDate);
+  }
+  if (createTenderWithRfpDto.maxInquiriesResponseDuration !== undefined) {
+    formData.append(
+      `maxInquiriesResponseDuration`,
+      createTenderWithRfpDto.maxInquiriesResponseDuration.toString(),
+    );
+  }
+  if (createTenderWithRfpDto.bidsOpeningLocationAr !== undefined) {
+    formData.append(`bidsOpeningLocationAr`, createTenderWithRfpDto.bidsOpeningLocationAr);
+  }
+  if (createTenderWithRfpDto.bidsOpeningLocationEn !== undefined) {
+    formData.append(`bidsOpeningLocationEn`, createTenderWithRfpDto.bidsOpeningLocationEn);
+  }
+  if (createTenderWithRfpDto.classifications !== undefined) {
+    formData.append(`classifications`, JSON.stringify(createTenderWithRfpDto.classifications));
+  }
+  if (createTenderWithRfpDto.executionLocationAr !== undefined) {
+    formData.append(`executionLocationAr`, createTenderWithRfpDto.executionLocationAr);
+  }
+  if (createTenderWithRfpDto.executionLocationEn !== undefined) {
+    formData.append(`executionLocationEn`, createTenderWithRfpDto.executionLocationEn);
+  }
+  if (createTenderWithRfpDto.detailsAr !== undefined) {
+    formData.append(`detailsAr`, createTenderWithRfpDto.detailsAr);
+  }
+  if (createTenderWithRfpDto.detailsEn !== undefined) {
+    formData.append(`detailsEn`, createTenderWithRfpDto.detailsEn);
+  }
+  if (createTenderWithRfpDto.tenderActivityAr !== undefined) {
+    formData.append(`tenderActivityAr`, createTenderWithRfpDto.tenderActivityAr);
+  }
+  if (createTenderWithRfpDto.tenderActivityEn !== undefined) {
+    formData.append(`tenderActivityEn`, createTenderWithRfpDto.tenderActivityEn);
+  }
+  if (createTenderWithRfpDto.includesSupplyItems !== undefined) {
+    formData.append(`includesSupplyItems`, createTenderWithRfpDto.includesSupplyItems.toString());
+  }
+  if (createTenderWithRfpDto.includesConstructionWorks !== undefined) {
+    formData.append(
+      `includesConstructionWorks`,
+      createTenderWithRfpDto.includesConstructionWorks.toString(),
+    );
+  }
+  if (createTenderWithRfpDto.includesMaintenanceAndOperationWorks !== undefined) {
+    formData.append(
+      `includesMaintenanceAndOperationWorks`,
+      createTenderWithRfpDto.includesMaintenanceAndOperationWorks.toString(),
+    );
+  }
+  if (createTenderWithRfpDto.awardResults !== undefined) {
+    formData.append(`awardResults`, JSON.stringify(createTenderWithRfpDto.awardResults));
+  }
+  if (createTenderWithRfpDto.localContentMechanisms !== undefined) {
+    formData.append(
+      `localContentMechanisms`,
+      JSON.stringify(createTenderWithRfpDto.localContentMechanisms),
+    );
+  }
+  if (createTenderWithRfpDto.localContentTermsPdfUrl !== undefined) {
+    formData.append(`localContentTermsPdfUrl`, createTenderWithRfpDto.localContentTermsPdfUrl);
+  }
+  formData.append(`rfpFile`, createTenderWithRfpDto.rfpFile);
 
-      const formData = new FormData();
-formData.append(`externalId`, createTenderWithRfpDto.externalId);
-formData.append(`titleAr`, createTenderWithRfpDto.titleAr);
-if(createTenderWithRfpDto.titleEn !== undefined) {
- formData.append(`titleEn`, createTenderWithRfpDto.titleEn);
- }
-if(createTenderWithRfpDto.descriptionAr !== undefined) {
- formData.append(`descriptionAr`, createTenderWithRfpDto.descriptionAr);
- }
-if(createTenderWithRfpDto.descriptionEn !== undefined) {
- formData.append(`descriptionEn`, createTenderWithRfpDto.descriptionEn);
- }
-if(createTenderWithRfpDto.entityNameAr !== undefined) {
- formData.append(`entityNameAr`, createTenderWithRfpDto.entityNameAr);
- }
-if(createTenderWithRfpDto.entityNameEn !== undefined) {
- formData.append(`entityNameEn`, createTenderWithRfpDto.entityNameEn);
- }
-if(createTenderWithRfpDto.sector !== undefined) {
- formData.append(`sector`, createTenderWithRfpDto.sector);
- }
-if(createTenderWithRfpDto.region !== undefined) {
- formData.append(`region`, createTenderWithRfpDto.region);
- }
-if(createTenderWithRfpDto.tenderType !== undefined) {
- formData.append(`tenderType`, createTenderWithRfpDto.tenderType);
- }
-if(createTenderWithRfpDto.status !== undefined) {
- formData.append(`status`, createTenderWithRfpDto.status);
- }
-if(createTenderWithRfpDto.estimatedBudget !== undefined) {
- formData.append(`estimatedBudget`, createTenderWithRfpDto.estimatedBudget.toString())
- }
-if(createTenderWithRfpDto.documentPrice !== undefined) {
- formData.append(`documentPrice`, createTenderWithRfpDto.documentPrice.toString())
- }
-if(createTenderWithRfpDto.submissionDeadline !== undefined) {
- formData.append(`submissionDeadline`, createTenderWithRfpDto.submissionDeadline);
- }
-if(createTenderWithRfpDto.publishDate !== undefined) {
- formData.append(`publishDate`, createTenderWithRfpDto.publishDate);
- }
-if(createTenderWithRfpDto.contractDurationMonths !== undefined) {
- formData.append(`contractDurationMonths`, createTenderWithRfpDto.contractDurationMonths.toString())
- }
-if(createTenderWithRfpDto.targetSme !== undefined) {
- formData.append(`targetSme`, createTenderWithRfpDto.targetSme.toString())
- }
-if(createTenderWithRfpDto.localContentRequired !== undefined) {
- formData.append(`localContentRequired`, createTenderWithRfpDto.localContentRequired.toString())
- }
-if(createTenderWithRfpDto.metadata !== undefined) {
- formData.append(`metadata`, JSON.stringify(createTenderWithRfpDto.metadata));
- }
-if(createTenderWithRfpDto.tenderNumber !== undefined) {
- formData.append(`tenderNumber`, createTenderWithRfpDto.tenderNumber);
- }
-if(createTenderWithRfpDto.referenceNumber !== undefined) {
- formData.append(`referenceNumber`, createTenderWithRfpDto.referenceNumber);
- }
-if(createTenderWithRfpDto.tenderPurposeAr !== undefined) {
- formData.append(`tenderPurposeAr`, createTenderWithRfpDto.tenderPurposeAr);
- }
-if(createTenderWithRfpDto.tenderPurposeEn !== undefined) {
- formData.append(`tenderPurposeEn`, createTenderWithRfpDto.tenderPurposeEn);
- }
-if(createTenderWithRfpDto.contractDurationAr !== undefined) {
- formData.append(`contractDurationAr`, createTenderWithRfpDto.contractDurationAr);
- }
-if(createTenderWithRfpDto.contractDurationEn !== undefined) {
- formData.append(`contractDurationEn`, createTenderWithRfpDto.contractDurationEn);
- }
-if(createTenderWithRfpDto.insuranceRequired !== undefined) {
- formData.append(`insuranceRequired`, createTenderWithRfpDto.insuranceRequired.toString())
- }
-if(createTenderWithRfpDto.governmentEntityAr !== undefined) {
- formData.append(`governmentEntityAr`, createTenderWithRfpDto.governmentEntityAr);
- }
-if(createTenderWithRfpDto.governmentEntityEn !== undefined) {
- formData.append(`governmentEntityEn`, createTenderWithRfpDto.governmentEntityEn);
- }
-if(createTenderWithRfpDto.competentAuthorityAr !== undefined) {
- formData.append(`competentAuthorityAr`, createTenderWithRfpDto.competentAuthorityAr);
- }
-if(createTenderWithRfpDto.competentAuthorityEn !== undefined) {
- formData.append(`competentAuthorityEn`, createTenderWithRfpDto.competentAuthorityEn);
- }
-if(createTenderWithRfpDto.remainingTimeAr !== undefined) {
- formData.append(`remainingTimeAr`, createTenderWithRfpDto.remainingTimeAr);
- }
-if(createTenderWithRfpDto.remainingTimeEn !== undefined) {
- formData.append(`remainingTimeEn`, createTenderWithRfpDto.remainingTimeEn);
- }
-if(createTenderWithRfpDto.submissionMethodAr !== undefined) {
- formData.append(`submissionMethodAr`, createTenderWithRfpDto.submissionMethodAr);
- }
-if(createTenderWithRfpDto.submissionMethodEn !== undefined) {
- formData.append(`submissionMethodEn`, createTenderWithRfpDto.submissionMethodEn);
- }
-if(createTenderWithRfpDto.initialGuaranteeRequired !== undefined) {
- formData.append(`initialGuaranteeRequired`, createTenderWithRfpDto.initialGuaranteeRequired.toString())
- }
-if(createTenderWithRfpDto.initialGuaranteeAddressAr !== undefined) {
- formData.append(`initialGuaranteeAddressAr`, createTenderWithRfpDto.initialGuaranteeAddressAr);
- }
-if(createTenderWithRfpDto.initialGuaranteeAddressEn !== undefined) {
- formData.append(`initialGuaranteeAddressEn`, createTenderWithRfpDto.initialGuaranteeAddressEn);
- }
-if(createTenderWithRfpDto.finalGuarantee !== undefined) {
- formData.append(`finalGuarantee`, createTenderWithRfpDto.finalGuarantee.toString())
- }
-if(createTenderWithRfpDto.inquiriesDeadline !== undefined) {
- formData.append(`inquiriesDeadline`, createTenderWithRfpDto.inquiriesDeadline);
- }
-if(createTenderWithRfpDto.bidsOpeningDate !== undefined) {
- formData.append(`bidsOpeningDate`, createTenderWithRfpDto.bidsOpeningDate);
- }
-if(createTenderWithRfpDto.bidsEvaluationDate !== undefined) {
- formData.append(`bidsEvaluationDate`, createTenderWithRfpDto.bidsEvaluationDate);
- }
-if(createTenderWithRfpDto.suspensionPeriod !== undefined) {
- formData.append(`suspensionPeriod`, createTenderWithRfpDto.suspensionPeriod.toString())
- }
-if(createTenderWithRfpDto.expectedAwardDate !== undefined) {
- formData.append(`expectedAwardDate`, createTenderWithRfpDto.expectedAwardDate);
- }
-if(createTenderWithRfpDto.workStartDate !== undefined) {
- formData.append(`workStartDate`, createTenderWithRfpDto.workStartDate);
- }
-if(createTenderWithRfpDto.inquiriesStartDate !== undefined) {
- formData.append(`inquiriesStartDate`, createTenderWithRfpDto.inquiriesStartDate);
- }
-if(createTenderWithRfpDto.maxInquiriesResponseDuration !== undefined) {
- formData.append(`maxInquiriesResponseDuration`, createTenderWithRfpDto.maxInquiriesResponseDuration.toString())
- }
-if(createTenderWithRfpDto.bidsOpeningLocationAr !== undefined) {
- formData.append(`bidsOpeningLocationAr`, createTenderWithRfpDto.bidsOpeningLocationAr);
- }
-if(createTenderWithRfpDto.bidsOpeningLocationEn !== undefined) {
- formData.append(`bidsOpeningLocationEn`, createTenderWithRfpDto.bidsOpeningLocationEn);
- }
-if(createTenderWithRfpDto.classifications !== undefined) {
- formData.append(`classifications`, JSON.stringify(createTenderWithRfpDto.classifications));
- }
-if(createTenderWithRfpDto.executionLocationAr !== undefined) {
- formData.append(`executionLocationAr`, createTenderWithRfpDto.executionLocationAr);
- }
-if(createTenderWithRfpDto.executionLocationEn !== undefined) {
- formData.append(`executionLocationEn`, createTenderWithRfpDto.executionLocationEn);
- }
-if(createTenderWithRfpDto.detailsAr !== undefined) {
- formData.append(`detailsAr`, createTenderWithRfpDto.detailsAr);
- }
-if(createTenderWithRfpDto.detailsEn !== undefined) {
- formData.append(`detailsEn`, createTenderWithRfpDto.detailsEn);
- }
-if(createTenderWithRfpDto.tenderActivityAr !== undefined) {
- formData.append(`tenderActivityAr`, createTenderWithRfpDto.tenderActivityAr);
- }
-if(createTenderWithRfpDto.tenderActivityEn !== undefined) {
- formData.append(`tenderActivityEn`, createTenderWithRfpDto.tenderActivityEn);
- }
-if(createTenderWithRfpDto.includesSupplyItems !== undefined) {
- formData.append(`includesSupplyItems`, createTenderWithRfpDto.includesSupplyItems.toString())
- }
-if(createTenderWithRfpDto.includesConstructionWorks !== undefined) {
- formData.append(`includesConstructionWorks`, createTenderWithRfpDto.includesConstructionWorks.toString())
- }
-if(createTenderWithRfpDto.includesMaintenanceAndOperationWorks !== undefined) {
- formData.append(`includesMaintenanceAndOperationWorks`, createTenderWithRfpDto.includesMaintenanceAndOperationWorks.toString())
- }
-if(createTenderWithRfpDto.awardResults !== undefined) {
- formData.append(`awardResults`, JSON.stringify(createTenderWithRfpDto.awardResults));
- }
-if(createTenderWithRfpDto.localContentMechanisms !== undefined) {
- formData.append(`localContentMechanisms`, JSON.stringify(createTenderWithRfpDto.localContentMechanisms));
- }
-if(createTenderWithRfpDto.localContentTermsPdfUrl !== undefined) {
- formData.append(`localContentTermsPdfUrl`, createTenderWithRfpDto.localContentTermsPdfUrl);
- }
-formData.append(`rfpFile`, createTenderWithRfpDto.rfpFile);
-
-      return api<TenderResponseDto>(
-      {url: `http://localhost:8000/api/admin-api/tenders`, method: 'POST',
-      headers: {'Content-Type': 'multipart/form-data', },
-       data: formData, signal
+  return api<TenderResponseDto>(
+    {
+      url: `/api/admin-api/tenders`,
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
+      data: formData,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getAdminTendersControllerCreateTenderMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminTendersControllerCreateTender>>,
+    TError,
+    { data: CreateTenderWithRfpDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminTendersControllerCreateTender>>,
+  TError,
+  { data: CreateTenderWithRfpDto },
+  TContext
+> => {
+  const mutationKey = ["adminTendersControllerCreateTender"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminTendersControllerCreateTender>>,
+    { data: CreateTenderWithRfpDto }
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getAdminTendersControllerCreateTenderMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerCreateTender>>, TError,{data: CreateTenderWithRfpDto}, TContext>, request?: SecondParameter<typeof api>}
-): UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerCreateTender>>, TError,{data: CreateTenderWithRfpDto}, TContext> => {
+    return adminTendersControllerCreateTender(data, requestOptions);
+  };
 
-const mutationKey = ['adminTendersControllerCreateTender'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  return { mutationFn, ...mutationOptions };
+};
 
+export type AdminTendersControllerCreateTenderMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminTendersControllerCreateTender>>
+>;
+export type AdminTendersControllerCreateTenderMutationBody = CreateTenderWithRfpDto;
+export type AdminTendersControllerCreateTenderMutationError = unknown;
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof adminTendersControllerCreateTender>>, {data: CreateTenderWithRfpDto}> = (props) => {
-          const {data} = props ?? {};
-
-          return  adminTendersControllerCreateTender(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AdminTendersControllerCreateTenderMutationResult = NonNullable<Awaited<ReturnType<typeof adminTendersControllerCreateTender>>>
-    export type AdminTendersControllerCreateTenderMutationBody = CreateTenderWithRfpDto
-    export type AdminTendersControllerCreateTenderMutationError = unknown
-
-    /**
+/**
  * @summary Admin: Create a new tender
  */
-export const useAdminTendersControllerCreateTender = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerCreateTender>>, TError,{data: CreateTenderWithRfpDto}, TContext>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof adminTendersControllerCreateTender>>,
-        TError,
-        {data: CreateTenderWithRfpDto},
-        TContext
-      > => {
-      return useMutation(getAdminTendersControllerCreateTenderMutationOptions(options), queryClient);
-    }
-    /**
+export const useAdminTendersControllerCreateTender = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof adminTendersControllerCreateTender>>,
+      TError,
+      { data: CreateTenderWithRfpDto },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof adminTendersControllerCreateTender>>,
+  TError,
+  { data: CreateTenderWithRfpDto },
+  TContext
+> => {
+  return useMutation(getAdminTendersControllerCreateTenderMutationOptions(options), queryClient);
+};
+/**
  * Allows an administrator to modify details of an existing tender.
  * @summary Admin: Update an existing tender
  */
 export const adminTendersControllerUpdateTender = (
-    id: string,
-    updateTenderDto: UpdateTenderDto,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  updateTenderDto: UpdateTenderDto,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return api<TenderResponseDto>(
-      {url: `http://localhost:8000/api/admin-api/tenders/${id}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: updateTenderDto, signal
+  return api<TenderResponseDto>(
+    {
+      url: `/api/admin-api/tenders/${id}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: updateTenderDto,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getAdminTendersControllerUpdateTenderMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>,
+    TError,
+    { id: string; data: UpdateTenderDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>,
+  TError,
+  { id: string; data: UpdateTenderDto },
+  TContext
+> => {
+  const mutationKey = ["adminTendersControllerUpdateTender"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>,
+    { id: string; data: UpdateTenderDto }
+  > = (props) => {
+    const { id, data } = props ?? {};
 
-export const getAdminTendersControllerUpdateTenderMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>, TError,{id: string;data: UpdateTenderDto}, TContext>, request?: SecondParameter<typeof api>}
-): UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>, TError,{id: string;data: UpdateTenderDto}, TContext> => {
+    return adminTendersControllerUpdateTender(id, data, requestOptions);
+  };
 
-const mutationKey = ['adminTendersControllerUpdateTender'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  return { mutationFn, ...mutationOptions };
+};
 
+export type AdminTendersControllerUpdateTenderMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>
+>;
+export type AdminTendersControllerUpdateTenderMutationBody = UpdateTenderDto;
+export type AdminTendersControllerUpdateTenderMutationError = unknown;
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>, {id: string;data: UpdateTenderDto}> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  adminTendersControllerUpdateTender(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AdminTendersControllerUpdateTenderMutationResult = NonNullable<Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>>
-    export type AdminTendersControllerUpdateTenderMutationBody = UpdateTenderDto
-    export type AdminTendersControllerUpdateTenderMutationError = unknown
-
-    /**
+/**
  * @summary Admin: Update an existing tender
  */
-export const useAdminTendersControllerUpdateTender = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>, TError,{id: string;data: UpdateTenderDto}, TContext>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>,
-        TError,
-        {id: string;data: UpdateTenderDto},
-        TContext
-      > => {
-      return useMutation(getAdminTendersControllerUpdateTenderMutationOptions(options), queryClient);
-    }
-    /**
+export const useAdminTendersControllerUpdateTender = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>,
+      TError,
+      { id: string; data: UpdateTenderDto },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof adminTendersControllerUpdateTender>>,
+  TError,
+  { id: string; data: UpdateTenderDto },
+  TContext
+> => {
+  return useMutation(getAdminTendersControllerUpdateTenderMutationOptions(options), queryClient);
+};
+/**
  * Allows an administrator to soft-delete a tender from the system.
  * @summary Admin: Delete a tender
  */
 export const adminTendersControllerDeleteTender = (
-    id: string,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  return api<void>({ url: `/api/admin-api/tenders/${id}`, method: "DELETE", signal }, options);
+};
 
+export const getAdminTendersControllerDeleteTenderMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  const mutationKey = ["adminTendersControllerDeleteTender"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-      return api<void>(
-      {url: `http://localhost:8000/api/admin-api/tenders/${id}`, method: 'DELETE', signal
-    },
-      options);
-    }
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>,
+    { id: string }
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return adminTendersControllerDeleteTender(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getAdminTendersControllerDeleteTenderMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof api>}
-): UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>, TError,{id: string}, TContext> => {
+export type AdminTendersControllerDeleteTenderMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>
+>;
 
-const mutationKey = ['adminTendersControllerDeleteTender'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type AdminTendersControllerDeleteTenderMutationError = unknown;
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>, {id: string}> = (props) => {
-          const {id} = props ?? {};
-
-          return  adminTendersControllerDeleteTender(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AdminTendersControllerDeleteTenderMutationResult = NonNullable<Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>>
-
-    export type AdminTendersControllerDeleteTenderMutationError = unknown
-
-    /**
+/**
  * @summary Admin: Delete a tender
  */
-export const useAdminTendersControllerDeleteTender = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>,
-        TError,
-        {id: string},
-        TContext
-      > => {
-      return useMutation(getAdminTendersControllerDeleteTenderMutationOptions(options), queryClient);
-    }
-    /**
+export const useAdminTendersControllerDeleteTender = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>,
+      TError,
+      { id: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof adminTendersControllerDeleteTender>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  return useMutation(getAdminTendersControllerDeleteTenderMutationOptions(options), queryClient);
+};
+/**
  * Upload a JSON or CSV file containing a list of tenders to import in bulk. Existing tenders with matching external IDs will be updated.
  * @summary Admin: Bulk import tenders
  */
 export const adminTendersControllerImportTenders = (
-    tendersImportDto: TendersImportDto,
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  tendersImportDto: TendersImportDto,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
+  const formData = new FormData();
+  formData.append(`file`, tendersImportDto.file);
 
-      const formData = new FormData();
-formData.append(`file`, tendersImportDto.file);
-
-      return api<AdminTendersControllerImportTenders200>(
-      {url: `http://localhost:8000/api/admin-api/tenders/import`, method: 'POST',
-      headers: {'Content-Type': 'multipart/form-data', },
-       data: formData, signal
+  return api<AdminTendersControllerImportTenders200>(
+    {
+      url: `/api/admin-api/tenders/import`,
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
+      data: formData,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getAdminTendersControllerImportTendersMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminTendersControllerImportTenders>>,
+    TError,
+    { data: TendersImportDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminTendersControllerImportTenders>>,
+  TError,
+  { data: TendersImportDto },
+  TContext
+> => {
+  const mutationKey = ["adminTendersControllerImportTenders"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminTendersControllerImportTenders>>,
+    { data: TendersImportDto }
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getAdminTendersControllerImportTendersMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerImportTenders>>, TError,{data: TendersImportDto}, TContext>, request?: SecondParameter<typeof api>}
-): UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerImportTenders>>, TError,{data: TendersImportDto}, TContext> => {
+    return adminTendersControllerImportTenders(data, requestOptions);
+  };
 
-const mutationKey = ['adminTendersControllerImportTenders'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  return { mutationFn, ...mutationOptions };
+};
 
+export type AdminTendersControllerImportTendersMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminTendersControllerImportTenders>>
+>;
+export type AdminTendersControllerImportTendersMutationBody = TendersImportDto;
+export type AdminTendersControllerImportTendersMutationError = unknown;
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof adminTendersControllerImportTenders>>, {data: TendersImportDto}> = (props) => {
-          const {data} = props ?? {};
-
-          return  adminTendersControllerImportTenders(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AdminTendersControllerImportTendersMutationResult = NonNullable<Awaited<ReturnType<typeof adminTendersControllerImportTenders>>>
-    export type AdminTendersControllerImportTendersMutationBody = TendersImportDto
-    export type AdminTendersControllerImportTendersMutationError = unknown
-
-    /**
+/**
  * @summary Admin: Bulk import tenders
  */
-export const useAdminTendersControllerImportTenders = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminTendersControllerImportTenders>>, TError,{data: TendersImportDto}, TContext>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof adminTendersControllerImportTenders>>,
-        TError,
-        {data: TendersImportDto},
-        TContext
-      > => {
-      return useMutation(getAdminTendersControllerImportTendersMutationOptions(options), queryClient);
-    }
-    /**
+export const useAdminTendersControllerImportTenders = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof adminTendersControllerImportTenders>>,
+      TError,
+      { data: TendersImportDto },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof adminTendersControllerImportTenders>>,
+  TError,
+  { data: TendersImportDto },
+  TContext
+> => {
+  return useMutation(getAdminTendersControllerImportTendersMutationOptions(options), queryClient);
+};
+/**
  * Manually publishes 2-3 random tenders from seed data for demo purposes.
  * @summary Trigger simulated tender feed
  */
 export const adminTendersControllerTriggerSimulatedFeed = (
-
- options?: SecondParameter<typeof api>,signal?: AbortSignal
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return api<TenderResponseDto[]>(
-      {url: `http://localhost:8000/api/admin-api/tenders/simulated-feed`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return api<TenderResponseDto[]>(
+    { url: `/api/admin-api/tenders/simulated-feed`, method: "GET", signal },
+    options,
+  );
+};
 
 export const getAdminTendersControllerTriggerSimulatedFeedQueryKey = () => {
-    return [
-    `http://localhost:8000/api/admin-api/tenders/simulated-feed`
-    ] as const;
-    }
+  return [`/api/admin-api/tenders/simulated-feed`] as const;
+};
 
+export const getAdminTendersControllerTriggerSimulatedFeedQueryOptions = <
+  TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+  TError = unknown,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof api>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getAdminTendersControllerTriggerSimulatedFeedQueryOptions = <TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError, TData>>, request?: SecondParameter<typeof api>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getAdminTendersControllerTriggerSimulatedFeedQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>
+  > = ({ signal }) => adminTendersControllerTriggerSimulatedFeed(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getAdminTendersControllerTriggerSimulatedFeedQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type AdminTendersControllerTriggerSimulatedFeedQueryResult = NonNullable<
+  Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>
+>;
+export type AdminTendersControllerTriggerSimulatedFeedQueryError = unknown;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>> = ({ signal }) => adminTendersControllerTriggerSimulatedFeed(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AdminTendersControllerTriggerSimulatedFeedQueryResult = NonNullable<Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>>
-export type AdminTendersControllerTriggerSimulatedFeedQueryError = unknown
-
-
-export function useAdminTendersControllerTriggerSimulatedFeed<TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError, TData>> & Pick<
+export function useAdminTendersControllerTriggerSimulatedFeed<
+  TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
           TError,
           Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAdminTendersControllerTriggerSimulatedFeed<TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useAdminTendersControllerTriggerSimulatedFeed<
+  TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
           TError,
           Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAdminTendersControllerTriggerSimulatedFeed<TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useAdminTendersControllerTriggerSimulatedFeed<
+  TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Trigger simulated tender feed
  */
 
-export function useAdminTendersControllerTriggerSimulatedFeed<TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>, TError, TData>>, request?: SecondParameter<typeof api>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useAdminTendersControllerTriggerSimulatedFeed<
+  TData = Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminTendersControllerTriggerSimulatedFeed>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getAdminTendersControllerTriggerSimulatedFeedQueryOptions(options);
 
-  const queryOptions = getAdminTendersControllerTriggerSimulatedFeedQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-
-
-
-
-

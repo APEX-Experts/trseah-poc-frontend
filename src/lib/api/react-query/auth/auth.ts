@@ -60,7 +60,7 @@ export const authControllerLogin = (
 ) => {
   return api<AuthControllerLogin200>(
     {
-      url: `http://localhost:8000/api/auth/login`,
+      url: `/api/auth/login`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: loginDto,
@@ -141,10 +141,7 @@ export const authControllerLogout = (
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<AuthControllerLogout200>(
-    { url: `http://localhost:8000/api/auth/logout`, method: "POST", signal },
-    options,
-  );
+  return api<AuthControllerLogout200>({ url: `/api/auth/logout`, method: "POST", signal }, options);
 };
 
 export const getAuthControllerLogoutMutationOptions = <
@@ -211,14 +208,11 @@ export const authControllerGetProfile = (
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<AuthControllerGetProfile200>(
-    { url: `http://localhost:8000/api/auth/me`, method: "GET", signal },
-    options,
-  );
+  return api<AuthControllerGetProfile200>({ url: `/api/auth/me`, method: "GET", signal }, options);
 };
 
 export const getAuthControllerGetProfileQueryKey = () => {
-  return [`http://localhost:8000/api/auth/me`] as const;
+  return [`/api/auth/me`] as const;
 };
 
 export const getAuthControllerGetProfileQueryOptions = <
@@ -337,7 +331,7 @@ export const authControllerUpdateProfile = (
 ) => {
   return api<AuthControllerUpdateProfile200>(
     {
-      url: `http://localhost:8000/api/auth/me`,
+      url: `/api/auth/me`,
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       data: updateUserDto,
@@ -419,13 +413,13 @@ export const authControllerGetPermissions = (
   signal?: AbortSignal,
 ) => {
   return api<AuthControllerGetPermissions200>(
-    { url: `http://localhost:8000/api/auth/me/permissions`, method: "GET", signal },
+    { url: `/api/auth/me/permissions`, method: "GET", signal },
     options,
   );
 };
 
 export const getAuthControllerGetPermissionsQueryKey = () => {
-  return [`http://localhost:8000/api/auth/me/permissions`] as const;
+  return [`/api/auth/me/permissions`] as const;
 };
 
 export const getAuthControllerGetPermissionsQueryOptions = <
@@ -544,7 +538,7 @@ export const authControllerRegister = (
 ) => {
   return api<AuthControllerRegister201>(
     {
-      url: `http://localhost:8000/api/auth/register`,
+      url: `/api/auth/register`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: registerDto,
@@ -628,7 +622,7 @@ export const authControllerResendVerification = (
 ) => {
   return api<AuthControllerResendVerification200>(
     {
-      url: `http://localhost:8000/api/auth/resend-verification`,
+      url: `/api/auth/resend-verification`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: resendVerificationDto,
@@ -709,14 +703,11 @@ export const authControllerGoogleAuth = (
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<void>(
-    { url: `http://localhost:8000/api/auth/google`, method: "GET", signal },
-    options,
-  );
+  return api<void>({ url: `/api/auth/google`, method: "GET", signal }, options);
 };
 
 export const getAuthControllerGoogleAuthQueryKey = () => {
-  return [`http://localhost:8000/api/auth/google`] as const;
+  return [`/api/auth/google`] as const;
 };
 
 export const getAuthControllerGoogleAuthQueryOptions = <
@@ -826,14 +817,11 @@ export const authControllerGoogleAuthRedirect = (
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<unknown>(
-    { url: `http://localhost:8000/api/auth/google/callback`, method: "GET", signal },
-    options,
-  );
+  return api<unknown>({ url: `/api/auth/google/callback`, method: "GET", signal }, options);
 };
 
 export const getAuthControllerGoogleAuthRedirectQueryKey = () => {
-  return [`http://localhost:8000/api/auth/google/callback`] as const;
+  return [`/api/auth/google/callback`] as const;
 };
 
 export const getAuthControllerGoogleAuthRedirectQueryOptions = <
@@ -949,7 +937,7 @@ export const authControllerVerify = (
 ) => {
   return api<AuthControllerVerify200>(
     {
-      url: `http://localhost:8000/api/auth/verify`,
+      url: `/api/auth/verify`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: verifyMagicLinkDto,
@@ -1033,7 +1021,7 @@ export const authControllerForgotPassword = (
 ) => {
   return api<AuthControllerForgotPassword200>(
     {
-      url: `http://localhost:8000/api/auth/forgot-password`,
+      url: `/api/auth/forgot-password`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: forgotPasswordDto,
@@ -1117,7 +1105,7 @@ export const authControllerResetPassword = (
 ) => {
   return api<AuthControllerResetPassword200>(
     {
-      url: `http://localhost:8000/api/auth/reset-password`,
+      url: `/api/auth/reset-password`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: resetPasswordDto,
@@ -1201,7 +1189,7 @@ export const authControllerVerifyResetToken = (
 ) => {
   return api<AuthControllerVerifyResetToken200>(
     {
-      url: `http://localhost:8000/api/auth/verify-reset-token`,
+      url: `/api/auth/verify-reset-token`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: verifyResetTokenDto,
@@ -1285,7 +1273,7 @@ export const magicLinkControllerRequest = (
 ) => {
   return api<MagicLinkControllerRequest200>(
     {
-      url: `http://localhost:8000/api/auth/magic-link/request`,
+      url: `/api/auth/magic-link/request`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: requestMagicLinkDto,
@@ -1369,7 +1357,7 @@ export const magicLinkControllerVerify = (
 ) => {
   return api<MagicLinkControllerVerify200>(
     {
-      url: `http://localhost:8000/api/auth/magic-link/verify`,
+      url: `/api/auth/magic-link/verify`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: verifyMagicLinkDto,

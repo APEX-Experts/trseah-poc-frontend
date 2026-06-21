@@ -12,83 +12,111 @@ import type {
   PaymentsControllerRefund200,
   RefundPaymentDto,
   WebhooksControllerHandleStripeWebhook200,
-  WebhooksControllerHandleStripeWebhookBody
-} from '../../../../types/api';
+  WebhooksControllerHandleStripeWebhookBody,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-  export const getPayments = () => {
-/**
- * @summary List all registered payment providers
- */
-const paymentsControllerListProviders = (
-
- options?: SecondParameter<typeof api<PaymentsControllerListProviders200>>,) => {
-      return api<PaymentsControllerListProviders200>(
-      {url: `http://localhost:8000/api/payments/providers`, method: 'GET'
-    },
-      options);
-    }
+export const getPayments = () => {
   /**
- * @summary Create a payment intent via a specific provider
- */
-const paymentsControllerCreatePayment = (
-    provider: 'stripe' | 'paymob' | 'mock',
+   * @summary List all registered payment providers
+   */
+  const paymentsControllerListProviders = (
+    options?: SecondParameter<typeof api<PaymentsControllerListProviders200>>,
+  ) => {
+    return api<PaymentsControllerListProviders200>(
+      { url: `/api/payments/providers`, method: "GET" },
+      options,
+    );
+  };
+  /**
+   * @summary Create a payment intent via a specific provider
+   */
+  const paymentsControllerCreatePayment = (
+    provider: "stripe" | "paymob" | "mock",
     createPaymentDto: CreatePaymentDto,
- options?: SecondParameter<typeof api<PaymentsControllerCreatePayment201>>,) => {
-      return api<PaymentsControllerCreatePayment201>(
-      {url: `http://localhost:8000/api/payments/${provider}/create`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createPaymentDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<PaymentsControllerCreatePayment201>>,
+  ) => {
+    return api<PaymentsControllerCreatePayment201>(
+      {
+        url: `/api/payments/${provider}/create`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: createPaymentDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary Get payment status from a specific provider
- */
-const paymentsControllerGetPaymentStatus = (
-    provider: 'stripe' | 'paymob' | 'mock',
+   * @summary Get payment status from a specific provider
+   */
+  const paymentsControllerGetPaymentStatus = (
+    provider: "stripe" | "paymob" | "mock",
     transactionId: string,
- options?: SecondParameter<typeof api<PaymentsControllerGetPaymentStatus200>>,) => {
-      return api<PaymentsControllerGetPaymentStatus200>(
-      {url: `http://localhost:8000/api/payments/${provider}/status/${transactionId}`, method: 'GET'
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<PaymentsControllerGetPaymentStatus200>>,
+  ) => {
+    return api<PaymentsControllerGetPaymentStatus200>(
+      { url: `/api/payments/${provider}/status/${transactionId}`, method: "GET" },
+      options,
+    );
+  };
   /**
- * @summary Issue a refund via a specific provider
- */
-const paymentsControllerRefund = (
-    provider: 'stripe' | 'paymob' | 'mock',
+   * @summary Issue a refund via a specific provider
+   */
+  const paymentsControllerRefund = (
+    provider: "stripe" | "paymob" | "mock",
     refundPaymentDto: RefundPaymentDto,
- options?: SecondParameter<typeof api<PaymentsControllerRefund200>>,) => {
-      return api<PaymentsControllerRefund200>(
-      {url: `http://localhost:8000/api/payments/${provider}/refund`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: refundPaymentDto
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<PaymentsControllerRefund200>>,
+  ) => {
+    return api<PaymentsControllerRefund200>(
+      {
+        url: `/api/payments/${provider}/refund`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: refundPaymentDto,
+      },
+      options,
+    );
+  };
   /**
- * @summary Handle incoming Stripe webhooks
- */
-const webhooksControllerHandleStripeWebhook = (
+   * @summary Handle incoming Stripe webhooks
+   */
+  const webhooksControllerHandleStripeWebhook = (
     webhooksControllerHandleStripeWebhookBody: WebhooksControllerHandleStripeWebhookBody,
- options?: SecondParameter<typeof api<WebhooksControllerHandleStripeWebhook200>>,) => {
-      return api<WebhooksControllerHandleStripeWebhook200>(
-      {url: `http://localhost:8000/api/webhooks/payments/stripe`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: webhooksControllerHandleStripeWebhookBody
-    },
-      options);
-    }
-  return {paymentsControllerListProviders,paymentsControllerCreatePayment,paymentsControllerGetPaymentStatus,paymentsControllerRefund,webhooksControllerHandleStripeWebhook}};
-export type PaymentsControllerListProvidersResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getPayments>['paymentsControllerListProviders']>>>
-export type PaymentsControllerCreatePaymentResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getPayments>['paymentsControllerCreatePayment']>>>
-export type PaymentsControllerGetPaymentStatusResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getPayments>['paymentsControllerGetPaymentStatus']>>>
-export type PaymentsControllerRefundResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getPayments>['paymentsControllerRefund']>>>
-export type WebhooksControllerHandleStripeWebhookResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getPayments>['webhooksControllerHandleStripeWebhook']>>>
+    options?: SecondParameter<typeof api<WebhooksControllerHandleStripeWebhook200>>,
+  ) => {
+    return api<WebhooksControllerHandleStripeWebhook200>(
+      {
+        url: `/api/webhooks/payments/stripe`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: webhooksControllerHandleStripeWebhookBody,
+      },
+      options,
+    );
+  };
+  return {
+    paymentsControllerListProviders,
+    paymentsControllerCreatePayment,
+    paymentsControllerGetPaymentStatus,
+    paymentsControllerRefund,
+    webhooksControllerHandleStripeWebhook,
+  };
+};
+export type PaymentsControllerListProvidersResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getPayments>["paymentsControllerListProviders"]>>
+>;
+export type PaymentsControllerCreatePaymentResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getPayments>["paymentsControllerCreatePayment"]>>
+>;
+export type PaymentsControllerGetPaymentStatusResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getPayments>["paymentsControllerGetPaymentStatus"]>>
+>;
+export type PaymentsControllerRefundResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getPayments>["paymentsControllerRefund"]>>
+>;
+export type WebhooksControllerHandleStripeWebhookResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getPayments>["webhooksControllerHandleStripeWebhook"]>>
+>;

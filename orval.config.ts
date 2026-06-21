@@ -28,7 +28,6 @@ export default defineConfig({
       client: "react-query",
       httpClient: "axios",
       clean: true,
-      baseUrl: API_URL,
       override: {
         mutator: {
           path: "./src/lib/apiClient.ts",
@@ -58,7 +57,6 @@ export default defineConfig({
       schemas: "./src/types/api",
       client: "axios",
       clean: true,
-      baseUrl: API_URL,
       override: {
         mutator: {
           path: "./src/lib/apiClient.ts",

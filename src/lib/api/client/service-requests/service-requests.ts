@@ -9,94 +9,113 @@ import type {
   PaginatedRequestsResponseDto,
   RequestsControllerListAllRequestsParams,
   RequestsControllerListRequestsParams,
-  ServiceRequestResponseDto
-} from '../../../../types/api';
+  ServiceRequestResponseDto,
+} from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-  export const getServiceRequests = () => {
-/**
- * Accepts an RFP file upload (PDF only) or a tender link. If the source type is external, either description or file is required.
- * @summary Submit a new service request
- */
-const requestsControllerCreateRequest = (
+export const getServiceRequests = () => {
+  /**
+   * Accepts an RFP file upload (PDF only) or a tender link. If the source type is external, either description or file is required.
+   * @summary Submit a new service request
+   */
+  const requestsControllerCreateRequest = (
     createServiceRequestDto: CreateServiceRequestDto,
- options?: SecondParameter<typeof api<ServiceRequestResponseDto>>,) => {const formData = new FormData();
-if(createServiceRequestDto.file !== undefined) {
- formData.append(`file`, createServiceRequestDto.file);
- }
-formData.append(`rfpSourceType`, createServiceRequestDto.rfpSourceType);
-if(createServiceRequestDto.tenderId !== undefined) {
- formData.append(`tenderId`, createServiceRequestDto.tenderId);
- }
-if(createServiceRequestDto.rfpExternalDescription !== undefined) {
- formData.append(`rfpExternalDescription`, createServiceRequestDto.rfpExternalDescription);
- }
+    options?: SecondParameter<typeof api<ServiceRequestResponseDto>>,
+  ) => {
+    const formData = new FormData();
+    if (createServiceRequestDto.file !== undefined) {
+      formData.append(`file`, createServiceRequestDto.file);
+    }
+    formData.append(`rfpSourceType`, createServiceRequestDto.rfpSourceType);
+    if (createServiceRequestDto.tenderId !== undefined) {
+      formData.append(`tenderId`, createServiceRequestDto.tenderId);
+    }
+    if (createServiceRequestDto.rfpExternalDescription !== undefined) {
+      formData.append(`rfpExternalDescription`, createServiceRequestDto.rfpExternalDescription);
+    }
 
-      return api<ServiceRequestResponseDto>(
-      {url: `http://localhost:8000/api/requests`, method: 'POST',
-      headers: {'Content-Type': 'multipart/form-data', },
-       data: formData
-    },
-      options);
-    }
+    return api<ServiceRequestResponseDto>(
+      {
+        url: `/api/requests`,
+        method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
+        data: formData,
+      },
+      options,
+    );
+  };
   /**
- * Returns a paginated list of service requests for the user's organization.
- * @summary List service requests
- */
-const requestsControllerListRequests = (
+   * Returns a paginated list of service requests for the user's organization.
+   * @summary List service requests
+   */
+  const requestsControllerListRequests = (
     params?: RequestsControllerListRequestsParams,
- options?: SecondParameter<typeof api<PaginatedRequestsResponseDto>>,) => {
-      return api<PaginatedRequestsResponseDto>(
-      {url: `http://localhost:8000/api/requests`, method: 'GET',
-        params
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<PaginatedRequestsResponseDto>>,
+  ) => {
+    return api<PaginatedRequestsResponseDto>(
+      { url: `/api/requests`, method: "GET", params },
+      options,
+    );
+  };
   /**
- * Returns a paginated list of all service requests for super admins and admins.
- * @summary List all service requests
- */
-const requestsControllerListAllRequests = (
+   * Returns a paginated list of all service requests for super admins and admins.
+   * @summary List all service requests
+   */
+  const requestsControllerListAllRequests = (
     params?: RequestsControllerListAllRequestsParams,
- options?: SecondParameter<typeof api<PaginatedRequestsResponseDto>>,) => {
-      return api<PaginatedRequestsResponseDto>(
-      {url: `http://localhost:8000/api/requests/all`, method: 'GET',
-        params
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<PaginatedRequestsResponseDto>>,
+  ) => {
+    return api<PaginatedRequestsResponseDto>(
+      { url: `/api/requests/all`, method: "GET", params },
+      options,
+    );
+  };
   /**
- * Retrieves details of a specific service request, including its current status.
- * @summary Get service request details
- */
-const requestsControllerGetRequestDetails = (
+   * Retrieves details of a specific service request, including its current status.
+   * @summary Get service request details
+   */
+  const requestsControllerGetRequestDetails = (
     id: string,
- options?: SecondParameter<typeof api<ServiceRequestResponseDto>>,) => {
-      return api<ServiceRequestResponseDto>(
-      {url: `http://localhost:8000/api/requests/${id}`, method: 'GET'
-    },
-      options);
-    }
+    options?: SecondParameter<typeof api<ServiceRequestResponseDto>>,
+  ) => {
+    return api<ServiceRequestResponseDto>({ url: `/api/requests/${id}`, method: "GET" }, options);
+  };
   /**
- * Marks a service request as paid and triggers the proposal creation job.
- * @summary Simulate service request payment
- */
-const requestsControllerPayRequest = (
+   * Marks a service request as paid and triggers the proposal creation job.
+   * @summary Simulate service request payment
+   */
+  const requestsControllerPayRequest = (
     id: string,
- options?: SecondParameter<typeof api<ServiceRequestResponseDto>>,) => {
-      return api<ServiceRequestResponseDto>(
-      {url: `http://localhost:8000/api/requests/${id}/pay`, method: 'POST'
-    },
-      options);
-    }
-  return {requestsControllerCreateRequest,requestsControllerListRequests,requestsControllerListAllRequests,requestsControllerGetRequestDetails,requestsControllerPayRequest}};
-export type RequestsControllerCreateRequestResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getServiceRequests>['requestsControllerCreateRequest']>>>
-export type RequestsControllerListRequestsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getServiceRequests>['requestsControllerListRequests']>>>
-export type RequestsControllerListAllRequestsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getServiceRequests>['requestsControllerListAllRequests']>>>
-export type RequestsControllerGetRequestDetailsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getServiceRequests>['requestsControllerGetRequestDetails']>>>
-export type RequestsControllerPayRequestResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getServiceRequests>['requestsControllerPayRequest']>>>
+    options?: SecondParameter<typeof api<ServiceRequestResponseDto>>,
+  ) => {
+    return api<ServiceRequestResponseDto>(
+      { url: `/api/requests/${id}/pay`, method: "POST" },
+      options,
+    );
+  };
+  return {
+    requestsControllerCreateRequest,
+    requestsControllerListRequests,
+    requestsControllerListAllRequests,
+    requestsControllerGetRequestDetails,
+    requestsControllerPayRequest,
+  };
+};
+export type RequestsControllerCreateRequestResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerCreateRequest"]>>
+>;
+export type RequestsControllerListRequestsResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerListRequests"]>>
+>;
+export type RequestsControllerListAllRequestsResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerListAllRequests"]>>
+>;
+export type RequestsControllerGetRequestDetailsResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerGetRequestDetails"]>>
+>;
+export type RequestsControllerPayRequestResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerPayRequest"]>>
+>;

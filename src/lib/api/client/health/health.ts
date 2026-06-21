@@ -4,27 +4,23 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type {
-  HealthControllerCheck200
-} from '../../../../types/api';
+import type { HealthControllerCheck200 } from "../../../../types/api";
 
-import { api } from '../../../apiClient';
-
+import { api } from "../../../apiClient";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-  export const getHealth = () => {
-/**
- * @summary Check application health
- */
-const healthControllerCheck = (
-
- options?: SecondParameter<typeof api<HealthControllerCheck200>>,) => {
-      return api<HealthControllerCheck200>(
-      {url: `http://localhost:8000/api/health`, method: 'GET'
-    },
-      options);
-    }
-  return {healthControllerCheck}};
-export type HealthControllerCheckResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getHealth>['healthControllerCheck']>>>
+export const getHealth = () => {
+  /**
+   * @summary Check application health
+   */
+  const healthControllerCheck = (
+    options?: SecondParameter<typeof api<HealthControllerCheck200>>,
+  ) => {
+    return api<HealthControllerCheck200>({ url: `/api/health`, method: "GET" }, options);
+  };
+  return { healthControllerCheck };
+};
+export type HealthControllerCheckResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getHealth>["healthControllerCheck"]>>
+>;

@@ -48,11 +48,16 @@ export default function VerifyEmailUI({ email }: { email?: string }) {
     }
 
     try {
-      const response = await resendVerification({ data: { email: resendEmail } });
-      if (response.statusCode === 200) {
-        toast.success(t("verification.verificationEmailSent"));
-        setIsDialogOpen(false);
-      }
+      await resendVerification(
+        { data: { email: resendEmail } },
+        {
+          onSuccess: () => {
+            toast.success(t("verification.verificationEmailSent"));
+            setIsDialogOpen(false);
+            setResendEmail("");
+          },
+        },
+      );
     } catch (err) {
       // Error is now handled by the errorMessage variable and displayed in the UI
       console.error("Resend verification error:", err);
