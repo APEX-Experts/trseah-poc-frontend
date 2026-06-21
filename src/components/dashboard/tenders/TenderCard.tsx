@@ -4,6 +4,7 @@ import { TenderResponseDto } from "@/types/api";
 import { Building2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import DaysLeftProgress from "./DaysLeftProgress";
+import { Link } from "@/i18n/navigation";
 
 interface TenderCardProps {
   tender: TenderResponseDto;
@@ -156,9 +157,12 @@ export default function TenderCard({ tender }: TenderCardProps) {
 
         {/* Action Buttons */}
         <div className="w-full space-y-2">
-          <button className="w-full bg-primary-800 text-white rounded-lg py-2.5 text-sm font-medium hover:bg-primary-700 transition-colors shadow-sm">
+          <Link
+            href={`/tenders/${tender.id}`}
+            className="w-full bg-primary-800 text-white rounded-lg py-2.5 text-sm font-medium hover:bg-primary-700 transition-colors shadow-sm block text-center"
+          >
             {t("card.viewDetails")}
-          </button>
+          </Link>
         </div>
       </div>
     </div>
