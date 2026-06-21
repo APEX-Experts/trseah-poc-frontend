@@ -8,13 +8,13 @@
 /**
  * Status of the tender
  */
-export type UpdateTenderDtoStatus = typeof UpdateTenderDtoStatus[keyof typeof UpdateTenderDtoStatus];
-
+export type UpdateTenderDtoStatus =
+  (typeof UpdateTenderDtoStatus)[keyof typeof UpdateTenderDtoStatus];
 
 export const UpdateTenderDtoStatus = {
-  open: 'open',
-  closed: 'closed',
-  under_review: 'under_review',
-  awarded: 'awarded',
-  canceled: 'canceled',
+  open: "open",
+  closed: "closed",
+  under_review: "under_review",
+  awarded: "awarded",
+  canceled: "canceled",
 } as const;

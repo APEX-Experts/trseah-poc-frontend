@@ -8,10 +8,10 @@
 /**
  * Source type of RFP
  */
-export type CreateServiceRequestDtoRfpSourceType = typeof CreateServiceRequestDtoRfpSourceType[keyof typeof CreateServiceRequestDtoRfpSourceType];
-
+export type CreateServiceRequestDtoRfpSourceType =
+  (typeof CreateServiceRequestDtoRfpSourceType)[keyof typeof CreateServiceRequestDtoRfpSourceType];
 
 export const CreateServiceRequestDtoRfpSourceType = {
-  platform: 'platform',
-  external: 'external',
+  platform: "platform",
+  external: "external",
 } as const;

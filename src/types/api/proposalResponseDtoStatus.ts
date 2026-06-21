@@ -5,13 +5,13 @@
  * OpenAPI spec version: 1.0
  */
 
-export type ProposalResponseDtoStatus = typeof ProposalResponseDtoStatus[keyof typeof ProposalResponseDtoStatus];
-
+export type ProposalResponseDtoStatus =
+  (typeof ProposalResponseDtoStatus)[keyof typeof ProposalResponseDtoStatus];
 
 export const ProposalResponseDtoStatus = {
-  draft: 'draft',
-  pending_review: 'pending_review',
-  approved: 'approved',
-  submitted: 'submitted',
-  declined: 'declined',
+  draft: "draft",
+  pending_review: "pending_review",
+  approved: "approved",
+  submitted: "submitted",
+  declined: "declined",
 } as const;

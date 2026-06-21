@@ -4,7 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ReviewRequestDtoDecision } from './reviewRequestDtoDecision';
+import type { ReviewRequestDtoDecision } from "./reviewRequestDtoDecision";
 
 export interface ReviewRequestDto {
   /** Decision to accept or decline the request */
@@ -14,8 +14,8 @@ export interface ReviewRequestDto {
   /** Required when decision is decline. Must not be provided when decision is accept. */
   declineReason?: string;
   /**
-     * Optional custom amount for the invoice (in Halalas/Cents, e.g. 150000 for 1,500 SAR). Must not be provided when decision is decline.
-     * @minimum 1
-     */
+   * Optional custom amount for the invoice (in Halalas/Cents, e.g. 150000 for 1,500 SAR). Must not be provided when decision is decline.
+   * @minimum 1
+   */
   invoiceAmount?: number;
 }

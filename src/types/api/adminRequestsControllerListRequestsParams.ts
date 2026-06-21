@@ -4,21 +4,21 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { AdminRequestsControllerListRequestsStatus } from './adminRequestsControllerListRequestsStatus';
+import type { AdminRequestsControllerListRequestsStatus } from "./adminRequestsControllerListRequestsStatus";
 
 export type AdminRequestsControllerListRequestsParams = {
-/**
- * The page number to retrieve
- * @minimum 1
- */
-page?: number;
-/**
- * The number of items to retrieve per page
- * @minimum 1
- */
-limit?: number;
-/**
- * Filter requests by status
- */
-status?: AdminRequestsControllerListRequestsStatus;
+  /**
+   * The page number to retrieve
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * The number of items to retrieve per page
+   * @minimum 1
+   */
+  limit?: number;
+  /**
+   * Filter requests by status
+   */
+  status?: AdminRequestsControllerListRequestsStatus;
 };

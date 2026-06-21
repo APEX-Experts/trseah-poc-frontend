@@ -5,12 +5,12 @@
  * OpenAPI spec version: 1.0
  */
 
-export type ComplianceItemResponseDtoStatus = typeof ComplianceItemResponseDtoStatus[keyof typeof ComplianceItemResponseDtoStatus];
-
+export type ComplianceItemResponseDtoStatus =
+  (typeof ComplianceItemResponseDtoStatus)[keyof typeof ComplianceItemResponseDtoStatus];
 
 export const ComplianceItemResponseDtoStatus = {
-  pending: 'pending',
-  compliant: 'compliant',
-  non_compliant: 'non_compliant',
-  not_applicable: 'not_applicable',
+  pending: "pending",
+  compliant: "compliant",
+  non_compliant: "non_compliant",
+  not_applicable: "not_applicable",
 } as const;

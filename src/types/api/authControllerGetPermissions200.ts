@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { PermissionsResponseDto } from './permissionsResponseDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { PermissionsResponseDto } from "./permissionsResponseDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type AuthControllerGetPermissions200 = SuccessResponseDto & {
   statusCode: number;

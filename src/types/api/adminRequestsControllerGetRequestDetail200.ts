@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { AdminRequestDetailResponseDto } from './adminRequestDetailResponseDto';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { AdminRequestDetailResponseDto } from "./adminRequestDetailResponseDto";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type AdminRequestsControllerGetRequestDetail200 = SuccessResponseDto & {
   statusCode: number;

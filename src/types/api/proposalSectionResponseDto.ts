@@ -4,10 +4,10 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ProposalSectionResponseDtoContentAr } from './proposalSectionResponseDtoContentAr';
-import type { ProposalSectionResponseDtoContentEn } from './proposalSectionResponseDtoContentEn';
-import type { ProposalSectionResponseDtoStatus } from './proposalSectionResponseDtoStatus';
-import type { ProposalSectionResponseDtoTitleEn } from './proposalSectionResponseDtoTitleEn';
+import type { ProposalSectionResponseDtoContentAr } from "./proposalSectionResponseDtoContentAr";
+import type { ProposalSectionResponseDtoContentEn } from "./proposalSectionResponseDtoContentEn";
+import type { ProposalSectionResponseDtoStatus } from "./proposalSectionResponseDtoStatus";
+import type { ProposalSectionResponseDtoTitleEn } from "./proposalSectionResponseDtoTitleEn";
 
 export interface ProposalSectionResponseDto {
   id: string;

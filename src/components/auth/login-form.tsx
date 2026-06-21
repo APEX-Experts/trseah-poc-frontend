@@ -3,13 +3,14 @@
 import { GenericForm } from "@/components/landing/layout/generic-form";
 import { useAuthControllerLogin } from "@/hooks/use-auth";
 import { Link, useRouter } from "@/i18n/navigation";
-import { getErrorMessage } from "@/lib/api-utils";
 import { getAuthControllerGetProfileQueryKey } from "@/lib/api/react-query/auth/auth";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import * as z from "zod";
 import { AuthFormTemplate } from "./auth-form-template";
+import { AxiosError } from "axios";
+import { ApiErrorResponseDto } from "@/types/api";
 
 export interface LoginFormProps {
   onTabChange: (tab: "login" | "register") => void;
@@ -19,13 +20,24 @@ export function LoginForm({ onTabChange }: LoginFormProps) {
   const t = useTranslations("Login");
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { mutateAsync: login, isPending, error, data, reset } = useAuthControllerLogin();
+  const {
+    mutateAsync: login,
+    isPending,
+    error,
+    reset,
+    isError,
+  } = useAuthControllerLogin<AxiosError<ApiErrorResponseDto>>();
   const rootT = useTranslations();
   const loginSchema = z.object({
     email: z.email(rootT("validation.invalidEmail")),
     password: z.string().min(1, rootT("validation.passwordRequired")),
   });
-  const errorMessage = getErrorMessage(error, data);
+  const errorMessage =
+    isError && error?.response?.status === 401
+      ? t("error401")
+      : error?.response?.status
+        ? t("error500")
+        : undefined;
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {

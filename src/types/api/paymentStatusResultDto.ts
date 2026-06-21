@@ -4,7 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { PaymentStatusResultDtoStatus } from './paymentStatusResultDtoStatus';
+import type { PaymentStatusResultDtoStatus } from "./paymentStatusResultDtoStatus";
 
 export interface PaymentStatusResultDto {
   /** The provider-assigned transaction/payment intent ID */

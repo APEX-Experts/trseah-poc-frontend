@@ -8,8 +8,8 @@
 /**
  * The HTTP status code
  */
-export type ApiErrorResponseDtoStatusCode = typeof ApiErrorResponseDtoStatusCode[keyof typeof ApiErrorResponseDtoStatusCode];
-
+export type ApiErrorResponseDtoStatusCode =
+  (typeof ApiErrorResponseDtoStatusCode)[keyof typeof ApiErrorResponseDtoStatusCode];
 
 export const ApiErrorResponseDtoStatusCode = {
   NUMBER_400: 400,

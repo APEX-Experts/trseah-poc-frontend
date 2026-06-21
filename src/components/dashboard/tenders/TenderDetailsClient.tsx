@@ -36,7 +36,7 @@ export default function TenderDetailsClient({ id }: TenderDetailsClientProps) {
   const tender = response;
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-300">
+    <div className="space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0 animate-in fade-in duration-300">
       {/* Header card */}
       <TenderDetailsHeader tender={tender} />
 

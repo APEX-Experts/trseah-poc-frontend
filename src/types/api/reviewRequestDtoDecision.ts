@@ -8,10 +8,10 @@
 /**
  * Decision to accept or decline the request
  */
-export type ReviewRequestDtoDecision = typeof ReviewRequestDtoDecision[keyof typeof ReviewRequestDtoDecision];
-
+export type ReviewRequestDtoDecision =
+  (typeof ReviewRequestDtoDecision)[keyof typeof ReviewRequestDtoDecision];
 
 export const ReviewRequestDtoDecision = {
-  accept: 'accept',
-  decline: 'decline',
+  accept: "accept",
+  decline: "decline",
 } as const;

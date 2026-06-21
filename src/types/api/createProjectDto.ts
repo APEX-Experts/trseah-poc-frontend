@@ -7,24 +7,24 @@
 
 export interface CreateProjectDto {
   /**
-     * The Arabic title of the project
-     * @maxLength 500
-     */
+   * The Arabic title of the project
+   * @maxLength 500
+   */
   titleAr: string;
   /**
-     * The English title of the project
-     * @maxLength 500
-     */
+   * The English title of the project
+   * @maxLength 500
+   */
   titleEn?: string;
   /**
-     * The Arabic name of the client
-     * @maxLength 255
-     */
+   * The Arabic name of the client
+   * @maxLength 255
+   */
   clientNameAr?: string;
   /**
-     * The English name of the client
-     * @maxLength 255
-     */
+   * The English name of the client
+   * @maxLength 255
+   */
   clientNameEn?: string;
   /** The monetary value of the project */
   value?: string;

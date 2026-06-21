@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // Static placeholder notifications using translation keys
 const INITIAL_NOTIFICATIONS = [
@@ -40,6 +40,7 @@ export function NotificationsPopover() {
   const [data, setData] = useState(INITIAL_NOTIFICATIONS);
   const [open, setOpen] = useState(false);
 
+  const locale = useLocale();
   // This will be replaced by a react-query hook later
   const unreadCount = data.filter((n) => n.unread).length;
 
@@ -88,7 +89,7 @@ export function NotificationsPopover() {
           </div>
         </div>
         <ScrollArea className="h-[300px]">
-          <div className="grid gap-1 p-1">
+          <div className="grid gap-1 p-1" dir={locale === "ar" ? "rtl" : "ltr"}>
             {data.length > 0 ? (
               data.map((notification) => (
                 <button

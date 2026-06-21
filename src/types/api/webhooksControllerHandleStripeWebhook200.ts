@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { SuccessResponseDto } from './successResponseDto';
-import type { WebhookResponseDto } from './webhookResponseDto';
+import type { SuccessResponseDto } from "./successResponseDto";
+import type { WebhookResponseDto } from "./webhookResponseDto";
 
 export type WebhooksControllerHandleStripeWebhook200 = SuccessResponseDto & {
   statusCode: number;

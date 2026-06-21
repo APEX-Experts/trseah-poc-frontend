@@ -6,5 +6,5 @@
  */
 
 export type AdminRequestsControllerGenerateInvoiceParams = {
-force: boolean;
+  force: boolean;
 };

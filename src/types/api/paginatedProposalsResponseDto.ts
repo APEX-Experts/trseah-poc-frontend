@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { PaginationMetaDto } from './paginationMetaDto';
-import type { ProposalResponseDto } from './proposalResponseDto';
+import type { PaginationMetaDto } from "./paginationMetaDto";
+import type { ProposalResponseDto } from "./proposalResponseDto";
 
 export interface PaginatedProposalsResponseDto {
   /** The list of proposals */

@@ -4,8 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { Object } from './object';
-import type { SuccessResponseDto } from './successResponseDto';
+import type { Object } from "./object";
+import type { SuccessResponseDto } from "./successResponseDto";
 
 export type HealthControllerCheck200 = SuccessResponseDto & {
   statusCode: number;

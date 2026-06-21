@@ -8,10 +8,9 @@
 /**
  * The preferred language of the user
  */
-export type RegisterDtoLocale = typeof RegisterDtoLocale[keyof typeof RegisterDtoLocale];
-
+export type RegisterDtoLocale = (typeof RegisterDtoLocale)[keyof typeof RegisterDtoLocale];
 
 export const RegisterDtoLocale = {
-  en: 'en',
-  ar: 'ar',
+  en: "en",
+  ar: "ar",
 } as const;

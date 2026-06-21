@@ -11,18 +11,18 @@ export interface CreateDocumentDto {
   /** Optional organization logo image file (JPEG/PNG/WebP/GIF) */
   logo?: Blob;
   /**
-     * The Arabic name of the document
-     * @maxLength 255
-     */
+   * The Arabic name of the document
+   * @maxLength 255
+   */
   nameAr: string;
   /**
-     * The English name of the document
-     * @maxLength 255
-     */
+   * The English name of the document
+   * @maxLength 255
+   */
   nameEn?: string;
   /**
-     * The type or category of the document (e.g. CR, VAT, LocalContent)
-     * @maxLength 50
-     */
+   * The type or category of the document (e.g. CR, VAT, LocalContent)
+   * @maxLength 50
+   */
   documentType?: string;
 }

@@ -5,13 +5,13 @@
  * OpenAPI spec version: 1.0
  */
 
-export type TendersControllerListTendersStatus = typeof TendersControllerListTendersStatus[keyof typeof TendersControllerListTendersStatus];
-
+export type TendersControllerListTendersStatus =
+  (typeof TendersControllerListTendersStatus)[keyof typeof TendersControllerListTendersStatus];
 
 export const TendersControllerListTendersStatus = {
-  open: 'open',
-  closed: 'closed',
-  under_review: 'under_review',
-  awarded: 'awarded',
-  canceled: 'canceled',
+  open: "open",
+  closed: "closed",
+  under_review: "under_review",
+  awarded: "awarded",
+  canceled: "canceled",
 } as const;

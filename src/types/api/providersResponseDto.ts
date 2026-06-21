@@ -4,7 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ProvidersResponseDtoProvidersItem } from './providersResponseDtoProvidersItem';
+import type { ProvidersResponseDtoProvidersItem } from "./providersResponseDtoProvidersItem";
 
 export interface ProvidersResponseDto {
   /** List of registered payment provider names */

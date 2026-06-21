@@ -8,11 +8,11 @@
 /**
  * Target folder
  */
-export type MediaControllerUploadSingleBodyFolder = typeof MediaControllerUploadSingleBodyFolder[keyof typeof MediaControllerUploadSingleBodyFolder];
-
+export type MediaControllerUploadSingleBodyFolder =
+  (typeof MediaControllerUploadSingleBodyFolder)[keyof typeof MediaControllerUploadSingleBodyFolder];
 
 export const MediaControllerUploadSingleBodyFolder = {
-  users: 'users',
-  general: 'general',
-  temp: 'temp',
+  users: "users",
+  general: "general",
+  temp: "temp",
 } as const;
