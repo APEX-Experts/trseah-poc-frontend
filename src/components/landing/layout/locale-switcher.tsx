@@ -13,6 +13,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  getAuthControllerGetProfileQueryKey,
+  useAuthControllerUpdateProfile,
+} from "@/lib/api/react-query/auth/auth";
+import { UpdateUserDtoLocale } from "@/types/api";
 
 const localeNames: Record<string, string> = {
   ar: "العربية",
@@ -29,10 +35,33 @@ export function LocaleSwitcher() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const queryClient = useQueryClient();
+
+  const { mutate: updateProfile } = useAuthControllerUpdateProfile({
+    mutation: {
+      onSuccess: (data) => {
+        // Update profile in query cache immediately
+        queryClient.setQueryData([getAuthControllerGetProfileQueryKey()], data);
+        // Force invalidation to ensure sync across components
+        queryClient.invalidateQueries({ queryKey: [getAuthControllerGetProfileQueryKey()] });
+      },
+    },
+  });
 
   const switchLocale = (nextLocale: string) => {
     const queryString = searchParams.toString();
     const targetPath = queryString ? `${pathname}?${queryString}` : pathname;
+
+    // Check if the user's profile is loaded in the cache (i.e. user is logged in)
+    const user = queryClient.getQueryData([getAuthControllerGetProfileQueryKey()]);
+    if (user) {
+      // Fire the PATCH request in the background (non-blocking)
+      updateProfile({
+        data: {
+          locale: nextLocale as UpdateUserDtoLocale,
+        },
+      });
+    }
 
     startTransition(() => {
       router.replace(targetPath, { locale: nextLocale });

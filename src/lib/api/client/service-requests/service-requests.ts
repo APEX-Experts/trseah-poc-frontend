@@ -112,6 +112,19 @@ export const getServiceRequests = () => {
       options,
     );
   };
+  /**
+   * Downloads the PDF invoice for a service request. Available to the organization associated with the request.
+   * @summary Download invoice PDF
+   */
+  const requestsControllerDownloadInvoicePdf = (
+    id: string,
+    options?: SecondParameter<typeof api<Blob>>,
+  ) => {
+    return api<Blob>(
+      { url: `/api/requests/${id}/invoice`, method: "GET", responseType: "blob" },
+      options,
+    );
+  };
   return {
     requestsControllerCreateRequest,
     requestsControllerListRequests,
@@ -119,6 +132,7 @@ export const getServiceRequests = () => {
     requestsControllerGetRequestDetails,
     requestsControllerDeleteRequest,
     requestsControllerPayRequest,
+    requestsControllerDownloadInvoicePdf,
   };
 };
 export type RequestsControllerCreateRequestResult = NonNullable<
@@ -138,4 +152,7 @@ export type RequestsControllerDeleteRequestResult = NonNullable<
 >;
 export type RequestsControllerPayRequestResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerPayRequest"]>>
+>;
+export type RequestsControllerDownloadInvoicePdfResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getServiceRequests>["requestsControllerDownloadInvoicePdf"]>>
 >;

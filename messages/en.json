@@ -512,6 +512,48 @@
     "success": {
       "created": "Service request submitted successfully!",
       "patched": "Organization details updated successfully!"
+    },
+    "statusPage": {
+      "title": "Request Details",
+      "backToList": "Back to My Requests",
+      "requestInfo": "Request Info",
+      "statusTimeline": "Status Timeline",
+      "downloadInvoice": "Download Invoice PDF",
+      "payNow": "Pay Now",
+      "adminNotes": "Admin Notes / Acceptance Notes",
+      "declineReason": "Decline Reason",
+      "proposalReady": "Your technical proposal is being prepared",
+      "viewProposal": "View Technical Proposal Progress",
+      "paymentSuccess": "Payment simulated successfully! Status updated to In Progress.",
+      "paymentError": "Payment simulation failed. Please try again.",
+      "tenderDetails": "Tender Details",
+      "organizationDetails": "Organization Details",
+      "uploadedFiles": "Uploaded RFP Documents",
+      "noFilesUploaded": "No additional files uploaded.",
+      "downloadInvoiceError": "Failed to download invoice. Please try again.",
+      "notFoundTitle": "Request Not Found",
+      "notFoundDesc": "The request you are trying to view does not exist or you do not have permission to view it.",
+      "loading": "Loading...",
+      "tenderNotFound": "Tender not found",
+      "externalTender": "External Tender",
+      "externalRfp": "External RFP",
+      "platformTender": "Platform Tender",
+      "externalUpload": "External Upload",
+      "rfpSource": "RFP Source",
+      "referenceNumber": "Tender Reference Number",
+      "estimatedBudget": "Estimated Budget",
+      "publishDate": "Publish Date",
+      "submissionDeadline": "Submission Deadline",
+      "descriptionScope": "Request Description / Scope of Work",
+      "mainRfpDocument": "Main RFP Document",
+      "additionalFile": "Additional File {index}",
+      "currentStage": "Current Stage",
+      "completed": "Completed",
+      "upcoming": "Upcoming",
+      "invoiceReadyTitle": "Service Request Invoice Ready for Payment",
+      "invoiceReadyDesc": "Please download the invoice and complete the simulated payment to initiate the proposal work.",
+      "proposalReadyDesc": "Your tailored technical proposal is being prepared. You will be notified once it is ready.",
+      "currency": "SAR"
     }
   },
   "Errors": {
@@ -580,5 +622,11 @@
     "tenderIdCopied": "Tender ID copied successfully!",
     "pageOf": "Page {page} of {totalPages}",
     "copyTenderId": "Copy tender ID"
+  },
+  "Proposals": {
+    "backToRequests": "Back to Service Requests",
+    "generatingTitle": "Technical Proposal Generating",
+    "generatingDesc": "Proposal #{id} is currently being processed and generated using our AI models.",
+    "generatingProgress": "AI generation is in progress. Check back soon."
   }
 }
