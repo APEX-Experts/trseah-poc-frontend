@@ -4,6 +4,8 @@
  * API
  * OpenAPI spec version: 1.0
  */
+import type { AdminRequestsControllerListRequestsSortBy } from "./adminRequestsControllerListRequestsSortBy";
+import type { AdminRequestsControllerListRequestsSortOrder } from "./adminRequestsControllerListRequestsSortOrder";
 import type { AdminRequestsControllerListRequestsStatus } from "./adminRequestsControllerListRequestsStatus";
 
 export type AdminRequestsControllerListRequestsParams = {
@@ -21,4 +23,16 @@ export type AdminRequestsControllerListRequestsParams = {
    * Filter requests by status
    */
   status?: AdminRequestsControllerListRequestsStatus;
+  /**
+   * Search query for organization name, CR number, tender title, or request ID
+   */
+  search?: string;
+  /**
+   * Field to sort requests by
+   */
+  sortBy?: AdminRequestsControllerListRequestsSortBy;
+  /**
+   * Sort order direction
+   */
+  sortOrder?: AdminRequestsControllerListRequestsSortOrder;
 };

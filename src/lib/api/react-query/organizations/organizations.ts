@@ -332,6 +332,137 @@ export const useOrganizationsControllerUpdateMe = <
   return useMutation(getOrganizationsControllerUpdateMeMutationOptions(options), queryClient);
 };
 /**
+ * @summary Get organization profile by ID (Admin/Super Admin only)
+ */
+export const organizationsControllerGetById = (
+  id: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  return api<OrganizationResponseDto>(
+    { url: `/api/organizations/${id}`, method: "GET", signal },
+    options,
+  );
+};
+
+export const getOrganizationsControllerGetByIdQueryKey = (id: string) => {
+  return [`/api/organizations/${id}`] as const;
+};
+
+export const getOrganizationsControllerGetByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof organizationsControllerGetById>>,
+  TError = ApiErrorResponseDto,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof organizationsControllerGetById>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOrganizationsControllerGetByIdQueryKey(id);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof organizationsControllerGetById>>> = ({
+    signal,
+  }) => organizationsControllerGetById(id, requestOptions, signal);
+
+  return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof organizationsControllerGetById>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type OrganizationsControllerGetByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof organizationsControllerGetById>>
+>;
+export type OrganizationsControllerGetByIdQueryError = ApiErrorResponseDto;
+
+export function useOrganizationsControllerGetById<
+  TData = Awaited<ReturnType<typeof organizationsControllerGetById>>,
+  TError = ApiErrorResponseDto,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof organizationsControllerGetById>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof organizationsControllerGetById>>,
+          TError,
+          Awaited<ReturnType<typeof organizationsControllerGetById>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useOrganizationsControllerGetById<
+  TData = Awaited<ReturnType<typeof organizationsControllerGetById>>,
+  TError = ApiErrorResponseDto,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof organizationsControllerGetById>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof organizationsControllerGetById>>,
+          TError,
+          Awaited<ReturnType<typeof organizationsControllerGetById>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useOrganizationsControllerGetById<
+  TData = Awaited<ReturnType<typeof organizationsControllerGetById>>,
+  TError = ApiErrorResponseDto,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof organizationsControllerGetById>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary Get organization profile by ID (Admin/Super Admin only)
+ */
+
+export function useOrganizationsControllerGetById<
+  TData = Awaited<ReturnType<typeof organizationsControllerGetById>>,
+  TError = ApiErrorResponseDto,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof organizationsControllerGetById>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getOrganizationsControllerGetByIdQueryOptions(id, options);
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
  * @summary Upload an organization document (strictly PDF) and optional logo
  */
 export const organizationsControllerUploadDocument = (

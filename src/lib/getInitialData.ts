@@ -1,6 +1,6 @@
 import { Locale } from "@/i18n/routing";
 import { getAuth } from "@/lib/api/client/auth/auth";
-import { getOrganizations } from "@/lib/api/client/organizations/organizations";
+// getOrganizations can likely be removed from imports if it isn't used elsewhere in this file!
 import { UnwrapEnvelope } from "@/lib/apiClient";
 import { AuthControllerGetProfile200 } from "@/types/api";
 import { isAxiosError } from "axios";
@@ -30,27 +30,30 @@ export default async function getInitialData({
       .getAll()
       .map((cookie) => `${cookie.name}=${cookie.value}`)
       .join("; ");
+
     const headers = {
       Cookie: cookieString,
     };
+
+    // 1. Fetch the profile data (which now includes hasCompletedOnboarding)
     initialProfileData = await getAuth().authControllerGetProfile({
       headers,
     });
-    if (checkOrganization) {
-      try {
-        await getOrganizations().organizationsControllerGetMe({ headers });
-      } catch (orgError) {
-        if (isAxiosError(orgError) && orgError.response?.status === 404) {
-          redirectObject = {
-            href: `/${locale}/onboarding`,
-            locale,
-            forcePrefix: false,
-          };
-        } else {
-          throw orgError;
-        }
+
+    // 2. Synchronously check the onboarding status instead of making a second API call
+    if (checkOrganization && initialProfileData) {
+      const isStandardUser =
+        initialProfileData.role !== "ADMIN" && initialProfileData.role !== "SUPER_ADMIN";
+
+      if (isStandardUser && !initialProfileData.hasCompletedOnboarding) {
+        redirectObject = {
+          href: `/${locale}/onboarding`,
+          locale,
+          forcePrefix: false,
+        };
       }
     }
+
     const sidebarState = cookieStore.get("sidebar_state");
     defaultOpen = sidebarState ? sidebarState.value === "true" : true;
   } catch (error) {

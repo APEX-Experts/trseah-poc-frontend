@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0
  */
 import type { UserResponseDtoLocale } from "./userResponseDtoLocale";
+import type { UserResponseDtoRole } from "./userResponseDtoRole";
 
 export interface UserResponseDto {
   /** The unique identifier of the user */
@@ -29,4 +30,8 @@ export interface UserResponseDto {
   updatedAt: string;
   /** The preferred language of the user */
   locale: UserResponseDtoLocale;
+  /** The role of the user */
+  role: UserResponseDtoRole;
+  /** Whether the user has completed onboarding */
+  hasCompletedOnboarding: boolean;
 }
