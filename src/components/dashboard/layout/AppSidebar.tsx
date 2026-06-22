@@ -59,7 +59,7 @@ export function AppSidebar({
   }
 
   return (
-    <Sidebar collapsible="icon" side={side} className="*:bg-primary-800 text-white">
+    <Sidebar collapsible="icon" side={side} className="*:bg-primary-800 text-white z-10">
       <SidebarHeader className="h-16 flex py-3 items-start justify-center px-2">
         <Link href={navConfig.primaryLink.href} className="flex items-center text-start">
           <Logo

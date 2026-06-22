@@ -22,7 +22,7 @@ export function ServiceRequestFooter({ children }: ServiceRequestFooterProps) {
   if (!container) return null;
 
   return createPortal(
-    <div className="w-full flex items-center justify-between">{children}</div>,
+    <div className="w-full flex items-center justify-between z-0">{children}</div>,
     container,
   );
 }

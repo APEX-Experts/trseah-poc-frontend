@@ -140,7 +140,7 @@ export function OnboardingLayout({ children, currentStep }: OnboardingLayoutProp
 
       <div
         id="onboarding-footer"
-        className="fixed bottom-0 inset-x-0 bg-white border-t border-border px-10 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.02)] z-20"
+        className="fixed bottom-0 inset-x-0 bg-white border-t border-border px-10 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.02)] z-0"
       />
     </div>
   );

@@ -688,7 +688,7 @@ export default function AdminRequestDetailPage() {
               <Button
                 type="submit"
                 disabled={reviewMutation.isPending}
-                className="h-9 px-4 rounded-xl cursor-pointer bg-rose-600 text-white hover:bg-rose-700 font-bold"
+                className="h-9 px-4 rounded-xl cursor-pointer bg-error-foreground text-error-background hover:bg-error-foreground/80 font-bold"
               >
                 {reviewMutation.isPending ? "..." : t("submitDecline")}
               </Button>
