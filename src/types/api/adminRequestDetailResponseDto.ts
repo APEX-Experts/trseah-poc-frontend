@@ -5,8 +5,9 @@
  * OpenAPI spec version: 1.0
  */
 import type { AdminRequestDetailResponseDtoStatus } from "./adminRequestDetailResponseDtoStatus";
-import type { OrganizationResponseDto } from "./organizationResponseDto";
+import type { OrgDocumentResponseDto } from "./orgDocumentResponseDto";
 import type { PastProjectResponseDto } from "./pastProjectResponseDto";
+import type { ServiceRequestOrganizationDto } from "./serviceRequestOrganizationDto";
 import type { TeamMemberResponseDto } from "./teamMemberResponseDto";
 
 export interface AdminRequestDetailResponseDto {
@@ -33,7 +34,8 @@ export interface AdminRequestDetailResponseDto {
   proposalId?: string | null;
   createdAt: string;
   updatedAt: string;
-  organization: OrganizationResponseDto;
+  organization?: ServiceRequestOrganizationDto;
   teamMembers: TeamMemberResponseDto[];
   pastProjects: PastProjectResponseDto[];
+  documents: OrgDocumentResponseDto[];
 }

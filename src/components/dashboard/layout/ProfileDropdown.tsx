@@ -9,6 +9,7 @@ import {
 import { SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { UserResponseDto } from "@/types/api";
+import { useQueryClient } from "@tanstack/react-query";
 import { LogOut, User } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -33,6 +34,7 @@ export function ProfileDropdown({
   const expanded = expandedProp ?? !isCollapsed;
   const locale = useLocale();
   const t = useTranslations("AppSidebar");
+  const queryClient = useQueryClient();
   return (
     <DropdownMenu dir={locale === "ar" ? "rtl" : "ltr"}>
       <DropdownMenuTrigger asChild>
@@ -100,7 +102,10 @@ export function ProfileDropdown({
               "--accent-foreground": "var(--error-foreground)",
             } as React.CSSProperties
           }
-          onClick={handleLogout}
+          onClick={() => {
+            handleLogout();
+            queryClient.clear();
+          }}
           disabled={isPending}
         >
           <LogOut className="mr-2 h-4 w-4" />

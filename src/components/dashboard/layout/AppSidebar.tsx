@@ -13,10 +13,12 @@ import {
 } from "@/components/ui/sidebar";
 import { navConfig } from "@/config/nav-config";
 import { useAuthAndLogout } from "@/hooks/use-auth";
+import { useUserPermissions } from "@/hooks/use-permissions";
 import { Link, usePathname } from "@/i18n/navigation";
 import { UnwrapEnvelope } from "@/lib/apiClient";
 import { cn } from "@/lib/utils";
 import { AuthControllerGetProfile200 } from "@/types/api";
+import { ClipboardList } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { ProfileDropdown } from "./ProfileDropdown";
 
@@ -36,6 +38,26 @@ export function AppSidebar({
   const { handleLogout, isPending, user, isLoading, error, statusCode } =
     useAuthAndLogout(initialProfileData);
 
+  const { isAdmin } = useUserPermissions();
+
+  const sidebarItems = navConfig.sidebarNav
+    .filter((item) => {
+      // Don't show My Requests to Admin roles
+      if (item.label === "MyRequests") {
+        return !isAdmin;
+      }
+      return true;
+    })
+    .map((item) => ({ ...item }));
+
+  if (isAdmin) {
+    sidebarItems.push({
+      label: "AdminRequests",
+      href: "/admin/requests",
+      icon: ClipboardList,
+    });
+  }
+
   return (
     <Sidebar collapsible="icon" side={side} className="*:bg-primary-800 text-white">
       <SidebarHeader className="h-16 flex py-3 items-start justify-center px-2">
@@ -52,32 +74,32 @@ export function AppSidebar({
       <SidebarContent className="flex flex-col gap-y-1">
         <SidebarGroup>
           <SidebarMenu className="space-y-2">
-            {navConfig.sidebarNav.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton
-                  asChild
-                  tooltip={t(item.label)}
-                  isActive={pathname === item.href}
-                  className={cn(
-                    "w-full flex items-center gap-4 rounded-md px-4 py-6",
-                    pathname === item.href
-                      ? "bg-accent-300/14! border border-accent-300/25 text-white! font-semibold!"
-                      : "hover:bg-accent-300/14 text-white/55 hover:text-white border border-transparent hover:border-accent-300/25",
-                    isCollapsed && "px-0 justify-center",
-                  )}
-                >
-                  <Link href={item.href}>
-                    <item.icon
-                      className={cn(
-                        "size-5",
-                        pathname === item.href ? "text-accent-300" : "text-white/55",
-                      )}
-                    />
-                    {!isCollapsed && <span>{t(item.label)}</span>}
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            {sidebarItems.map((item) => {
+              const isItemActive = pathname === item.href || pathname.startsWith(item.href + "/");
+              return (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    asChild
+                    tooltip={t(item.label)}
+                    isActive={isItemActive}
+                    className={cn(
+                      "w-full flex items-center gap-4 rounded-md px-4 py-6",
+                      isItemActive
+                        ? "bg-accent-300/14! border border-accent-300/25 text-white! font-semibold!"
+                        : "hover:bg-accent-300/14 text-white/55 hover:text-white border border-transparent hover:border-accent-300/25",
+                      isCollapsed && "px-0 justify-center",
+                    )}
+                  >
+                    <Link href={item.href}>
+                      <item.icon
+                        className={cn("size-5", isItemActive ? "text-accent-300" : "text-white/55")}
+                      />
+                      {!isCollapsed && <span>{t(item.label)}</span>}
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

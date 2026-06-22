@@ -18,6 +18,14 @@ export default async function DashboardLayout({
     checkOrganization: false,
   });
 
+  if (initialProfileData?.hasCompletedOnboarding) {
+    return redirect({
+      href: "/",
+      locale: locale as Locale,
+      forcePrefix: true,
+    });
+  }
+
   if (redirectObject?.href) {
     return redirect(redirectObject);
   }

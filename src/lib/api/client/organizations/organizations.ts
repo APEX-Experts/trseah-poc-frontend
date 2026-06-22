@@ -64,6 +64,18 @@ export const getOrganizations = () => {
     );
   };
   /**
+   * @summary Get organization profile by ID (Admin/Super Admin only)
+   */
+  const organizationsControllerGetById = (
+    id: string,
+    options?: SecondParameter<typeof api<OrganizationResponseDto>>,
+  ) => {
+    return api<OrganizationResponseDto>(
+      { url: `/api/organizations/${id}`, method: "GET" },
+      options,
+    );
+  };
+  /**
    * @summary Upload an organization document (strictly PDF) and optional logo
    */
   const organizationsControllerUploadDocument = (
@@ -191,6 +203,7 @@ export const getOrganizations = () => {
     organizationsControllerCreate,
     organizationsControllerGetMe,
     organizationsControllerUpdateMe,
+    organizationsControllerGetById,
     organizationsControllerUploadDocument,
     organizationsControllerListDocuments,
     organizationsControllerDeleteDocument,
@@ -208,6 +221,9 @@ export type OrganizationsControllerGetMeResult = NonNullable<
 >;
 export type OrganizationsControllerUpdateMeResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerUpdateMe"]>>
+>;
+export type OrganizationsControllerGetByIdResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerGetById"]>>
 >;
 export type OrganizationsControllerUploadDocumentResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerUploadDocument"]>>

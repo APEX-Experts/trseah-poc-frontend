@@ -1,7 +1,7 @@
 {
   "Metadata": {
-    "title": "إنشاء تطبيق Next",
-    "description": "تم إنشاؤه بواسطة إنشاء تطبيق next"
+    "title": "منصة ترسية",
+    "description": "منصة موثوقة لمتابعة المنافسات الحكومية وإنشاء العروض الفنية باستخدام الذكاء الاصطناعي"
   },
   "Common": {
     "welcome": "مرحباً"
@@ -125,7 +125,8 @@
     "error": "خطأ: {message}",
     "notAuthorized": "غير مصرح لك بالوصول إلى هذه الصفحة.",
     "logOut": "تسجيل خروج",
-    "MyRequests": "طلباتي"
+    "MyRequests": "طلباتي",
+    "AdminRequests": "طلبات الإدارة"
   },
   "Search": {
     "placeholderShort": "بحث في المنافسات والطلبات...",
@@ -244,7 +245,7 @@
       "localContentScore": "درجة المحتوى المحلي",
       "sector": "القطاع",
       "size": "حجم الشركة",
-      "sizes": {
+      "": {
         "micro": "صغيرة جدًا",
         "small": "صغيرة",
         "medium": "متوسطة",
@@ -519,5 +520,73 @@
       "patched": "تم تحديث بيانات المنشأة بنجاح!",
       "deleted": "تم حذف طلب الخدمة بنجاح!"
     }
+  },
+  "Errors": {
+    "forbiddenTitle": "الوصول غير مصرح به",
+    "forbiddenDescription": "ليس لديك الصلاحيات اللازمة للوصول إلى هذه الصفحة الإدارية.",
+    "goHome": "الذهاب للرئيسية",
+    "goBack": "العودة للخلف"
+  },
+  "AdminRequests": {
+    "title": "طلبات الإدارة",
+    "subtitle": "مراجعة وإدارة طلبات الخدمة المقدمة من الشركات.",
+    "searchPlaceholder": "البحث باسم المنشأة، السجل التجاري، اسم المنافسة، أو رقم الطلب...",
+    "sortBy": "ترتيب حسب",
+    "sortByNewest": "الأحدث",
+    "sortByOldest": "الأقدم",
+    "sortByStatus": "الحالة",
+    "allStatus": "الكل",
+    "requestId": "رقم الطلب",
+    "company": "المنشأة",
+    "sourceType": "نوع المصدر",
+    "dateSubmitted": "تاريخ التقديم",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "viewDetails": "عرض التفاصيل",
+    "noRequests": "لم يتم العثور على طلبات تطابق الفلاتر المحددة.",
+    "backToList": "العودة لقائمة الطلبات",
+    "pdfViewer": "مستعرض مستند كراسة الشروط",
+    "noPdfAvailable": "لم يتم رفع ملف كراسة الشروط. تفاصيل المنافسة بالأسفل.",
+    "companyProfile": "ملف المنشأة",
+    "sizes": {
+      "micro": "صغيرة جدًا",
+      "small": "صغيرة",
+      "medium": "متوسطة",
+      "large": "كبيرة"
+    },
+    "sector": "القطاع",
+    "cr": "السجل التجاري",
+    "employeeCount": "حجم العمالة",
+    "pastProjects": "المشاريع السابقة",
+    "documents": "المستندات والوثائق",
+    "noDocuments": "لم يتم رفع أي مستندات.",
+    "noProjects": "لم يتم إضافة أي مشاريع سابقة.",
+    "adminNotes": "ملاحظات المسؤول",
+    "adminNotesPlaceholder": "أضف ملاحظات إدارية حول هذا الطلب هنا...",
+    "accept": "قبول الطلب",
+    "decline": "رفض الطلب",
+    "acceptModalTitle": "قبول الطلب وإنشاء الفاتورة",
+    "acceptModalDescription": "حدد تفاصيل الفاتورة لقبول هذا الطلب. سيتم إشعار المنشأة بالدفع.",
+    "invoiceAmount": "مبلغ الفاتورة (ريال سعودي)",
+    "invoiceNotes": "ملاحظات الفاتورة",
+    "invoiceNotesPlaceholder": "وصف اختياري للفاتورة...",
+    "cancel": "إلغاء",
+    "submitAccept": "قبول وإنشاء الفاتورة",
+    "declineModalTitle": "رفض الطلب",
+    "declineModalDescription": "أدخل سبب رفض هذا الطلب. سيتم إرسال هذا السبب إلى المنشأة.",
+    "declineReason": "سبب الرفض",
+    "declineReasonPlaceholder": "اشرح سبب رفض هذا الطلب...",
+    "submitDecline": "رفض الطلب",
+    "successAccept": "تم قبول الطلب وإنشاء الفاتورة بنجاح!",
+    "successDecline": "تم رفض الطلب بنجاح!",
+    "errorAction": "فشل تحديث حالة الطلب. يرجى المحاولة مرة أخرى.",
+    "sourceTypeValues": {
+      "platform": "من المنصة",
+      "external": "خارجية"
+    },
+    "tenderId": "رقم المنافسة",
+    "tenderIdCopied": "تم نسخ رقم المنافسة بنجاح!",
+    "pageOf": "صفحة {page} من {totalPages}",
+    "copyTenderId": "نسخ رقم المنافسة"
   }
 }

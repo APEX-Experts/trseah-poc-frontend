@@ -368,3 +368,12 @@
 
   box-shadow: 0px 8px 24px 0px rgba(from var(--primary-800) r g b / 0.122);
 }
+
+.react-pdf__Page {
+  margin-bottom: 1rem;
+}
+
+.react-pdf__Page canvas {
+  max-width: 100%;
+  height: auto !important;
+}

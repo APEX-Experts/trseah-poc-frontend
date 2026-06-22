@@ -4,6 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
+import type { ServiceRequestOrganizationDto } from "./serviceRequestOrganizationDto";
 import type { ServiceRequestResponseDtoStatus } from "./serviceRequestResponseDtoStatus";
 
 export interface ServiceRequestResponseDto {
@@ -30,4 +31,5 @@ export interface ServiceRequestResponseDto {
   proposalId?: string | null;
   createdAt: string;
   updatedAt: string;
+  organization?: ServiceRequestOrganizationDto;
 }
