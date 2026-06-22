@@ -710,3 +710,154 @@ export const useRequestsControllerPayRequest = <TError = unknown, TContext = unk
 > => {
   return useMutation(getRequestsControllerPayRequestMutationOptions(options), queryClient);
 };
+/**
+ * Downloads the PDF invoice for a service request. Available to the organization associated with the request.
+ * @summary Download invoice PDF
+ */
+export const requestsControllerDownloadInvoicePdf = (
+  id: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  return api<Blob>(
+    { url: `/api/requests/${id}/invoice`, method: "GET", responseType: "blob", signal },
+    options,
+  );
+};
+
+export const getRequestsControllerDownloadInvoicePdfQueryKey = (id: string) => {
+  return [`/api/requests/${id}/invoice`] as const;
+};
+
+export const getRequestsControllerDownloadInvoicePdfQueryOptions = <
+  TData = Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getRequestsControllerDownloadInvoicePdfQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>
+  > = ({ signal }) => requestsControllerDownloadInvoicePdf(id, requestOptions, signal);
+
+  return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type RequestsControllerDownloadInvoicePdfQueryResult = NonNullable<
+  Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>
+>;
+export type RequestsControllerDownloadInvoicePdfQueryError = void;
+
+export function useRequestsControllerDownloadInvoicePdf<
+  TData = Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+  TError = void,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+          TError,
+          Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useRequestsControllerDownloadInvoicePdf<
+  TData = Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+          TError,
+          Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useRequestsControllerDownloadInvoicePdf<
+  TData = Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary Download invoice PDF
+ */
+
+export function useRequestsControllerDownloadInvoicePdf<
+  TData = Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof requestsControllerDownloadInvoicePdf>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getRequestsControllerDownloadInvoicePdfQueryOptions(id, options);
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}

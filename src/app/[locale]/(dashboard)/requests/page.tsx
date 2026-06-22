@@ -112,53 +112,58 @@ function RequestCard({ req, onDelete, isDeletable }: RequestCardProps) {
 
   return (
     <div className="bg-white rounded-2xl border border-border p-6 card-shadow flex items-start gap-4 relative transition-all duration-200 hover:border-primary-200 hover:shadow-lg group">
-      {/* Icon Container */}
-      <div className="shrink-0 flex items-center justify-center w-12 h-12 bg-primary-50 rounded-xl border border-primary-100/50 text-primary-800">
-        <ClipboardList className="w-6 h-6" />
-      </div>
-
-      {/* Main Info */}
-      <div className="flex-1 min-w-0 pr-8">
-        <div className="flex flex-wrap items-center gap-2.5 text-xs font-semibold text-neutral-400">
-          <span className="font-mono tracking-wider">{requestCode}</span>
-          <span
-            className={`px-3 py-0.5 rounded-full border text-[10px] uppercase font-bold tracking-wider ${getStatusStyles(
-              req.status,
-            )}`}
-          >
-            {t(`statuses.${req.status}`)}
-          </span>
+      <Link
+        href={`/requests/${req.id}`}
+        className="flex items-start gap-4 flex-1 min-w-0 pe-8 text-start"
+      >
+        {/* Icon Container */}
+        <div className="shrink-0 flex items-center justify-center w-12 h-12 bg-primary-50 rounded-xl border border-primary-100/50 text-primary-800">
+          <ClipboardList className="w-6 h-6" />
         </div>
 
-        <h3 className="text-base font-bold text-primary-900 mt-2 truncate">{title}</h3>
-
-        {subtitle && <p className="text-xs text-neutral-400 mt-1 truncate">{subtitle}</p>}
-
-        {description && (
-          <p className="text-sm text-neutral-500 mt-3 line-clamp-2 leading-relaxed">
-            {description}
-          </p>
-        )}
-
-        {/* Footer Meta */}
-        <div className="flex flex-wrap items-center gap-4 mt-4 pt-3 border-t border-neutral-100 text-xs text-neutral-400">
-          <div className="flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 text-neutral-300" />
-            <span>
-              {new Date(req.createdAt).toLocaleDateString(locale, {
-                dateStyle: "medium",
-              })}
+        {/* Main Info */}
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-2.5 text-xs font-semibold text-neutral-400">
+            <span className="font-mono tracking-wider">{requestCode}</span>
+            <span
+              className={`px-3 py-0.5 rounded-full border text-[10px] uppercase font-bold tracking-wider ${getStatusStyles(
+                req.status,
+              )}`}
+            >
+              {t(`statuses.${req.status}`)}
             </span>
           </div>
 
-          {req.reviewedById && (
-            <div className="flex items-center gap-1.5">
-              <User className="w-3.5 h-3.5 text-neutral-300" />
-              <span>{locale === "ar" ? "تمت المراجعة" : "Reviewed"}</span>
-            </div>
+          <h3 className="text-base font-bold text-primary-900 mt-2 truncate">{title}</h3>
+
+          {subtitle && <p className="text-xs text-neutral-400 mt-1 truncate">{subtitle}</p>}
+
+          {description && (
+            <p className="text-sm text-neutral-500 mt-3 line-clamp-2 leading-relaxed">
+              {description}
+            </p>
           )}
+
+          {/* Footer Meta */}
+          <div className="flex flex-wrap items-center gap-4 mt-4 pt-3 border-t border-neutral-100 text-xs text-neutral-400">
+            <div className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5 text-neutral-300" />
+              <span>
+                {new Date(req.createdAt).toLocaleDateString(locale, {
+                  dateStyle: "medium",
+                })}
+              </span>
+            </div>
+
+            {req.reviewedById && (
+              <div className="flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5 text-neutral-300" />
+                <span>{locale === "ar" ? "تمت المراجعة" : "Reviewed"}</span>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </Link>
 
       {/* Dropdown Menu */}
       <div className="absolute top-6 inset-e-6">

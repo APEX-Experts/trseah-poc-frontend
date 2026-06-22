@@ -126,7 +126,7 @@
     "notAuthorized": "غير مصرح لك بالوصول إلى هذه الصفحة.",
     "logOut": "تسجيل خروج",
     "MyRequests": "طلباتي",
-    "AdminRequests": "طلبات الإدارة"
+    "AdminRequests": "طلبات الخدمة"
   },
   "Search": {
     "placeholderShort": "بحث في المنافسات والطلبات...",
@@ -245,7 +245,7 @@
       "localContentScore": "درجة المحتوى المحلي",
       "sector": "القطاع",
       "size": "حجم الشركة",
-      "": {
+      "sizes": {
         "micro": "صغيرة جدًا",
         "small": "صغيرة",
         "medium": "متوسطة",
@@ -519,6 +519,48 @@
       "created": "تم إرسال طلب الخدمة بنجاح!",
       "patched": "تم تحديث بيانات المنشأة بنجاح!",
       "deleted": "تم حذف طلب الخدمة بنجاح!"
+    },
+    "statusPage": {
+      "title": "تفاصيل الطلب",
+      "backToList": "العودة لطلباتي",
+      "requestInfo": "معلومات الطلب",
+      "statusTimeline": "خط سير الطلب",
+      "downloadInvoice": "تحميل الفاتورة (PDF)",
+      "payNow": "ادفع الآن",
+      "adminNotes": "ملاحظات الإدارة / القبول",
+      "declineReason": "سبب الرفض",
+      "proposalReady": "جاري العمل على العرض الفني الخاص بك",
+      "viewProposal": "عرض التقدم في العرض الفني",
+      "paymentSuccess": "تمت محاكاة عملية الدفع بنجاح! تم تحديث حالة الطلب إلى قيد العمل.",
+      "paymentError": "فشلت محاكاة عملية الدفع. يرجى المحاولة مرة أخرى.",
+      "tenderDetails": "تفاصيل المنافسة",
+      "organizationDetails": "تفاصيل المنشأة",
+      "uploadedFiles": "ملفات كراسة الشروط المرفوعة",
+      "noFilesUploaded": "لم يتم رفع أي مستندات إضافية.",
+      "downloadInvoiceError": "فشلت عملية تحميل الفاتورة. يرجى المحاولة لاحقاً.",
+      "notFoundTitle": "لم يتم العثور على الطلب",
+      "notFoundDesc": "الطلب الذي تبحث عنه غير موجود أو لا تملك صلاحية الوصول إليه.",
+      "loading": "جاري التحميل...",
+      "tenderNotFound": "لم يتم العثور على المنافسة",
+      "externalTender": "منافسة خارجية",
+      "externalRfp": "طلب خارجي",
+      "platformTender": "منافسة من المنصة",
+      "externalUpload": "رفع خارجي",
+      "rfpSource": "مصدر الطلب",
+      "referenceNumber": "الرقم المرجعي للمنافسة",
+      "estimatedBudget": "الميزانية التقديرية",
+      "publishDate": "تاريخ النشر",
+      "submissionDeadline": "آخر موعد لتقديم العروض",
+      "descriptionScope": "وصف الطلب / نطاق العمل",
+      "mainRfpDocument": "مستند كراسة الشروط الأساسي",
+      "additionalFile": "ملف إضافي {index}",
+      "currentStage": "الحالة الحالية",
+      "completed": "مكتمل",
+      "upcoming": "مستقبلي",
+      "invoiceReadyTitle": "فاتورة طلب الخدمة جاهزة للدفع",
+      "invoiceReadyDesc": "يرجى تحميل الفاتورة المرفقة وإكمال عملية محاكاة الدفع لبدء العمل على العرض الفني.",
+      "proposalReadyDesc": "يتم تجهيز العرض الفني الخاص بك وسيتم تحديث الحالة فور انتهاؤه.",
+      "currency": "ريال"
     }
   },
   "Errors": {
@@ -528,7 +570,7 @@
     "goBack": "العودة للخلف"
   },
   "AdminRequests": {
-    "title": "طلبات الإدارة",
+    "title": "طلبات الخدمة",
     "subtitle": "مراجعة وإدارة طلبات الخدمة المقدمة من الشركات.",
     "searchPlaceholder": "البحث باسم المنشأة، السجل التجاري، اسم المنافسة، أو رقم الطلب...",
     "sortBy": "ترتيب حسب",
@@ -588,5 +630,11 @@
     "tenderIdCopied": "تم نسخ رقم المنافسة بنجاح!",
     "pageOf": "صفحة {page} من {totalPages}",
     "copyTenderId": "نسخ رقم المنافسة"
+  },
+  "Proposals": {
+    "backToRequests": "العودة لطلبات الخدمة",
+    "generatingTitle": "جاري إنشاء العرض الفني",
+    "generatingDesc": "العرض الفني رقم #{id} يتم إنشاؤه حالياً بواسطة الذكاء الاصطناعي وسيتم الانتهاء منه قريباً.",
+    "generatingProgress": "العرض الفني قيد الإنشاء... يرجى المتابعة لاحقاً."
   }
 }

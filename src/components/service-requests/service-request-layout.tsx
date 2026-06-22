@@ -141,7 +141,7 @@ export function ServiceRequestLayout({ children, currentStep }: ServiceRequestLa
       {/* Portal destination for the footer actions */}
       <div
         id="service-request-footer"
-        className="fixed bottom-0 inset-x-0 bg-white border-t border-border px-10 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.02)] z-20"
+        className="absolute bottom-0 inset-x-0 bg-white border-t border-border px-10 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.02)] z-10"
       />
     </div>
   );
