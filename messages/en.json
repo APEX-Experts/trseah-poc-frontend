@@ -616,7 +616,8 @@
     "sizes": {
       "small": "Small",
       "medium": "Medium",
-      "large": "Large"
+      "large": "Large",
+      "micro": "Micro"
     },
     "tenderId": "Tender ID",
     "tenderIdCopied": "Tender ID copied successfully!",
