@@ -68,7 +68,7 @@ export function ProfileDropdown({
               <p className="text-sm font-medium leading-none truncate">
                 {user.firstName} {user.lastName}
               </p>
-              <p className="text-xs leading-none text-muted-foreground truncate mt-1 group-hover/sidebar:text-accent-300">
+              <p className="font-inter text-xs leading-none text-muted-foreground truncate mt-1 group-hover/sidebar:text-accent-300">
                 {user.email}
               </p>
             </div>
@@ -91,7 +91,7 @@ export function ProfileDropdown({
             <p className="text-sm font-medium leading-none">
               {user.firstName + " " + user.lastName}
             </p>
-            <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+            <p className="text-xs leading-none text-muted-foreground font-inter">{user.email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

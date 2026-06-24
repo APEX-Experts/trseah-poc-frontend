@@ -47,6 +47,7 @@ export const useAuthAndLogout = (
 
   const handleLogout = () => {
     logout();
+    localStorage.removeItem("onboarding-storage");
   };
   const user = data;
 

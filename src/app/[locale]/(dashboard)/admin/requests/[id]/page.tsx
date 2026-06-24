@@ -546,17 +546,30 @@ export default function AdminRequestDetailPage() {
             ) : (
               <>
                 <CheckCircle2 className="h-5 w-5 shrink-0 mt-0.5" />
-                <div className="text-xs space-y-1">
-                  <span className="block font-bold">
-                    {locale === "ar" ? "تم قبول الطلب" : "Request Approved"}
-                  </span>
-                  {request.invoiceId && (
-                    <p className="font-semibold text-neutral-600">
+                <div className="text-xs space-y-1 w-full">
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <span className="block font-bold">
+                        {locale === "ar" ? "تم قبول الطلب" : "Request Approved"}
+                      </span>
+                      {request.invoiceId && (
+                        <p className="font-semibold text-neutral-600 mt-0.5">
+                          {locale === "ar"
+                            ? `مرتبط بالفاتورة رقم: ${request.invoiceId.slice(0, 8)}`
+                            : `Linked to Invoice: #${request.invoiceId.slice(0, 8)}`}
+                        </p>
+                      )}
+                    </div>
+                    <Link
+                      href={`/admin/proposals/${request.proposalId || request.id}`}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition-colors shrink-0"
+                    >
+                      <FileText className="h-3.5 w-3.5" />
                       {locale === "ar"
-                        ? `مرتبط بالفاتورة رقم: ${request.invoiceId.slice(0, 8)}`
-                        : `Linked to Invoice: #${request.invoiceId.slice(0, 8)}`}
-                    </p>
-                  )}
+                        ? "فتح استوديو المقترحات الذكي"
+                        : "Open Smart Proposal Studio"}
+                    </Link>
+                  </div>
                 </div>
               </>
             )}
