@@ -117,6 +117,7 @@ export function ProfileDropdown({
           onClick={() => {
             handleLogout();
             queryClient.clear();
+            localStorage.removeItem("onboarding-storage");
           }}
           disabled={isPending}
         >
