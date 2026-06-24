@@ -250,7 +250,13 @@
         "medium": "Medium",
         "large": "Large"
       },
-      "error": "An Error occurred while updating company information"
+      "error": "An Error occurred while updating company information",
+      "nameArRequired": "Company name in Arabic is required and must be at least 2 characters",
+      "localContentScoreMin": "Local content score must be 0 or more",
+      "localContentScoreMax": "Local content score cannot exceed 999.99",
+      "localContentScoreStep": "Local content score must have at most 2 decimal places",
+      "localContentScoreInvalid": "Local content score must be a valid number",
+      "sizeInvalid": "Selected company size is invalid"
     },
     "Team": {
       "title": "Team Members",
@@ -270,7 +276,11 @@
       "yearsOf": "Years of Experience",
       "noMembersTitle": "No team members added yet",
       "noMembersDescription": "Add your key team members using the form below to showcase your company's expertise.",
-      "addMembersOneByOne": "Team members are added one at a time."
+      "addMembersOneByOne": "Team members are added one at a time.",
+      "nameArRequired": "Name in Arabic is required and must be at least 2 characters",
+      "roleArRequired": "Role in Arabic is required and must be at least 2 characters",
+      "yearsRequired": "Years of experience is required",
+      "yearsMin": "Years of experience must be 0 or more"
     },
     "Review": {
       "title": "Review & Submit",
@@ -301,7 +311,8 @@
       "invalidDateRange": "End date must be after start date",
       "noProjectsTitle": "No projects added yet",
       "noProjectsDescription": "Use the form below to add your previous projects and build your company portfolio.",
-      "addProjectsOneByOne": "Projects are added one at a time."
+      "addProjectsOneByOne": "Projects are added one at a time.",
+      "titleArRequired": "Project name in Arabic is required and must be at least 2 characters"
     },
     "Actions": {
       "continue": "Continue",
