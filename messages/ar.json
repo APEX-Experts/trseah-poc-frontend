@@ -257,7 +257,8 @@
       "localContentScoreMax": "يجب ألا تتجاوز درجة المحتوى المحلي 999.99",
       "localContentScoreStep": "يجب أن تحتوي درجة المحتوى المحلي على خانتين عشريتين كحد أقصى",
       "localContentScoreInvalid": "يجب إدخال درجة محتوى محلي صالحة",
-      "sizeInvalid": "حجم الشركة المحدد غير صالح"
+      "sizeInvalid": "حجم الشركة المحدد غير صالح",
+      "sizeRequired": "حجم الشركة مطلوب"
     },
     "Team": {
       "title": "معلومات الفريق",

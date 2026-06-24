@@ -50,6 +50,8 @@ export type FieldConfig<T> = {
   max?: number;
   /** Optional step for number inputs */
   step?: number;
+  /** Optional flag to mark field as required and display asterisk */
+  required?: boolean;
 };
 
 /**
@@ -168,7 +170,10 @@ export function GenericForm<T>({
 
               return (
                 <UIField data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>{fieldConfig.label}</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>
+                    {fieldConfig.label}
+                    {fieldConfig.required && <span className="text-destructive mx-1">*</span>}
+                  </FieldLabel>
 
                   {fieldConfig.type === "textarea" ? (
                     <Textarea

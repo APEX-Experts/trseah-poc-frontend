@@ -256,7 +256,8 @@
       "localContentScoreMax": "Local content score cannot exceed 999.99",
       "localContentScoreStep": "Local content score must have at most 2 decimal places",
       "localContentScoreInvalid": "Local content score must be a valid number",
-      "sizeInvalid": "Selected company size is invalid"
+      "sizeInvalid": "Selected company size is invalid",
+      "sizeRequired": "Company size is required"
     },
     "Team": {
       "title": "Team Members",

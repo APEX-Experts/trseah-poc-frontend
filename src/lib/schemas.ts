@@ -18,11 +18,9 @@ export const createCompanySchema = (t: TFunction) =>
       .multipleOf(0.01, t("Company.localContentScoreStep"))
       .optional(),
     sector: z.string().optional(),
-    size: z
-      .enum(["micro", "small", "medium", "large"], {
-        message: t("Company.sizeInvalid"),
-      })
-      .optional(),
+    size: z.enum(["micro", "small", "medium", "large"], {
+      message: t("Company.sizeRequired"),
+    }),
   });
 
 export const createTeamSchema = (t: TFunction) =>

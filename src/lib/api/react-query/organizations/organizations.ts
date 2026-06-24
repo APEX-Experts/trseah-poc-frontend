@@ -26,6 +26,8 @@ import type {
   CreateOrganizationDto,
   CreateProjectDto,
   CreateTeamMemberDto,
+  OnboardingDto,
+  OnboardingResponseDto,
   OrgDocumentResponseDto,
   OrganizationResponseDto,
   PastProjectResponseDto,
@@ -1235,3 +1237,101 @@ export function useOrganizationsControllerListProjects<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * Registers the organization, relates the user, adds team members, past projects, and uploads documents atomically.
+ * @summary Onboard a new organization in a single transaction
+ */
+export const organizationsControllerOnboard = (
+  onboardingDto: OnboardingDto,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  const formData = new FormData();
+  formData.append(`organization`, onboardingDto.organization);
+  if (onboardingDto.teamMembers !== undefined) {
+    formData.append(`teamMembers`, onboardingDto.teamMembers);
+  }
+  if (onboardingDto.projects !== undefined) {
+    formData.append(`projects`, onboardingDto.projects);
+  }
+  if (onboardingDto.documents !== undefined) {
+    formData.append(`documents`, onboardingDto.documents);
+  }
+
+  return api<OnboardingResponseDto>(
+    {
+      url: `/api/organizations/onboard`,
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
+      data: formData,
+      signal,
+    },
+    options,
+  );
+};
+
+export const getOrganizationsControllerOnboardMutationOptions = <
+  TError = ApiErrorResponseDto,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof organizationsControllerOnboard>>,
+    TError,
+    { data: OnboardingDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof organizationsControllerOnboard>>,
+  TError,
+  { data: OnboardingDto },
+  TContext
+> => {
+  const mutationKey = ["organizationsControllerOnboard"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof organizationsControllerOnboard>>,
+    { data: OnboardingDto }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return organizationsControllerOnboard(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OrganizationsControllerOnboardMutationResult = NonNullable<
+  Awaited<ReturnType<typeof organizationsControllerOnboard>>
+>;
+export type OrganizationsControllerOnboardMutationBody = OnboardingDto;
+export type OrganizationsControllerOnboardMutationError = ApiErrorResponseDto;
+
+/**
+ * @summary Onboard a new organization in a single transaction
+ */
+export const useOrganizationsControllerOnboard = <TError = ApiErrorResponseDto, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof organizationsControllerOnboard>>,
+      TError,
+      { data: OnboardingDto },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof organizationsControllerOnboard>>,
+  TError,
+  { data: OnboardingDto },
+  TContext
+> => {
+  return useMutation(getOrganizationsControllerOnboardMutationOptions(options), queryClient);
+};
