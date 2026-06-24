@@ -1,11 +1,7 @@
 import { useAuthControllerGetPermissions } from "@/lib/api/react-query/auth/auth";
 
 export function useUserPermissions() {
-  const { data, isLoading, error } = useAuthControllerGetPermissions({
-    query: {
-      staleTime: 1000 * 60 * 5, // 5 minutes cache
-    },
-  });
+  const { data, isLoading, error } = useAuthControllerGetPermissions();
 
   const permissions = data?.permissions || [];
 

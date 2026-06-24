@@ -77,8 +77,11 @@ export default function VerifyEmailUI({ email }: { email?: string }) {
             {t("verification.checkEmailTitle")}
           </CardTitle>
           <CardDescription>
-            {t("verification.checkEmailDescription", {
+            {t.rich("verification.checkEmailDescription", {
               email: email || t("verification.emailPlaceholder"),
+              emailTag: (chunks) => (
+                <span style={{ fontFamily: "var(--font-inter)" }}>{chunks}</span>
+              ),
             })}
           </CardDescription>
         </CardHeader>
@@ -121,6 +124,8 @@ export default function VerifyEmailUI({ email }: { email?: string }) {
                     placeholder={t("verification.emailPlaceholder")}
                     value={resendEmail}
                     onChange={(e) => setResendEmail(e.target.value)}
+                    style={{ fontFamily: "var(--font-inter)" }}
+                    dir="ltr"
                   />
                 </UIField>
 

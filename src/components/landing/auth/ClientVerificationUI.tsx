@@ -129,6 +129,8 @@ export default function ClientVerificationUI({
                       placeholder={t("verification.emailPlaceholder")}
                       value={resendEmail}
                       onChange={(e) => setResendEmail(e.target.value)}
+                      style={{ fontFamily: "var(--font-inter)" }}
+                      dir="ltr"
                     />
                   </UIField>
 

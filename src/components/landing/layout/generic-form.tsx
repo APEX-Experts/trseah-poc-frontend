@@ -224,6 +224,25 @@ export function GenericForm<T>({
                       }}
                       aria-invalid={isInvalid}
                     />
+                  ) : fieldConfig.type === "email" || fieldConfig.type === "password" ? (
+                    <Input
+                      {...fieldConfig}
+                      id={field.name}
+                      name={field.name}
+                      value={(field.state.value ?? "") as string}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => {
+                        // Parse numbers natively
+                        const val =
+                          fieldConfig.type === "number" ? Number(e.target.value) : e.target.value;
+                        field.handleChange(val as DeepValue<T, Extract<keyof T, string>>);
+                      }}
+                      aria-invalid={isInvalid}
+                      style={{
+                        fontFamily: "var(--font-inter)",
+                      }}
+                      dir="ltr"
+                    />
                   ) : (
                     <Input
                       {...fieldConfig}

@@ -5,6 +5,7 @@ import {
 } from "@/lib/api/react-query/auth/auth";
 import { UnwrapEnvelope } from "@/lib/apiClient";
 import { AuthControllerGetProfile200 } from "@/types/api";
+import { useQueryClient } from "@tanstack/react-query";
 
 export {
   useAuthControllerLogin,
@@ -41,9 +42,12 @@ export const useAuthAndLogout = (
         router.push("/auth/login");
         // Force a refresh to clear any cached states if necessary
         router.refresh();
+        localStorage.removeItem("onboarding-storage");
+        queryClient.clear();
       },
     },
   });
+  const queryClient = useQueryClient();
 
   const handleLogout = () => {
     logout();
