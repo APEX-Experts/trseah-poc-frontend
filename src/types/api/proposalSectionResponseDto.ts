@@ -4,10 +4,7 @@
  * API
  * OpenAPI spec version: 1.0
  */
-import type { ProposalSectionResponseDtoContentAr } from "./proposalSectionResponseDtoContentAr";
-import type { ProposalSectionResponseDtoContentEn } from "./proposalSectionResponseDtoContentEn";
 import type { ProposalSectionResponseDtoStatus } from "./proposalSectionResponseDtoStatus";
-import type { ProposalSectionResponseDtoTitleEn } from "./proposalSectionResponseDtoTitleEn";
 
 export interface ProposalSectionResponseDto {
   id: string;
@@ -15,11 +12,11 @@ export interface ProposalSectionResponseDto {
   sectionType: string;
   titleAr: string;
   /** @nullable */
-  titleEn?: ProposalSectionResponseDtoTitleEn;
+  titleEn?: string | null;
   /** @nullable */
-  contentAr?: ProposalSectionResponseDtoContentAr;
+  contentAr?: string | null;
   /** @nullable */
-  contentEn?: ProposalSectionResponseDtoContentEn;
+  contentEn?: string | null;
   aiGenerated: boolean;
   humanApproved: boolean;
   sortOrder: number;

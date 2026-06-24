@@ -8,6 +8,9 @@ import type {
   AdminDeliverProposalDto,
   AdminProposalsControllerDeliverProposal200,
   AdminProposalsControllerGetProposalDetail200,
+  AdminProposalsControllerGetProposalSections200,
+  AdminProposalsControllerUpdateProposalSection200,
+  UpdateProposalSectionDto,
 } from "../../../../types/api";
 
 import { api } from "../../../apiClient";
@@ -47,7 +50,45 @@ export const getAdminProposals = () => {
       options,
     );
   };
-  return { adminProposalsControllerGetProposalDetail, adminProposalsControllerDeliverProposal };
+  /**
+   * Retrieves all sections of a proposal for administrative review.
+   * @summary Get all sections of a proposal for admin
+   */
+  const adminProposalsControllerGetProposalSections = (
+    id: string,
+    options?: SecondParameter<typeof api<AdminProposalsControllerGetProposalSections200>>,
+  ) => {
+    return api<AdminProposalsControllerGetProposalSections200>(
+      { url: `/api/admin-api/proposals/${id}/sections`, method: "GET" },
+      options,
+    );
+  };
+  /**
+   * Updates a specific section of a proposal for administrative review.
+   * @summary Update a specific section of a proposal for admin
+   */
+  const adminProposalsControllerUpdateProposalSection = (
+    id: string,
+    sectionId: string,
+    updateProposalSectionDto: UpdateProposalSectionDto,
+    options?: SecondParameter<typeof api<AdminProposalsControllerUpdateProposalSection200>>,
+  ) => {
+    return api<AdminProposalsControllerUpdateProposalSection200>(
+      {
+        url: `/api/admin-api/proposals/${id}/sections/${sectionId}`,
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        data: updateProposalSectionDto,
+      },
+      options,
+    );
+  };
+  return {
+    adminProposalsControllerGetProposalDetail,
+    adminProposalsControllerDeliverProposal,
+    adminProposalsControllerGetProposalSections,
+    adminProposalsControllerUpdateProposalSection,
+  };
 };
 export type AdminProposalsControllerGetProposalDetailResult = NonNullable<
   Awaited<
@@ -57,5 +98,17 @@ export type AdminProposalsControllerGetProposalDetailResult = NonNullable<
 export type AdminProposalsControllerDeliverProposalResult = NonNullable<
   Awaited<
     ReturnType<ReturnType<typeof getAdminProposals>["adminProposalsControllerDeliverProposal"]>
+  >
+>;
+export type AdminProposalsControllerGetProposalSectionsResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getAdminProposals>["adminProposalsControllerGetProposalSections"]>
+  >
+>;
+export type AdminProposalsControllerUpdateProposalSectionResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getAdminProposals>["adminProposalsControllerUpdateProposalSection"]
+    >
   >
 >;

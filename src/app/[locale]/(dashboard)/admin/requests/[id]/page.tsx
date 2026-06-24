@@ -560,15 +560,19 @@ export default function AdminRequestDetailPage() {
                         </p>
                       )}
                     </div>
-                    <Link
-                      href={`/admin/proposals/${request.proposalId || request.id}`}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition-colors shrink-0"
-                    >
-                      <FileText className="h-3.5 w-3.5" />
-                      {locale === "ar"
-                        ? "فتح استوديو المقترحات الذكي"
-                        : "Open Smart Proposal Studio"}
-                    </Link>
+                    {request.status === "paid" ||
+                    request.status === "in_progress" ||
+                    request.status === "delivered" ? (
+                      <Link
+                        href={`/admin/proposals/${request.proposalId || request.id}`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition-colors shrink-0"
+                      >
+                        <FileText className="h-3.5 w-3.5" />
+                        {locale === "ar"
+                          ? "فتح استوديو المقترحات الذكي"
+                          : "Open Smart Proposal Studio"}
+                      </Link>
+                    ) : null}
                   </div>
                 </div>
               </>
