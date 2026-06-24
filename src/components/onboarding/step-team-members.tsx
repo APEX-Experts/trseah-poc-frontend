@@ -124,6 +124,7 @@ export function StepTeamMembers() {
               name: "nameAr",
               label: t("Team.nameAr"),
               type: "text",
+              required: true,
             },
             {
               name: "nameEn",
@@ -134,6 +135,7 @@ export function StepTeamMembers() {
               name: "roleAr",
               label: t("Team.roleAr"),
               type: "text",
+              required: true,
             },
             {
               name: "roleEn",
@@ -144,6 +146,7 @@ export function StepTeamMembers() {
               name: "yearsOfExperience",
               label: t("Team.experience"),
               type: "number",
+              required: true,
             },
             {
               name: "file",

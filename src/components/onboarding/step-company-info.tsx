@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { OnboardingFooter } from "./onboarding-footer";
 import { GenericForm } from "@/components/landing/layout/generic-form";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
-import { createCompanySchema } from "@/lib/schemas";
+import { createCompanySchema, CompanyInfoType } from "@/lib/schemas";
 
 export function StepCompanyInfo() {
   const t = useTranslations("Onboarding");
@@ -21,10 +21,20 @@ export function StepCompanyInfo() {
       </div>
 
       <div className="bg-white p-8 rounded-2xl border border-border card-shadow">
-        <GenericForm
+        <GenericForm<CompanyInfoType>
           title=""
           schema={companySchema}
-          defaultValues={companyInfo || { nameAr: "", nameEn: "" }}
+          defaultValues={
+            (companyInfo || {
+              nameAr: "",
+              nameEn: "",
+              crNumber: "",
+              crExpiry: "",
+              localContentScore: undefined,
+              sector: "",
+              size: undefined,
+            }) as CompanyInfoType
+          }
           submitText={t("Actions.continue")}
           hideReset
           hideSubmit
@@ -34,6 +44,7 @@ export function StepCompanyInfo() {
               name: "nameAr",
               label: t("Company.nameAr"),
               type: "text",
+              required: true,
             },
             {
               name: "nameEn",
@@ -66,6 +77,7 @@ export function StepCompanyInfo() {
               name: "size",
               label: t("Company.size"),
               type: "select",
+              required: true,
               options: [
                 { label: t("Company.sizes.micro"), value: "micro" },
                 { label: t("Company.sizes.small"), value: "small" },

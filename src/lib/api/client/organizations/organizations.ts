@@ -9,6 +9,8 @@ import type {
   CreateOrganizationDto,
   CreateProjectDto,
   CreateTeamMemberDto,
+  OnboardingDto,
+  OnboardingResponseDto,
   OrgDocumentResponseDto,
   OrganizationResponseDto,
   PastProjectResponseDto,
@@ -199,6 +201,36 @@ export const getOrganizations = () => {
       options,
     );
   };
+  /**
+   * Registers the organization, relates the user, adds team members, past projects, and uploads documents atomically.
+   * @summary Onboard a new organization in a single transaction
+   */
+  const organizationsControllerOnboard = (
+    onboardingDto: OnboardingDto,
+    options?: SecondParameter<typeof api<OnboardingResponseDto>>,
+  ) => {
+    const formData = new FormData();
+    formData.append(`organization`, onboardingDto.organization);
+    if (onboardingDto.teamMembers !== undefined) {
+      formData.append(`teamMembers`, onboardingDto.teamMembers);
+    }
+    if (onboardingDto.projects !== undefined) {
+      formData.append(`projects`, onboardingDto.projects);
+    }
+    if (onboardingDto.documents !== undefined) {
+      formData.append(`documents`, onboardingDto.documents);
+    }
+
+    return api<OnboardingResponseDto>(
+      {
+        url: `/api/organizations/onboard`,
+        method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
+        data: formData,
+      },
+      options,
+    );
+  };
   return {
     organizationsControllerCreate,
     organizationsControllerGetMe,
@@ -211,6 +243,7 @@ export const getOrganizations = () => {
     organizationsControllerListTeam,
     organizationsControllerAddProject,
     organizationsControllerListProjects,
+    organizationsControllerOnboard,
   };
 };
 export type OrganizationsControllerCreateResult = NonNullable<
@@ -245,4 +278,7 @@ export type OrganizationsControllerAddProjectResult = NonNullable<
 >;
 export type OrganizationsControllerListProjectsResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerListProjects"]>>
+>;
+export type OrganizationsControllerOnboardResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getOrganizations>["organizationsControllerOnboard"]>>
 >;

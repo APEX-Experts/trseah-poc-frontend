@@ -160,6 +160,7 @@ export function StepPastProjects() {
               name: "titleAr",
               label: t("Projects.projectNameAr"),
               type: "text",
+              required: true,
             },
             {
               name: "titleEn",

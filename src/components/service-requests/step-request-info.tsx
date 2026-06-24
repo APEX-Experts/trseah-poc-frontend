@@ -44,7 +44,7 @@ export function StepRequestInfo() {
   }
 
   // Pre-fill mapping:
-  const mappedOrg: CompanyInfoType = {
+  const mappedOrg = {
     nameAr: org.nameAr || "",
     nameEn: org.nameEn || "",
     crNumber: org.crNumber || "",
@@ -54,7 +54,7 @@ export function StepRequestInfo() {
     size: org.size as "micro" | "small" | "medium" | "large" | undefined,
   };
 
-  const defaultValues: CompanyInfoType = {
+  const defaultValues = {
     nameAr: editedOrganizationInfo?.nameAr || mappedOrg.nameAr,
     nameEn: editedOrganizationInfo?.nameEn ?? mappedOrg.nameEn,
     crNumber: editedOrganizationInfo?.crNumber ?? mappedOrg.crNumber,
@@ -65,7 +65,7 @@ export function StepRequestInfo() {
         : mappedOrg.localContentScore,
     sector: editedOrganizationInfo?.sector ?? mappedOrg.sector,
     size: editedOrganizationInfo?.size ?? mappedOrg.size,
-  };
+  } as CompanyInfoType;
 
   const handleSubmit = async (values: CompanyInfoType) => {
     // Compare form values with the API values to see if there are edits
@@ -125,6 +125,7 @@ export function StepRequestInfo() {
               name: "nameAr",
               label: tOnboarding("Company.nameAr"),
               type: "text",
+              required: true,
             },
             {
               name: "nameEn",
@@ -157,6 +158,7 @@ export function StepRequestInfo() {
               name: "size",
               label: tOnboarding("Company.size"),
               type: "select",
+              required: true,
               options: [
                 { label: tOnboarding("Company.sizes.micro"), value: "micro" },
                 { label: tOnboarding("Company.sizes.small"), value: "small" },

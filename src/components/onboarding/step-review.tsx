@@ -10,12 +10,9 @@ import { OnboardingFooter } from "./onboarding-footer";
 import { toast } from "sonner";
 import { Building2, Users, Briefcase, FileText, Loader2, User } from "lucide-react";
 
-import {
-  useOrganizationsControllerCreate,
-  useOrganizationsControllerAddTeamMember,
-  useOrganizationsControllerAddProject,
-  useOrganizationsControllerUploadDocument,
-} from "@/lib/api/react-query/organizations/organizations";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/apiClient";
+import type { OnboardingResponseDto } from "@/types/api";
 
 export function StepReview() {
   const t = useTranslations("Onboarding");
@@ -26,10 +23,15 @@ export function StepReview() {
   const { companyInfo, teamMembers, projects, documents, prevStep, clearStore } =
     useOnboardingStore();
 
-  const { mutateAsync: createOrganization } = useOrganizationsControllerCreate();
-  const { mutateAsync: addTeamMember } = useOrganizationsControllerAddTeamMember();
-  const { mutateAsync: addProject } = useOrganizationsControllerAddProject();
-  const { mutateAsync: uploadDocument } = useOrganizationsControllerUploadDocument();
+  const { mutateAsync: onboard } = useMutation({
+    mutationFn: (data: FormData) =>
+      api<OnboardingResponseDto>({
+        url: `/api/organizations/onboard`,
+        method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
+        data,
+      }),
+  });
 
   const handleSubmit = async () => {
     try {
@@ -40,30 +42,33 @@ export function StepReview() {
         return;
       }
 
-      // 1. Create Organization First
-      await createOrganization({ data: companyInfo });
+      const formData = new FormData();
+      formData.append("organization", JSON.stringify(companyInfo));
 
-      // 2. Add Team Members
-      for (const member of teamMembers) {
-        await addTeamMember({ data: member });
-      }
+      // Build team members payload without the file property inside JSON, and append files separately
+      const teamMembersPayload = teamMembers.map(({ file: _, ...rest }) => rest);
+      formData.append("teamMembers", JSON.stringify(teamMembersPayload));
 
-      // 3. Add Projects
-      for (const project of projects) {
-        await addProject({ data: project });
-      }
+      teamMembers.forEach((member, index) => {
+        if (member.file) {
+          formData.append(`team_member_${index}`, member.file);
+        }
+      });
 
-      // 4. Upload Documents
-      for (const doc of documents) {
-        await uploadDocument({
-          data: {
-            file: doc.file,
-            nameAr: doc.nameAr,
-            nameEn: doc.nameEn,
-            documentType: doc.documentType,
-          },
-        });
-      }
+      // Build projects payload
+      formData.append("projects", JSON.stringify(projects));
+
+      // Build documents payload without the file property inside JSON, and append files separately
+      const documentsPayload = documents.map(({ file: _file, id: _id, ...rest }) => rest);
+      formData.append("documents", JSON.stringify(documentsPayload));
+
+      documents.forEach((doc, index) => {
+        if (doc.file) {
+          formData.append(`document_${index}`, doc.file);
+        }
+      });
+
+      await onboard(formData);
 
       toast.success(t("Actions.completeMessage"));
       clearStore(); // Wipe local storage

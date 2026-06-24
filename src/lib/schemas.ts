@@ -7,29 +7,40 @@ type TFunction = _Translator<Record<string, any>, never>;
 
 export const createCompanySchema = (t: TFunction) =>
   z.object({
-    nameAr: z.string().min(2, t("Status.required")),
+    nameAr: z.string().min(2, t("Company.nameArRequired")),
     nameEn: z.string().optional(),
     crNumber: z.string().optional(),
     crExpiry: z.string().optional(),
-    localContentScore: z.number().min(0).max(999.99).multipleOf(0.01).optional(),
+    localContentScore: z
+      .number({ message: t("Company.localContentScoreInvalid") })
+      .min(0, t("Company.localContentScoreMin"))
+      .max(999.99, t("Company.localContentScoreMax"))
+      .multipleOf(0.01, t("Company.localContentScoreStep"))
+      .optional(),
     sector: z.string().optional(),
-    size: z.enum(["micro", "small", "medium", "large"]).optional(),
+    size: z.enum(["micro", "small", "medium", "large"], {
+      message: t("Company.sizeRequired"),
+    }),
   });
 
 export const createTeamSchema = (t: TFunction) =>
   z.object({
-    nameAr: z.string().min(2, t("Status.required")),
+    nameAr: z.string().min(2, t("Team.nameArRequired")),
     nameEn: z.string().optional(),
-    roleAr: z.string().min(2, t("Status.required")),
+    roleAr: z.string().min(2, t("Team.roleArRequired")),
     roleEn: z.string().optional(),
-    yearsOfExperience: z.number().min(0),
+    yearsOfExperience: z
+      .number({
+        message: t("Team.yearsRequired"),
+      })
+      .min(0, t("Team.yearsMin")),
     file: z.any().optional(),
   });
 
 export const createProjectSchema = (t: TFunction) =>
   z
     .object({
-      titleAr: z.string().min(2, t("Status.required")),
+      titleAr: z.string().min(2, t("Projects.titleArRequired")),
       titleEn: z.string().optional(),
       clientNameAr: z.string().optional(),
       clientNameEn: z.string().optional(),

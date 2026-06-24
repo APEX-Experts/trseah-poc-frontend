@@ -185,7 +185,10 @@ export function StepTenderSelection() {
       {/* Platform Tender Selection */}
       {rfpSourceType === "platform" && (
         <div className="bg-white p-6 rounded-2xl border border-border card-shadow space-y-6">
-          <h3 className="h5 text-primary-900">{t("listedTenderOption")}</h3>
+          <h3 className="h5 text-primary-900">
+            {t("listedTenderOption")}
+            <span className="text-destructive mx-1">*</span>
+          </h3>
 
           {selectedTender ? (
             <div className="flex items-start justify-between p-4 border border-primary-800/10 bg-primary-50/50 rounded-xl">
