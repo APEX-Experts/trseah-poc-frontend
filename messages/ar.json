@@ -155,7 +155,7 @@
     "stat3Label": "معدل رضا المستخدمين",
     "verification": {
       "checkEmailTitle": "تحقق من بريدك الإلكتروني",
-      "checkEmailDescription": "لقد أرسلنا رابط التحقق إلى {email}.",
+      "checkEmailDescription": "لقد أرسلنا رابط التحقق إلى <emailTag>{email}</emailTag>.",
       "checkEmailInstructions": "يرجى النقر على الرابط في البريد للتحقق من حسابك. إذا لم تجده، تحقق من مجلد الرسائل غير المرغوب فيها.",
       "emailVerifiedTitle": "تم التحقق من البريد الإلكتروني!",
       "verificationFailedTitle": "فشل التحقق",

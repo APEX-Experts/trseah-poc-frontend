@@ -161,7 +161,7 @@
       "resendDialogTitle": "Resend Verification",
       "resendDialogDescription": "Enter your email address and we'll send you a new verification link.",
       "checkEmailTitle": "Check your email",
-      "checkEmailDescription": "We've sent a verification link to {email}.",
+      "checkEmailDescription": "We've sent a verification link to <emailTag>{email}</emailTag>.",
       "checkEmailInstructions": "Please click the link in the email to verify your account. If you don't see it, check your spam folder.",
       "emailLabel": "Email Address",
       "emailPlaceholder": "john.doe@example.com",
