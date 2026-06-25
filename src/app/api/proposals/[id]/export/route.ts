@@ -1,10 +1,12 @@
-import puppeteer from "puppeteer";
-import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+import puppeteer from "puppeteer";
 
-export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
+    const searchParams = req.nextUrl.searchParams;
+    const admin = searchParams.get("admin");
     const cookieStore = await cookies();
     // Launch local Puppeteer
     const browser = await puppeteer.launch({
@@ -20,7 +22,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     browser.setCookie(...puppeteerCookies);
     const page = await browser.newPage();
 
-    const targetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/proposals/${id}/print`;
+    const targetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/proposals/${id}/print${admin === "true" ? "/admin" : ""}`;
 
     // networkidle0 ensures all fonts, images, and Tailwind styles are fully loaded
     await page.goto(targetUrl, { waitUntil: "networkidle0" });

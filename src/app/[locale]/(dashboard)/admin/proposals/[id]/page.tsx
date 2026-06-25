@@ -33,6 +33,7 @@ import {
   ArrowRight,
   CheckCircle,
   Clock,
+  Download,
   Loader2,
   RotateCcw,
   Save,
@@ -102,6 +103,17 @@ export default function AdminProposalWorkspacePage() {
 
   const selectedSection = sections.find((s) => s.id === selectedSectionId);
   const allSectionsGenerated = sections.every((sec) => sec.humanApproved === true);
+
+  const [isExporting, setIsExporting] = useState(false);
+  const handleExportPDF = async () => {
+    setIsExporting(true);
+    try {
+      // Calling the API route triggers the download
+      window.open(`/api/proposals/${id}/export?admin=true`, "_blank");
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   // Formatted date
   const formattedDate = new Date(
@@ -393,20 +405,36 @@ export default function AdminProposalWorkspacePage() {
             </Button>
           )}
 
-          <Button
-            variant="outline"
-            className="border-neutral-200 text-neutral-700 font-bold h-9 px-4 rounded-xl gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
-            onClick={handleResetSection}
-            disabled={
-              isGenerating ||
-              deliverProposalMutation.isPending ||
-              generateAiMutation.isPending ||
-              selectedSection?.humanApproved
-            }
-          >
-            <RotateCcw className="h-4 w-4" />
-            <span>{t("reset")}</span>
-          </Button>
+          {proposalData?.status === "submitted" ? (
+            <Button
+              variant="outline"
+              className="border-neutral-200 text-neutral-700 font-bold h-9 px-4 rounded-xl gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+              onClick={handleExportPDF}
+              disabled={isExporting}
+            >
+              {isExporting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Download className="w-4 h-4" />
+              )}
+              <span>{locale === "ar" ? "تصدير إلى PDF" : "Export to PDF"}</span>
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              className="border-neutral-200 text-neutral-700 font-bold h-9 px-4 rounded-xl gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+              onClick={handleResetSection}
+              disabled={
+                isGenerating ||
+                deliverProposalMutation.isPending ||
+                generateAiMutation.isPending ||
+                selectedSection?.humanApproved
+              }
+            >
+              <RotateCcw className="h-4 w-4" />
+              <span>{t("reset")}</span>
+            </Button>
+          )}
 
           <Button
             variant="default"
