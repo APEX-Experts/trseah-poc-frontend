@@ -5,7 +5,6 @@
  * OpenAPI spec version: 1.0
  */
 
-/**
- * @nullable
- */
-export type ProposalSectionResponseDtoTitleEn = { [key: string]: unknown } | null;
+export interface Array {
+  [key: string]: unknown;
+}

@@ -12,6 +12,7 @@ interface CoverPageFormProps {
   isRtl: boolean;
   proposalData?: ProposalDto | null;
   formattedDate: string;
+  isDisabled?: boolean;
 }
 
 export default function CoverPageForm({
@@ -20,6 +21,7 @@ export default function CoverPageForm({
   isRtl,
   proposalData,
   formattedDate,
+  isDisabled,
 }: CoverPageFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
@@ -68,6 +70,7 @@ export default function CoverPageForm({
               className={inputClass}
               value={coverPageData.title}
               onChange={(e) => updateCoverPageField("title", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -77,6 +80,7 @@ export default function CoverPageForm({
               className={inputClass}
               value={coverPageData.presentedTo}
               onChange={(e) => updateCoverPageField("presentedTo", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -87,6 +91,7 @@ export default function CoverPageForm({
             markdown={coverPageData.description || ""}
             onChange={(value) => updateCoverPageField("description", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
 
@@ -98,6 +103,7 @@ export default function CoverPageForm({
               className={inputClass}
               value={coverPageData.reference}
               onChange={(e) => updateCoverPageField("reference", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -107,6 +113,7 @@ export default function CoverPageForm({
               className={inputClass}
               value={coverPageData.date}
               onChange={(e) => updateCoverPageField("date", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -116,6 +123,7 @@ export default function CoverPageForm({
               className={inputClass}
               value={coverPageData.orgName}
               onChange={(e) => updateCoverPageField("orgName", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -135,6 +143,7 @@ export default function CoverPageForm({
               className={inputClass}
               value={coverPageData.vision}
               onChange={(e) => updateCoverPageField("vision", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -144,6 +153,7 @@ export default function CoverPageForm({
               className={inputClass}
               value={coverPageData.specialists}
               onChange={(e) => updateCoverPageField("specialists", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -153,6 +163,7 @@ export default function CoverPageForm({
               className={inputClass}
               value={coverPageData.duration}
               onChange={(e) => updateCoverPageField("duration", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -162,6 +173,7 @@ export default function CoverPageForm({
               className={inputClass}
               value={coverPageData.value}
               onChange={(e) => updateCoverPageField("value", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
         </div>

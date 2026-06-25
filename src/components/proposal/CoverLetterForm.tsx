@@ -14,6 +14,7 @@ interface CoverLetterFormProps {
   requestData?: ProposalDto["request"] | null;
   tenderData?: ProposalDto["tender"] | null;
   formattedDate: string;
+  isDisabled?: boolean;
 }
 
 export default function CoverLetterForm({
@@ -24,6 +25,7 @@ export default function CoverLetterForm({
   requestData,
   tenderData,
   formattedDate,
+  isDisabled,
 }: CoverLetterFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
@@ -79,6 +81,7 @@ export default function CoverLetterForm({
               className={inputClass}
               value={coverLetterData.companyName}
               onChange={(e) => updateCoverLetterField("companyName", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -88,6 +91,7 @@ export default function CoverLetterForm({
               className={inputClass}
               value={coverLetterData.entityName}
               onChange={(e) => updateCoverLetterField("entityName", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -97,6 +101,7 @@ export default function CoverLetterForm({
               className={inputClass}
               value={coverLetterData.reference}
               onChange={(e) => updateCoverLetterField("reference", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -109,6 +114,7 @@ export default function CoverLetterForm({
               className={inputClass}
               value={coverLetterData.recipientTitle}
               onChange={(e) => updateCoverLetterField("recipientTitle", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -118,6 +124,7 @@ export default function CoverLetterForm({
               className={inputClass}
               value={coverLetterData.recipientName}
               onChange={(e) => updateCoverLetterField("recipientName", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -127,6 +134,7 @@ export default function CoverLetterForm({
               className={inputClass}
               value={coverLetterData.recipientLocation}
               onChange={(e) => updateCoverLetterField("recipientLocation", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -138,6 +146,7 @@ export default function CoverLetterForm({
             className={inputClass}
             value={coverLetterData.tenderTitle}
             onChange={(e) => updateCoverLetterField("tenderTitle", e.target.value)}
+            disabled={isDisabled}
           />
         </div>
 
@@ -148,6 +157,7 @@ export default function CoverLetterForm({
             className={inputClass}
             value={coverLetterData.subject}
             onChange={(e) => updateCoverLetterField("subject", e.target.value)}
+            disabled={isDisabled}
           />
         </div>
       </div>
@@ -164,6 +174,7 @@ export default function CoverLetterForm({
             markdown={coverLetterData.body || ""}
             onChange={(value) => updateCoverLetterField("body", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>
@@ -182,6 +193,7 @@ export default function CoverLetterForm({
               className={inputClass}
               value={coverLetterData.signatoryName}
               onChange={(e) => updateCoverLetterField("signatoryName", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -191,6 +203,7 @@ export default function CoverLetterForm({
               className={inputClass}
               value={coverLetterData.signatoryTitle}
               onChange={(e) => updateCoverLetterField("signatoryTitle", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -200,6 +213,7 @@ export default function CoverLetterForm({
               className={inputClass}
               value={coverLetterData.date}
               onChange={(e) => updateCoverLetterField("date", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
         </div>

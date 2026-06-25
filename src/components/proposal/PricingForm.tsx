@@ -16,9 +16,10 @@ interface PricingFormProps {
   content: string;
   onChange: (newContent: string) => void;
   isRtl: boolean;
+  isDisabled?: boolean;
 }
 
-export default function PricingForm({ content, onChange, isRtl }: PricingFormProps) {
+export default function PricingForm({ content, onChange, isRtl, isDisabled }: PricingFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
 
@@ -147,6 +148,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
               type="text"
               className={inputClass}
               value={dataState.title}
+              disabled={isDisabled}
               onChange={(e) => updateField("title", e.target.value)}
             />
           </div>
@@ -156,6 +158,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
               type="text"
               className={inputClass}
               value={dataState.subtitle || ""}
+              disabled={isDisabled}
               onChange={(e) => updateField("subtitle", e.target.value)}
             />
           </div>
@@ -171,6 +174,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
           <button
             type="button"
             onClick={handleAddMetric}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.pricing.addMetric")}
@@ -188,6 +192,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                 <input
                   type="text"
                   className={inputClass}
+                  disabled={isDisabled}
                   value={metric.value}
                   onChange={(e) => handleUpdateMetric(idx, "value", e.target.value)}
                 />
@@ -197,6 +202,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                 <input
                   type="text"
                   className={inputClass}
+                  disabled={isDisabled}
                   value={metric.label}
                   onChange={(e) => handleUpdateMetric(idx, "label", e.target.value)}
                 />
@@ -207,6 +213,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                   type="text"
                   className={inputClass}
                   value={metric.sublabel}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateMetric(idx, "sublabel", e.target.value)}
                 />
               </div>
@@ -216,6 +223,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                   id={`metric-highlighted-${idx}`}
                   checked={!!metric.highlighted}
                   onChange={(e) => handleUpdateMetric(idx, "highlighted", e.target.checked)}
+                  disabled={isDisabled}
                   className="rounded border-neutral-300 text-primary-600 focus:ring-primary-500 h-4 w-4"
                 />
                 <label
@@ -228,6 +236,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
               <button
                 type="button"
                 onClick={() => handleRemoveMetric(idx)}
+                disabled={isDisabled}
                 className="text-xs px-2.5 py-1.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold self-end sm:mb-0.5"
               >
                 {t("form.pricing.remove")}
@@ -246,6 +255,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
           <button
             type="button"
             onClick={handleAddItem}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.pricing.addItem")}
@@ -265,6 +275,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                 <button
                   type="button"
                   onClick={() => handleRemoveItem(idx)}
+                  disabled={isDisabled}
                   className="text-xs px-2.5 py-1.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold"
                 >
                   {t("form.pricing.remove")}
@@ -278,6 +289,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                     type="text"
                     className={inputClass}
                     value={pricingItem.item}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateItem(idx, "item", e.target.value)}
                   />
                 </div>
@@ -287,6 +299,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                     type="text"
                     className={inputClass}
                     value={pricingItem.unit}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateItem(idx, "unit", e.target.value)}
                   />
                 </div>
@@ -299,6 +312,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                     type="number"
                     className={inputClass}
                     value={pricingItem.amount}
+                    disabled={isDisabled}
                     onChange={(e) =>
                       handleUpdateItem(idx, "amount", parseFloat(e.target.value) || 0)
                     }
@@ -310,6 +324,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                     type="text"
                     className={inputClass}
                     value={pricingItem.description}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateItem(idx, "description", e.target.value)}
                   />
                 </div>
@@ -326,6 +341,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
               type="text"
               className={inputClass}
               value={dataState.totalLabel}
+              disabled={isDisabled}
               onChange={(e) => updateField("totalLabel", e.target.value)}
             />
           </div>
@@ -334,6 +350,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
             <input
               type="number"
               className={inputClass}
+              disabled={isDisabled}
               value={dataState.totalAmount}
               onChange={(e) => updateField("totalAmount", parseFloat(e.target.value) || 0)}
             />
@@ -349,6 +366,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
           </h3>
           <button
             type="button"
+            disabled={isDisabled}
             onClick={handleAddTerm}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
@@ -366,6 +384,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
                 <input
                   type="text"
                   className={inputClass}
+                  disabled={isDisabled}
                   placeholder={t("form.pricing.termPlaceholder")}
                   value={term.text}
                   onChange={(e) => handleUpdateTerm(idx, e.target.value)}
@@ -374,6 +393,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
               <button
                 type="button"
                 onClick={() => handleRemoveTerm(idx)}
+                disabled={isDisabled}
                 className="text-xs px-2.5 py-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold"
               >
                 {t("form.pricing.remove")}
@@ -394,6 +414,7 @@ export default function PricingForm({ content, onChange, isRtl }: PricingFormPro
             markdown={dataState.additionalContent || ""}
             onChange={(value) => updateField("additionalContent", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>

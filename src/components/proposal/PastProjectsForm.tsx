@@ -16,6 +16,7 @@ interface PastProjectsFormProps {
   onChange: (newContent: string) => void;
   isRtl: boolean;
   proposalData?: ProposalDto | null;
+  isDisabled?: boolean;
 }
 
 export default function PastProjectsForm({
@@ -23,6 +24,7 @@ export default function PastProjectsForm({
   onChange,
   isRtl,
   proposalData,
+  isDisabled = false,
 }: PastProjectsFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
@@ -118,6 +120,7 @@ export default function PastProjectsForm({
               type="text"
               className={inputClass}
               value={dataState.title}
+              disabled={isDisabled}
               onChange={(e) => updateField("title", e.target.value)}
             />
           </div>
@@ -127,6 +130,7 @@ export default function PastProjectsForm({
               markdown={dataState.subtitle || ""}
               onChange={(value) => updateField("subtitle", value)}
               dir={locale === "ar" ? "rtl" : "ltr"}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -141,6 +145,7 @@ export default function PastProjectsForm({
           <button
             type="button"
             onClick={handleAddProject}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.pastProjects.addProject")}
@@ -161,6 +166,7 @@ export default function PastProjectsForm({
                 <button
                   type="button"
                   onClick={() => handleRemoveProject(idx)}
+                  disabled={isDisabled}
                   className="text-xs px-2.5 py-1.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold"
                 >
                   {t("form.pastProjects.remove")}
@@ -175,6 +181,7 @@ export default function PastProjectsForm({
                     type="text"
                     className={inputClass}
                     value={project.title}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateProject(idx, "title", e.target.value)}
                   />
                 </div>
@@ -184,6 +191,7 @@ export default function PastProjectsForm({
                     type="text"
                     className={inputClass}
                     value={project.clientName}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateProject(idx, "clientName", e.target.value)}
                   />
                 </div>
@@ -193,6 +201,7 @@ export default function PastProjectsForm({
                     type="text"
                     className={inputClass}
                     value={project.value}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateProject(idx, "value", e.target.value)}
                   />
                 </div>
@@ -202,6 +211,7 @@ export default function PastProjectsForm({
                     type="text"
                     className={inputClass}
                     value={project.year}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateProject(idx, "year", e.target.value)}
                   />
                 </div>
@@ -214,6 +224,7 @@ export default function PastProjectsForm({
                   markdown={project.description || ""}
                   onChange={(val) => handleUpdateProject(idx, "description", val)}
                   dir={locale === "ar" ? "rtl" : "ltr"}
+                  disabled={isDisabled}
                 />
               </div>
 
@@ -226,6 +237,7 @@ export default function PastProjectsForm({
                   <button
                     type="button"
                     onClick={() => handleAddMetric(idx)}
+                    disabled={isDisabled}
                     className="text-[10px] px-2.5 py-1 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-bold rounded-lg transition-all"
                   >
                     + {t("form.pastProjects.addMetric")}
@@ -240,11 +252,13 @@ export default function PastProjectsForm({
                           type="text"
                           className={inputClass}
                           value={metric}
+                          disabled={isDisabled}
                           onChange={(e) => handleUpdateMetric(idx, mIdx, e.target.value)}
                         />
                         <button
                           type="button"
                           onClick={() => handleRemoveMetric(idx, mIdx)}
+                          disabled={isDisabled}
                           className="text-xs p-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold"
                         >
                           ✕
@@ -269,6 +283,7 @@ export default function PastProjectsForm({
             markdown={dataState.additionalContent || ""}
             onChange={(value) => updateField("additionalContent", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>

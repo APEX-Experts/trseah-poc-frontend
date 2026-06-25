@@ -5,11 +5,12 @@
  * OpenAPI spec version: 1.0
  */
 
-export * from "./adminDeliverProposalDto";
 export * from "./adminProposalDetailResponseDto";
 export * from "./adminProposalDetailResponseDtoStatus";
 export * from "./adminProposalsControllerDeliverProposal200";
 export * from "./adminProposalsControllerGetProposalDetail200";
+export * from "./adminProposalsControllerGetProposalSections200";
+export * from "./adminProposalsControllerUpdateProposalSection200";
 export * from "./adminRequestDetailResponseDto";
 export * from "./adminRequestDetailResponseDtoStatus";
 export * from "./adminRequestsControllerGenerateInvoice200";
@@ -24,6 +25,7 @@ export * from "./adminRequestsControllerReviewRequest200";
 export * from "./adminTendersControllerImportTenders200";
 export * from "./apiErrorResponseDto";
 export * from "./apiErrorResponseDtoStatusCode";
+export * from "./array";
 export * from "./authControllerForgotPassword200";
 export * from "./authControllerGetPermissions200";
 export * from "./authControllerGetProfile200";
@@ -105,12 +107,11 @@ export * from "./proposalResponseDto";
 export * from "./proposalResponseDtoStatus";
 export * from "./proposalsControllerListProposalsParams";
 export * from "./proposalSectionResponseDto";
-export * from "./proposalSectionResponseDtoContentAr";
-export * from "./proposalSectionResponseDtoContentEn";
 export * from "./proposalSectionResponseDtoStatus";
-export * from "./proposalSectionResponseDtoTitleEn";
 export * from "./providersResponseDto";
 export * from "./providersResponseDtoProvidersItem";
+export * from "./pythonAiControllerGenerateLocale";
+export * from "./pythonAiControllerGenerateParams";
 export * from "./refundPaymentDto";
 export * from "./refundResultDto";
 export * from "./refundResultDtoStatus";
@@ -144,6 +145,8 @@ export * from "./tendersControllerListTendersStatus";
 export * from "./tendersImportDto";
 export * from "./updateOrganizationDto";
 export * from "./updateOrganizationDtoMetadata";
+export * from "./updateProposalSectionDto";
+export * from "./updateProposalSectionDtoStatus";
 export * from "./updateTenderDto";
 export * from "./updateTenderDtoAwardResults";
 export * from "./updateTenderDtoClassifications";

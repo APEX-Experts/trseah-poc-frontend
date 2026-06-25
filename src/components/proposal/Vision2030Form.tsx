@@ -10,9 +10,15 @@ interface Vision2030FormProps {
   content: string;
   onChange: (newContent: string) => void;
   isRtl: boolean;
+  isDisabled?: boolean;
 }
 
-export default function Vision2030Form({ content, onChange, isRtl }: Vision2030FormProps) {
+export default function Vision2030Form({
+  content,
+  onChange,
+  isRtl,
+  isDisabled = false,
+}: Vision2030FormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
 
@@ -82,6 +88,7 @@ export default function Vision2030Form({ content, onChange, isRtl }: Vision2030F
               className={inputClass}
               value={visionData.title}
               onChange={(e) => updateVisionField("title", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -91,6 +98,7 @@ export default function Vision2030Form({ content, onChange, isRtl }: Vision2030F
               className={inputClass}
               value={visionData.subtitle}
               onChange={(e) => updateVisionField("subtitle", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -105,6 +113,7 @@ export default function Vision2030Form({ content, onChange, isRtl }: Vision2030F
           <button
             type="button"
             onClick={handleAddPillar}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.vision30.addPillar")}
@@ -125,6 +134,7 @@ export default function Vision2030Form({ content, onChange, isRtl }: Vision2030F
                 <button
                   type="button"
                   onClick={() => handleRemovePillar(idx)}
+                  disabled={isDisabled}
                   className="text-xs px-2 py-1 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold"
                 >
                   {t("form.vision30.remove")}
@@ -140,6 +150,7 @@ export default function Vision2030Form({ content, onChange, isRtl }: Vision2030F
                   <input
                     type="text"
                     className={inputClass}
+                    disabled={isDisabled}
                     value={pillar.title}
                     onChange={(e) => handleUpdatePillar(idx, "title", e.target.value)}
                   />
@@ -152,6 +163,7 @@ export default function Vision2030Form({ content, onChange, isRtl }: Vision2030F
                     type="text"
                     className={inputClass}
                     value={pillar.metric}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdatePillar(idx, "metric", e.target.value)}
                   />
                 </div>
@@ -164,6 +176,7 @@ export default function Vision2030Form({ content, onChange, isRtl }: Vision2030F
                   markdown={pillar.nationalTarget || ""}
                   onChange={(val) => handleUpdatePillar(idx, "nationalTarget", val)}
                   dir={locale === "ar" ? "rtl" : "ltr"}
+                  disabled={isDisabled}
                 />
               </div>
 
@@ -174,6 +187,7 @@ export default function Vision2030Form({ content, onChange, isRtl }: Vision2030F
                   markdown={pillar.projectContribution || ""}
                   onChange={(val) => handleUpdatePillar(idx, "projectContribution", val)}
                   dir={locale === "ar" ? "rtl" : "ltr"}
+                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -192,6 +206,7 @@ export default function Vision2030Form({ content, onChange, isRtl }: Vision2030F
             markdown={visionData.additionalContent || ""}
             onChange={(value) => updateVisionField("additionalContent", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>

@@ -15,9 +15,15 @@ interface MethodologyFormProps {
   content: string;
   onChange: (newContent: string) => void;
   isRtl: boolean;
+  isDisabled?: boolean;
 }
 
-export default function MethodologyForm({ content, onChange, isRtl }: MethodologyFormProps) {
+export default function MethodologyForm({
+  content,
+  onChange,
+  isRtl,
+  isDisabled,
+}: MethodologyFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
 
@@ -121,6 +127,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
               className={inputClass}
               value={dataState.title}
               onChange={(e) => updateField("title", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -129,6 +136,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
               markdown={dataState.subtitle || ""}
               onChange={(value) => updateField("subtitle", value)}
               dir={locale === "ar" ? "rtl" : "ltr"}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -143,6 +151,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
           <button
             type="button"
             onClick={handleAddStep}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.methodology.addStep")}
@@ -163,6 +172,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
                 <button
                   type="button"
                   onClick={() => handleRemoveStep(idx)}
+                  disabled={isDisabled}
                   className="text-xs px-2.5 py-1.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold"
                 >
                   {t("form.methodology.remove")}
@@ -178,6 +188,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
                     className={inputClass}
                     value={step.title}
                     onChange={(e) => handleUpdateStep(idx, "title", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
                 <div>
@@ -186,6 +197,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
                     type="text"
                     className={inputClass}
                     value={step.duration}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateStep(idx, "duration", e.target.value)}
                   />
                 </div>
@@ -198,6 +210,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
                   markdown={step.description || ""}
                   onChange={(val) => handleUpdateStep(idx, "description", val)}
                   dir={locale === "ar" ? "rtl" : "ltr"}
+                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -214,6 +227,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
           <button
             type="button"
             onClick={handleAddDeliverable}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.methodology.addDeliverable")}
@@ -226,6 +240,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
             type="text"
             className={inputClass}
             value={dataState.deliverablesTitle}
+            disabled={isDisabled}
             onChange={(e) => updateField("deliverablesTitle", e.target.value)}
           />
         </div>
@@ -242,6 +257,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
                   type="text"
                   className={inputClass}
                   value={deliv.phase}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateDeliverable(idx, "phase", e.target.value)}
                 />
               </div>
@@ -251,6 +267,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
                   type="text"
                   className={inputClass}
                   value={deliv.deliverable}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateDeliverable(idx, "deliverable", e.target.value)}
                 />
               </div>
@@ -260,12 +277,14 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
                   type="text"
                   className={inputClass}
                   value={deliv.criterion}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateDeliverable(idx, "criterion", e.target.value)}
                 />
               </div>
               <button
                 type="button"
                 onClick={() => handleRemoveDeliverable(idx)}
+                disabled={isDisabled}
                 className="text-xs p-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold self-end sm:mb-0.5"
               >
                 {t("form.methodology.remove")}
@@ -286,6 +305,7 @@ export default function MethodologyForm({ content, onChange, isRtl }: Methodolog
             markdown={dataState.additionalContent || ""}
             onChange={(value) => updateField("additionalContent", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>

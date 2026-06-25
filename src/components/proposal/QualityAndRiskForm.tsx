@@ -15,9 +15,15 @@ interface QualityAndRiskFormProps {
   content: string;
   onChange: (newContent: string) => void;
   isRtl: boolean;
+  isDisabled?: boolean;
 }
 
-export default function QualityAndRiskForm({ content, onChange, isRtl }: QualityAndRiskFormProps) {
+export default function QualityAndRiskForm({
+  content,
+  onChange,
+  isRtl,
+  isDisabled,
+}: QualityAndRiskFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
 
@@ -109,6 +115,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
             className={inputClass}
             value={dataState.title}
             onChange={(e) => updateField("title", e.target.value)}
+            disabled={isDisabled}
           />
         </div>
       </div>
@@ -122,6 +129,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
           <button
             type="button"
             onClick={handleAddRisk}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.quality_and_risk.addRisk")}
@@ -134,6 +142,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
             type="text"
             className={inputClass}
             value={dataState.risksTitle}
+            disabled={isDisabled}
             onChange={(e) => updateField("risksTitle", e.target.value)}
           />
         </div>
@@ -152,6 +161,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
                 <button
                   type="button"
                   onClick={() => handleRemoveRisk(idx)}
+                  disabled={isDisabled}
                   className="text-xs px-2.5 py-1.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold"
                 >
                   {t("form.quality_and_risk.remove")}
@@ -166,6 +176,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
                     type="text"
                     className={inputClass}
                     value={risk.title}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateRisk(idx, "title", e.target.value)}
                   />
                 </div>
@@ -178,6 +189,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
                   <select
                     className={inputClass}
                     value={risk.likelihood}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateRisk(idx, "likelihood", e.target.value)}
                   >
                     <option value={isRtl ? "منخفض" : "Low"}>{isRtl ? "منخفض" : "Low"}</option>
@@ -190,6 +202,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
                   <select
                     className={inputClass}
                     value={risk.impact}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdateRisk(idx, "impact", e.target.value)}
                   >
                     <option value={isRtl ? "منخفض" : "Low"}>{isRtl ? "منخفض" : "Low"}</option>
@@ -206,6 +219,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
                   rows={2}
                   className={inputClass}
                   value={risk.mitigation}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateRisk(idx, "mitigation", e.target.value)}
                 />
               </div>
@@ -223,6 +237,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
           <button
             type="button"
             onClick={handleAddStandard}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.quality_and_risk.addStandard")}
@@ -235,6 +250,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
             type="text"
             className={inputClass}
             value={dataState.standardsTitle}
+            disabled={isDisabled}
             onChange={(e) => updateField("standardsTitle", e.target.value)}
           />
         </div>
@@ -251,6 +267,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
                   type="text"
                   className={inputClass}
                   value={std.standard}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateStandard(idx, "standard", e.target.value)}
                 />
               </div>
@@ -260,6 +277,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
                   type="text"
                   className={inputClass}
                   value={std.method}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateStandard(idx, "method", e.target.value)}
                 />
               </div>
@@ -269,6 +287,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
                   type="text"
                   className={inputClass}
                   value={std.frequency}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateStandard(idx, "frequency", e.target.value)}
                 />
               </div>
@@ -295,6 +314,7 @@ export default function QualityAndRiskForm({ content, onChange, isRtl }: Quality
             markdown={dataState.additionalContent || ""}
             onChange={(value) => updateField("additionalContent", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>

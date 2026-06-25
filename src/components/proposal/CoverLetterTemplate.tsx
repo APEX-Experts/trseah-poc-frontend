@@ -46,7 +46,7 @@ function CoverLetterTemplate({
 
         {/* Header Row */}
         <div className="flex justify-between items-center border-b border-neutral-200/60 pb-3 mt-1 text-[10px] sm:text-xs text-neutral-400 font-medium z-10">
-          <div>{isRtl ? "خطاب التغطية" : "Cover Letter"}</div>
+          <div>{isRtl ? "خطاب التقديم" : "Cover Letter"}</div>
           {parsedLetter.entityName && (
             <div>
               {parsedLetter.entityName} —{" "}
@@ -63,7 +63,7 @@ function CoverLetterTemplate({
               className={`border-accent-500 ${isRtl ? "border-r-4 pr-3 text-right" : "border-l-4 pl-3 text-left"}`}
             >
               <h1 className="text-xl sm:text-2xl font-black text-primary-800 tracking-tight leading-tight">
-                {isRtl ? "خطاب التغطية" : "Cover Letter"}
+                {isRtl ? "خطاب التقديم" : "Cover Letter"}
               </h1>
               <p className="text-[10px] sm:text-xs text-neutral-400 mt-0.5">
                 {isRtl ? "الرياض، المملكة العربية السعودية" : "Riyadh, Kingdom of Saudi Arabia"}

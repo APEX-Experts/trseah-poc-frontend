@@ -21,9 +21,11 @@ import type {
 } from "@tanstack/react-query";
 
 import type {
-  AdminDeliverProposalDto,
   AdminProposalsControllerDeliverProposal200,
   AdminProposalsControllerGetProposalDetail200,
+  AdminProposalsControllerGetProposalSections200,
+  AdminProposalsControllerUpdateProposalSection200,
+  UpdateProposalSectionDto,
 } from "../../../../types/api";
 
 import { api } from "../../../apiClient";
@@ -189,18 +191,11 @@ export function useAdminProposalsControllerGetProposalDetail<
  */
 export const adminProposalsControllerDeliverProposal = (
   id: string,
-  adminDeliverProposalDto: AdminDeliverProposalDto,
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
   return api<AdminProposalsControllerDeliverProposal200>(
-    {
-      url: `/api/admin-api/proposals/${id}/deliver`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: adminDeliverProposalDto,
-      signal,
-    },
+    { url: `/api/admin-api/proposals/${id}/deliver`, method: "PATCH", signal },
     options,
   );
 };
@@ -212,14 +207,14 @@ export const getAdminProposalsControllerDeliverProposalMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
     TError,
-    { id: string; data: AdminDeliverProposalDto },
+    { id: string },
     TContext
   >;
   request?: SecondParameter<typeof api>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
   TError,
-  { id: string; data: AdminDeliverProposalDto },
+  { id: string },
   TContext
 > => {
   const mutationKey = ["adminProposalsControllerDeliverProposal"];
@@ -231,11 +226,11 @@ export const getAdminProposalsControllerDeliverProposalMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
-    { id: string; data: AdminDeliverProposalDto }
+    { id: string }
   > = (props) => {
-    const { id, data } = props ?? {};
+    const { id } = props ?? {};
 
-    return adminProposalsControllerDeliverProposal(id, data, requestOptions);
+    return adminProposalsControllerDeliverProposal(id, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -244,7 +239,7 @@ export const getAdminProposalsControllerDeliverProposalMutationOptions = <
 export type AdminProposalsControllerDeliverProposalMutationResult = NonNullable<
   Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>
 >;
-export type AdminProposalsControllerDeliverProposalMutationBody = AdminDeliverProposalDto;
+
 export type AdminProposalsControllerDeliverProposalMutationError = void;
 
 /**
@@ -255,7 +250,7 @@ export const useAdminProposalsControllerDeliverProposal = <TError = void, TConte
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
       TError,
-      { id: string; data: AdminDeliverProposalDto },
+      { id: string },
       TContext
     >;
     request?: SecondParameter<typeof api>;
@@ -264,11 +259,254 @@ export const useAdminProposalsControllerDeliverProposal = <TError = void, TConte
 ): UseMutationResult<
   Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
   TError,
-  { id: string; data: AdminDeliverProposalDto },
+  { id: string },
   TContext
 > => {
   return useMutation(
     getAdminProposalsControllerDeliverProposalMutationOptions(options),
+    queryClient,
+  );
+};
+/**
+ * Retrieves all sections of a proposal for administrative review.
+ * @summary Get all sections of a proposal for admin
+ */
+export const adminProposalsControllerGetProposalSections = (
+  id: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  return api<AdminProposalsControllerGetProposalSections200>(
+    { url: `/api/admin-api/proposals/${id}/sections`, method: "GET", signal },
+    options,
+  );
+};
+
+export const getAdminProposalsControllerGetProposalSectionsQueryKey = (id: string) => {
+  return [`/api/admin-api/proposals/${id}/sections`] as const;
+};
+
+export const getAdminProposalsControllerGetProposalSectionsQueryOptions = <
+  TData = Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getAdminProposalsControllerGetProposalSectionsQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>
+  > = ({ signal }) => adminProposalsControllerGetProposalSections(id, requestOptions, signal);
+
+  return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type AdminProposalsControllerGetProposalSectionsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>
+>;
+export type AdminProposalsControllerGetProposalSectionsQueryError = void;
+
+export function useAdminProposalsControllerGetProposalSections<
+  TData = Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+  TError = void,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+          TError,
+          Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useAdminProposalsControllerGetProposalSections<
+  TData = Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+          TError,
+          Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useAdminProposalsControllerGetProposalSections<
+  TData = Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary Get all sections of a proposal for admin
+ */
+
+export function useAdminProposalsControllerGetProposalSections<
+  TData = Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+  TError = void,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof adminProposalsControllerGetProposalSections>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getAdminProposalsControllerGetProposalSectionsQueryOptions(id, options);
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * Updates a specific section of a proposal for administrative review.
+ * @summary Update a specific section of a proposal for admin
+ */
+export const adminProposalsControllerUpdateProposalSection = (
+  id: string,
+  sectionId: string,
+  updateProposalSectionDto: UpdateProposalSectionDto,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  return api<AdminProposalsControllerUpdateProposalSection200>(
+    {
+      url: `/api/admin-api/proposals/${id}/sections/${sectionId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: updateProposalSectionDto,
+      signal,
+    },
+    options,
+  );
+};
+
+export const getAdminProposalsControllerUpdateProposalSectionMutationOptions = <
+  TError = void,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminProposalsControllerUpdateProposalSection>>,
+    TError,
+    { id: string; sectionId: string; data: UpdateProposalSectionDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminProposalsControllerUpdateProposalSection>>,
+  TError,
+  { id: string; sectionId: string; data: UpdateProposalSectionDto },
+  TContext
+> => {
+  const mutationKey = ["adminProposalsControllerUpdateProposalSection"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminProposalsControllerUpdateProposalSection>>,
+    { id: string; sectionId: string; data: UpdateProposalSectionDto }
+  > = (props) => {
+    const { id, sectionId, data } = props ?? {};
+
+    return adminProposalsControllerUpdateProposalSection(id, sectionId, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminProposalsControllerUpdateProposalSectionMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminProposalsControllerUpdateProposalSection>>
+>;
+export type AdminProposalsControllerUpdateProposalSectionMutationBody = UpdateProposalSectionDto;
+export type AdminProposalsControllerUpdateProposalSectionMutationError = void;
+
+/**
+ * @summary Update a specific section of a proposal for admin
+ */
+export const useAdminProposalsControllerUpdateProposalSection = <TError = void, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof adminProposalsControllerUpdateProposalSection>>,
+      TError,
+      { id: string; sectionId: string; data: UpdateProposalSectionDto },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof adminProposalsControllerUpdateProposalSection>>,
+  TError,
+  { id: string; sectionId: string; data: UpdateProposalSectionDto },
+  TContext
+> => {
+  return useMutation(
+    getAdminProposalsControllerUpdateProposalSectionMutationOptions(options),
     queryClient,
   );
 };

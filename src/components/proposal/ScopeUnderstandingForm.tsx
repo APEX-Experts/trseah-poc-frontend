@@ -10,12 +10,14 @@ interface ScopeUnderstandingFormProps {
   content: string;
   onChange: (newContent: string) => void;
   isRtl: boolean;
+  isDisabled?: boolean;
 }
 
 export default function ScopeUnderstandingForm({
   content,
   onChange,
   isRtl,
+  isDisabled = false,
 }: ScopeUnderstandingFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
@@ -106,6 +108,7 @@ export default function ScopeUnderstandingForm({
               className={inputClass}
               value={scopeData.title}
               onChange={(e) => updateScopeField("title", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -115,6 +118,7 @@ export default function ScopeUnderstandingForm({
               className={inputClass}
               value={scopeData.subtitle}
               onChange={(e) => updateScopeField("subtitle", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -129,6 +133,7 @@ export default function ScopeUnderstandingForm({
           <button
             type="button"
             onClick={handleAddRequirement}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.scopeUnderstanding.addRequirement")}
@@ -151,6 +156,7 @@ export default function ScopeUnderstandingForm({
                     className={inputClass}
                     value={req.requirement}
                     onChange={(e) => handleUpdateRequirement(idx, "requirement", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
                 <div>
@@ -162,6 +168,7 @@ export default function ScopeUnderstandingForm({
                     className={inputClass}
                     value={req.classification}
                     onChange={(e) => handleUpdateRequirement(idx, "classification", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
                 <div>
@@ -173,12 +180,14 @@ export default function ScopeUnderstandingForm({
                     className={inputClass}
                     value={req.alignment}
                     onChange={(e) => handleUpdateRequirement(idx, "alignment", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => handleRemoveRequirement(idx)}
+                disabled={isDisabled}
                 className="text-xs px-2.5 py-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold self-end mb-0.5"
               >
                 {t("form.scopeUnderstanding.remove")}
@@ -197,6 +206,7 @@ export default function ScopeUnderstandingForm({
           <button
             type="button"
             onClick={handleAddGoal}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.scopeUnderstanding.addGoal")}
@@ -217,12 +227,14 @@ export default function ScopeUnderstandingForm({
                   type="text"
                   className={inputClass}
                   value={goal}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateGoal(idx, e.target.value)}
                 />
               </div>
               <button
                 type="button"
                 onClick={() => handleRemoveGoal(idx)}
+                disabled={isDisabled}
                 className="text-xs px-2.5 py-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold self-end mb-0.5"
               >
                 {t("form.scopeUnderstanding.remove")}
@@ -243,6 +255,7 @@ export default function ScopeUnderstandingForm({
             markdown={scopeData.additionalContent || ""}
             onChange={(value) => updateScopeField("additionalContent", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>

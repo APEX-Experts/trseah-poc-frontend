@@ -13,7 +13,7 @@ import TeamForm from "./TeamForm";
 import TimelineForm from "./TimelineForm";
 import QualityAndRiskForm from "./QualityAndRiskForm";
 import PricingForm from "./PricingForm";
-
+import { jsonrepair } from "jsonrepair";
 interface SectionFormProps {
   sectionId: string;
   content: string;
@@ -23,6 +23,7 @@ interface SectionFormProps {
   requestData?: ProposalDto["request"] | null;
   tenderData?: ProposalDto["tender"] | null;
   formattedDate: string;
+  isDisabled?: boolean;
 }
 
 export default function SectionForm({
@@ -34,16 +35,30 @@ export default function SectionForm({
   requestData,
   tenderData,
   formattedDate,
+  isDisabled,
 }: SectionFormProps) {
-  console.log(sectionId);
+  // 1. Default to the raw content (handles Markdown and empty strings safely)
+  let safeContent = content;
+
+  // 2. Only attempt to repair if it actually looks like JSON
+  if (content && content.trim().startsWith("{")) {
+    try {
+      safeContent = jsonrepair(content);
+    } catch (_e) {
+      // If it's too broken even for jsonrepair, fail gracefully
+      // The child forms will just use their fallback data for this render cycle
+      console.warn("jsonrepair failed to parse stream chunk");
+    }
+  }
   if (sectionId === "cover_page") {
     return (
       <CoverPageForm
-        content={content}
+        content={safeContent}
         onChange={onChange}
         isRtl={isRtl}
         proposalData={proposalData}
         formattedDate={formattedDate}
+        isDisabled={isDisabled}
       />
     );
   }
@@ -51,36 +66,59 @@ export default function SectionForm({
   if (sectionId === "cover_letter") {
     return (
       <CoverLetterForm
-        content={content}
+        content={safeContent}
         onChange={onChange}
         isRtl={isRtl}
         proposalData={proposalData}
         requestData={requestData}
         tenderData={tenderData}
         formattedDate={formattedDate}
+        isDisabled={isDisabled}
       />
     );
   }
 
   if (sectionId === "executive_summary") {
-    return <ExecutiveSummaryForm content={content} onChange={onChange} isRtl={isRtl} />;
+    return (
+      <ExecutiveSummaryForm
+        content={safeContent}
+        onChange={onChange}
+        isRtl={isRtl}
+        isDisabled={isDisabled}
+      />
+    );
   }
 
   if (sectionId === "scope_understanding") {
-    return <ScopeUnderstandingForm content={content} onChange={onChange} isRtl={isRtl} />;
+    return (
+      <ScopeUnderstandingForm
+        content={safeContent}
+        onChange={onChange}
+        isRtl={isRtl}
+        isDisabled={isDisabled}
+      />
+    );
   }
 
   if (sectionId === "vision_2030") {
-    return <Vision2030Form content={content} onChange={onChange} isRtl={isRtl} />;
+    return (
+      <Vision2030Form
+        content={safeContent}
+        onChange={onChange}
+        isRtl={isRtl}
+        isDisabled={isDisabled}
+      />
+    );
   }
 
   if (sectionId === "company_profile") {
     return (
       <CompanyProfileForm
-        content={content}
+        content={safeContent}
         onChange={onChange}
         isRtl={isRtl}
         proposalData={proposalData}
+        isDisabled={isDisabled}
       />
     );
   }
@@ -88,34 +126,69 @@ export default function SectionForm({
   if (sectionId === "past_projects") {
     return (
       <PastProjectsForm
-        content={content}
+        content={safeContent}
         onChange={onChange}
         isRtl={isRtl}
         proposalData={proposalData}
+        isDisabled={isDisabled}
       />
     );
   }
 
   if (sectionId === "methodology") {
-    return <MethodologyForm content={content} onChange={onChange} isRtl={isRtl} />;
+    return (
+      <MethodologyForm
+        content={safeContent}
+        onChange={onChange}
+        isRtl={isRtl}
+        isDisabled={isDisabled}
+      />
+    );
   }
 
   if (sectionId === "team") {
     return (
-      <TeamForm content={content} onChange={onChange} isRtl={isRtl} proposalData={proposalData} />
+      <TeamForm
+        content={safeContent}
+        onChange={onChange}
+        isRtl={isRtl}
+        proposalData={proposalData}
+        isDisabled={isDisabled}
+      />
     );
   }
 
   if (sectionId === "timeline") {
-    return <TimelineForm content={content} onChange={onChange} isRtl={isRtl} />;
+    return (
+      <TimelineForm
+        content={safeContent}
+        onChange={onChange}
+        isRtl={isRtl}
+        isDisabled={isDisabled}
+      />
+    );
   }
 
   if (sectionId === "quality_and_risk") {
-    return <QualityAndRiskForm content={content} onChange={onChange} isRtl={isRtl} />;
+    return (
+      <QualityAndRiskForm
+        content={safeContent}
+        onChange={onChange}
+        isRtl={isRtl}
+        isDisabled={isDisabled}
+      />
+    );
   }
 
   if (sectionId === "pricing") {
-    return <PricingForm content={content} onChange={onChange} isRtl={isRtl} />;
+    return (
+      <PricingForm
+        content={safeContent}
+        onChange={onChange}
+        isRtl={isRtl}
+        isDisabled={isDisabled}
+      />
+    );
   }
 
   return null;

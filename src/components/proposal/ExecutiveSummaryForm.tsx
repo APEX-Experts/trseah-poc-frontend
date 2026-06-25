@@ -10,12 +10,14 @@ interface ExecutiveSummaryFormProps {
   content: string;
   onChange: (newContent: string) => void;
   isRtl: boolean;
+  isDisabled?: boolean;
 }
 
 export default function ExecutiveSummaryForm({
   content,
   onChange,
   isRtl,
+  isDisabled,
 }: ExecutiveSummaryFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
@@ -102,6 +104,7 @@ export default function ExecutiveSummaryForm({
               className={inputClass}
               value={executiveSummaryData.title}
               onChange={(e) => updateExecutiveSummaryField("title", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -111,6 +114,7 @@ export default function ExecutiveSummaryForm({
               className={inputClass}
               value={executiveSummaryData.subtitle}
               onChange={(e) => updateExecutiveSummaryField("subtitle", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -121,6 +125,7 @@ export default function ExecutiveSummaryForm({
             markdown={executiveSummaryData.description || ""}
             onChange={(value) => updateExecutiveSummaryField("description", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>
@@ -143,6 +148,7 @@ export default function ExecutiveSummaryForm({
                     updateExecutiveSummaryField("contractValue", "");
                     updateExecutiveSummaryField("contractValueSub", "");
                   }}
+                  disabled={isDisabled}
                   className="text-[9px] font-bold text-red-500 hover:text-red-700 bg-red-50 px-1.5 py-0.5 rounded transition-all"
                 >
                   ✕ {t("form.executiveSummary.remove")}
@@ -153,6 +159,7 @@ export default function ExecutiveSummaryForm({
                 className={inputClass}
                 value={executiveSummaryData.contractValue}
                 onChange={(e) => updateExecutiveSummaryField("contractValue", e.target.value)}
+                disabled={isDisabled}
               />
               <div className="mt-2">
                 <label className="text-[10px] font-bold text-neutral-400 block text-start">
@@ -163,6 +170,7 @@ export default function ExecutiveSummaryForm({
                   className="w-full border border-neutral-200 rounded-lg px-2.5 py-1 text-xs text-neutral-800 bg-white text-start mt-0.5"
                   value={executiveSummaryData.contractValueSub}
                   onChange={(e) => updateExecutiveSummaryField("contractValueSub", e.target.value)}
+                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -179,6 +187,7 @@ export default function ExecutiveSummaryForm({
                     updateExecutiveSummaryField("usersCount", "");
                     updateExecutiveSummaryField("usersCountSub", "");
                   }}
+                  disabled={isDisabled}
                   className="text-[9px] font-bold text-red-500 hover:text-red-700 bg-red-50 px-1.5 py-0.5 rounded transition-all"
                 >
                   ✕ {t("form.executiveSummary.remove")}
@@ -189,6 +198,7 @@ export default function ExecutiveSummaryForm({
                 className={inputClass}
                 value={executiveSummaryData.usersCount}
                 onChange={(e) => updateExecutiveSummaryField("usersCount", e.target.value)}
+                disabled={isDisabled}
               />
               <div className="mt-2">
                 <label className="text-[10px] font-bold text-neutral-400 block text-start">
@@ -199,6 +209,7 @@ export default function ExecutiveSummaryForm({
                   className="w-full border border-neutral-200 rounded-lg px-2.5 py-1 text-xs text-neutral-800 bg-white text-start mt-0.5"
                   value={executiveSummaryData.usersCountSub}
                   onChange={(e) => updateExecutiveSummaryField("usersCountSub", e.target.value)}
+                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -215,6 +226,7 @@ export default function ExecutiveSummaryForm({
                     updateExecutiveSummaryField("duration", "");
                     updateExecutiveSummaryField("durationSub", "");
                   }}
+                  disabled={isDisabled}
                   className="text-[9px] font-bold text-red-500 hover:text-red-700 bg-red-50 px-1.5 py-0.5 rounded transition-all"
                 >
                   ✕ {t("form.executiveSummary.remove")}
@@ -225,6 +237,7 @@ export default function ExecutiveSummaryForm({
                 className={inputClass}
                 value={executiveSummaryData.duration}
                 onChange={(e) => updateExecutiveSummaryField("duration", e.target.value)}
+                disabled={isDisabled}
               />
               <div className="mt-2">
                 <label className="text-[10px] font-bold text-neutral-400 block text-start">
@@ -235,6 +248,7 @@ export default function ExecutiveSummaryForm({
                   className="w-full border border-neutral-200 rounded-lg px-2.5 py-1 text-xs text-neutral-800 bg-white text-start mt-0.5"
                   value={executiveSummaryData.durationSub}
                   onChange={(e) => updateExecutiveSummaryField("durationSub", e.target.value)}
+                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -251,6 +265,7 @@ export default function ExecutiveSummaryForm({
                     updateExecutiveSummaryField("matchRate", "");
                     updateExecutiveSummaryField("matchRateSub", "");
                   }}
+                  disabled={isDisabled}
                   className="text-[9px] font-bold text-red-500 hover:text-red-700 bg-red-50 px-1.5 py-0.5 rounded transition-all"
                 >
                   ✕ {t("form.executiveSummary.remove")}
@@ -261,6 +276,7 @@ export default function ExecutiveSummaryForm({
                 className={inputClass}
                 value={executiveSummaryData.matchRate}
                 onChange={(e) => updateExecutiveSummaryField("matchRate", e.target.value)}
+                disabled={isDisabled}
               />
               <div className="mt-2">
                 <label className="text-[10px] font-bold text-neutral-400 block text-start">
@@ -271,6 +287,7 @@ export default function ExecutiveSummaryForm({
                   className="w-full border border-neutral-200 rounded-lg px-2.5 py-1 text-xs text-neutral-800 bg-white text-start mt-0.5"
                   value={executiveSummaryData.matchRateSub}
                   onChange={(e) => updateExecutiveSummaryField("matchRateSub", e.target.value)}
+                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -287,6 +304,7 @@ export default function ExecutiveSummaryForm({
           <button
             type="button"
             onClick={handleAddPhase}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.executiveSummary.addPhase")}
@@ -300,6 +318,7 @@ export default function ExecutiveSummaryForm({
             className={inputClass}
             value={executiveSummaryData.roadmapTitle}
             onChange={(e) => updateExecutiveSummaryField("roadmapTitle", e.target.value)}
+            disabled={isDisabled}
           />
         </div>
 
@@ -320,6 +339,7 @@ export default function ExecutiveSummaryForm({
                     className={inputClass}
                     value={phase.title}
                     onChange={(e) => handleUpdatePhase(idx, "title", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
                 <div>
@@ -329,12 +349,14 @@ export default function ExecutiveSummaryForm({
                     className={inputClass}
                     value={phase.duration}
                     onChange={(e) => handleUpdatePhase(idx, "duration", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => handleRemovePhase(idx)}
+                disabled={isDisabled}
                 className="text-xs px-2.5 py-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold self-end mb-0.5"
               >
                 {t("form.executiveSummary.remove")}
@@ -353,6 +375,7 @@ export default function ExecutiveSummaryForm({
           <button
             type="button"
             onClick={handleAddFeature}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.executiveSummary.addPillar")}
@@ -368,6 +391,7 @@ export default function ExecutiveSummaryForm({
               <button
                 type="button"
                 onClick={() => handleRemoveFeature(idx)}
+                disabled={isDisabled}
                 className={`absolute top-4 ${isRtl ? "left-4" : "right-4"} text-xs px-2 py-1 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold`}
               >
                 {t("form.executiveSummary.remove")}
@@ -380,6 +404,7 @@ export default function ExecutiveSummaryForm({
                   type="text"
                   className={inputClass}
                   value={feature.title}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateFeature(idx, "title", e.target.value)}
                 />
               </div>
@@ -391,6 +416,7 @@ export default function ExecutiveSummaryForm({
                   markdown={feature.desc || ""}
                   onChange={(value) => handleUpdateFeature(idx, "desc", value)}
                   dir={locale === "ar" ? "rtl" : "ltr"}
+                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -409,6 +435,7 @@ export default function ExecutiveSummaryForm({
             markdown={executiveSummaryData.additionalContent || ""}
             onChange={(value) => updateExecutiveSummaryField("additionalContent", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>
