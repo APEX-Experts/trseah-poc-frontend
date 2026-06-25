@@ -3,6 +3,7 @@ allowBuilds:
   '@swc/core': true
   esbuild: false
   msw: false
+  puppeteer: true
   sharp: false
   unrs-resolver: false
 ignoredBuiltDependencies:

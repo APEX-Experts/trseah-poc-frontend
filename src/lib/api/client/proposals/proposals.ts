@@ -5,9 +5,9 @@
  * OpenAPI spec version: 1.0
  */
 import type {
+  AdminProposalDetailResponseDto,
   ComplianceItemResponseDto,
   PaginatedProposalsResponseDto,
-  ProposalResponseDto,
   ProposalsControllerListProposalsParams,
 } from "../../../../types/api";
 
@@ -35,9 +35,12 @@ export const getProposals = () => {
    */
   const proposalsControllerGetProposalDetails = (
     id: string,
-    options?: SecondParameter<typeof api<ProposalResponseDto>>,
+    options?: SecondParameter<typeof api<AdminProposalDetailResponseDto>>,
   ) => {
-    return api<ProposalResponseDto>({ url: `/api/proposals/${id}`, method: "GET" }, options);
+    return api<AdminProposalDetailResponseDto>(
+      { url: `/api/proposals/${id}`, method: "GET" },
+      options,
+    );
   };
   /**
    * Retrieves the compliance checklist items associated with a proposal.

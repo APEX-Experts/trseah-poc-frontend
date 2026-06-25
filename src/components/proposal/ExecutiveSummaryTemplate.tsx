@@ -43,14 +43,11 @@ function ExecutiveSummaryTemplate({
   const hasMatchRate = data.matchRate && data.matchRate.trim() !== "";
 
   return (
-    <div className="flex-1 overflow-y-auto p-2 bg-neutral-100/50">
+    <div className="flex-1 overflow-y-auto">
       <div
-        className="w-full aspect-[1/1.414] bg-white text-neutral-800 rounded-2xl shadow-xl overflow-y-auto border border-neutral-200/50 flex flex-col justify-between relative p-8 sm:p-10 select-none"
+        className="w-full aspect-[1/1.414] bg-white text-neutral-800 rounded-2xl  page-bg overflow-y-auto border border-neutral-200/50 flex flex-col justify-between relative p-8 sm:p-10 select-none"
         style={{ direction: isRtl ? "rtl" : "ltr" }}
       >
-        {/* Top Accent Line */}
-        <div className="absolute top-0 inset-x-0 h-1.5 bg-accent-500" />
-
         {/* Header Row */}
         <div className="flex justify-between items-center border-b border-neutral-200/60 pb-3 mt-1 text-[10px] sm:text-xs text-neutral-400 font-medium z-10">
           <div>{isRtl ? "الملخص التنفيذي" : "Executive Summary"}</div>
@@ -64,7 +61,7 @@ function ExecutiveSummaryTemplate({
           {/* Section Title with Vertical Accent Line */}
           {(hasTitle || hasSubtitle) && (
             <div
-              className={`border-accent-500 ${isRtl ? "border-r-4 pr-3 text-right" : "border-l-4 pl-3 text-left"}`}
+              className={`border-primary-500 ${isRtl ? "border-r-4 pr-3 text-right" : "border-l-4 pl-3 text-left"}`}
             >
               {hasTitle && (
                 <h1 className="text-xl sm:text-2xl font-black text-primary-800 tracking-tight leading-tight">
@@ -189,7 +186,7 @@ function ExecutiveSummaryTemplate({
                     "bg-primary-700 text-white",
                     "bg-primary-600 text-white",
                     "bg-primary-500 text-white",
-                    "bg-accent-500 text-primary-800 font-black",
+                    "bg-primary-500 text-primary-800 font-black",
                   ];
                   const colorClass = colors[idx % colors.length];
                   return (
@@ -218,7 +215,7 @@ function ExecutiveSummaryTemplate({
           {data.features && data.features.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-2">
               {data.features.map((feature, idx) => {
-                const bulletColors = ["bg-primary-800", "bg-accent-500", "bg-primary-400"];
+                const bulletColors = ["bg-primary-800", "bg-primary-500", "bg-primary-400"];
                 const bulletColor = bulletColors[idx % bulletColors.length];
                 return (
                   <div

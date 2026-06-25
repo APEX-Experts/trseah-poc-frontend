@@ -387,7 +387,8 @@
       "date": "Publish Date",
       "deadline": "Deadline",
       "sortBy": "Sort By",
-      "clearAll": "Clear all filters"
+      "clearAll": "Clear all filters",
+      "any": "Any"
     },
     "card": {
       "remainingDays": "{days} days remaining",
@@ -639,8 +640,12 @@
   "Proposals": {
     "backToRequests": "Back to Service Requests",
     "generatingTitle": "Technical Proposal Generating",
-    "generatingDesc": "Proposal #{id} is currently being processed and generated using our AI models.",
-    "generatingProgress": "AI generation is in progress. Check back soon."
+    "generatingDesc": "Technical Proposal is currently being processed and generated.",
+    "generatingProgress": "AI generation is in progress. Check back soon.",
+    "loading": "Loading...",
+    "error": "Failed to load proposal",
+    "previous": "Previous",
+    "next": "Next"
   },
   "AdminProposals": {
     "title": "Smart Proposal Studio",
@@ -659,6 +664,14 @@
     "successApprove": "Section approved successfully!",
     "empty": "Draft",
     "aiDraft": "AI Draft",
+    "aiThinking": "AI is reasoning...",
+    "thinkingSteps": {
+      "step1": "Analyzing proposal context...",
+      "step2": "Formulating structural strategy...",
+      "step3": "Retrieving domain knowledge...",
+      "step4": "Drafting optimal response...",
+      "step5": "Initiating secure stream..."
+    },
     "editor": "Write / Edit",
     "preview": "Live Preview",
     "activityLog": "Activity Log",

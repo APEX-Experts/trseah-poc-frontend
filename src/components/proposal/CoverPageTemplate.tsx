@@ -41,9 +41,9 @@ export function CoverPageTemplate({
   ].filter(Boolean) as Array<{ label: string; val: string; color: string }>;
 
   return (
-    <div className="flex-1 overflow-y-auto p-2">
+    <div className="flex-1 overflow-y-auto">
       <div
-        className="w-full aspect-[1/1.414] bg-linear-to-br from-primary-700 via-primary-600 to-primary-800 text-white rounded-2xl shadow-xl overflow-hidden relative flex flex-col justify-between p-8 sm:p-10 lg:p-12 select-none"
+        className="w-full aspect-[1/1.414] bg-linear-to-br from-primary-700 via-primary-600 to-primary-800 text-white rounded-2xl  page-bg overflow-hidden relative flex flex-col justify-between p-8 sm:p-10 lg:p-12 select-none"
         style={{ direction: isRtl ? "rtl" : "ltr" }}
       >
         {/* Decorative circular shapes */}

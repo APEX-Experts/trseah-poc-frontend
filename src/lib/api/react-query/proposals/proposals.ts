@@ -18,9 +18,9 @@ import type {
 } from "@tanstack/react-query";
 
 import type {
+  AdminProposalDetailResponseDto,
   ComplianceItemResponseDto,
   PaginatedProposalsResponseDto,
-  ProposalResponseDto,
   ProposalsControllerListProposalsParams,
 } from "../../../../types/api";
 
@@ -171,7 +171,10 @@ export const proposalsControllerGetProposalDetails = (
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<ProposalResponseDto>({ url: `/api/proposals/${id}`, method: "GET", signal }, options);
+  return api<AdminProposalDetailResponseDto>(
+    { url: `/api/proposals/${id}`, method: "GET", signal },
+    options,
+  );
 };
 
 export const getProposalsControllerGetProposalDetailsQueryKey = (id: string) => {

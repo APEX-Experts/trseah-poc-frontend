@@ -266,7 +266,7 @@ export default function PricingForm({ content, onChange, isRtl, isDisabled }: Pr
           {items.map((pricingItem, idx) => (
             <div
               key={idx}
-              className="border border-neutral-200 p-5 rounded-2xl bg-neutral-50/10 space-y-4 relative text-start"
+              className="border border-neutral-200 p-5 rounded-2xl  page-bg bg-neutral-50/10 space-y-4 relative text-start"
             >
               <div className="flex justify-between items-center">
                 <span className="text-xs font-bold text-primary-800 bg-primary-800/5 px-2.5 py-1 rounded-md">

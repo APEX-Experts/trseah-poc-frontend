@@ -42,7 +42,7 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 // Import MDXEditor dynamically to prevent SSR failures
@@ -73,6 +73,7 @@ export default function AdminProposalWorkspacePage() {
   const generateAiMutation = usePythonAiControllerGenerate();
   const initializeAiMutation = usePythonAiControllerInitialize();
   const { pythonAiControllerGenerate } = getPythonAi();
+
   // States
   const proposalSections: ProposalSectionResponseDto[] = proposalData?.sections || [];
   const { mutateAsync: updateSection } = useAdminProposalsControllerUpdateProposalSection({
@@ -85,16 +86,21 @@ export default function AdminProposalWorkspacePage() {
       },
     },
   });
+
   const [sections, setSections] = useState<ProposalSectionResponseDto[]>(proposalSections);
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState<string>("");
+
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isWaitingForStream, setIsWaitingForStream] = useState(false);
+  const [currentThinkingStep, setCurrentThinkingStep] = useState(0);
+
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"editor" | "preview">("editor");
   const [markdownContentKey, setMarkdownContentKey] = useState(0);
+  const hasStartedStreamingRef = useRef(false);
 
   const selectedSection = sections.find((s) => s.id === selectedSectionId);
-
   const allSectionsGenerated = sections.every((sec) => sec.humanApproved === true);
 
   // Formatted date
@@ -124,6 +130,18 @@ export default function AdminProposalWorkspacePage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSectionId, locale]);
+
+  // AI Thinking Steps Timeline Effect
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isWaitingForStream) {
+      setCurrentThinkingStep(0);
+      interval = setInterval(() => {
+        setCurrentThinkingStep((prev) => (prev < 4 ? prev + 1 : prev));
+      }, 2000);
+    }
+    return () => clearInterval(interval);
+  }, [isWaitingForStream]);
 
   // Action: Save Section
   const handleSave = async () => {
@@ -225,27 +243,33 @@ export default function AdminProposalWorkspacePage() {
     if (!selectedSection || !selectedSectionId) return;
 
     setIsGenerating(true);
+    setIsWaitingForStream(true);
+    hasStartedStreamingRef.current = false; // Reset ref before starting
 
     let streamedText = "";
     try {
-      // Initialize project if not initialized
       if (!proposalData?.isInitialized) {
         await handleInitializeProposal();
       }
+
       await pythonAiControllerGenerate(
         id,
         selectedSection.sectionType,
         { locale: locale as Locale },
         {
           onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-            // Axios attaches the raw XMLHttpRequest to the event
             const xhr = progressEvent.event?.target;
             const accumulatedText = xhr?.responseText;
 
             if (accumulatedText) {
+              // IMMEDIATELY kill the dialog on the very first byte of text
+              if (!hasStartedStreamingRef.current) {
+                hasStartedStreamingRef.current = true;
+                setIsWaitingForStream(false);
+              }
+
               streamedText = accumulatedText;
               setEditingContent(accumulatedText);
-              // Force React to re-render the Markdown/Form immediately
               setMarkdownContentKey((prev) => prev + 1);
             }
           },
@@ -281,6 +305,7 @@ export default function AdminProposalWorkspacePage() {
       toast.error(t("errorGenerate") || "Failed to generate AI content. Please try again.");
     } finally {
       setIsGenerating(false);
+      setIsWaitingForStream(false); // Failsafe if request crashes before streaming
     }
   };
 
@@ -356,7 +381,6 @@ export default function AdminProposalWorkspacePage() {
 
         {/* Global Toolbar Controls */}
         <div className="flex items-center gap-3">
-          {/* Optional Initializer button if no sections exist yet */}
           {sections.length === 0 && (
             <Button
               variant="outline"
@@ -442,7 +466,6 @@ export default function AdminProposalWorkspacePage() {
                     <span className="text-xs truncate text-start block w-full">{sectionTitle}</span>
                   </div>
 
-                  {/* Section Status Badge */}
                   <div className="shrink-0 ms-2">
                     {sec.humanApproved ? (
                       <Badge className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border-emerald-100 text-[9px] py-0.5 px-1.5 font-bold rounded-md flex items-center gap-1">
@@ -450,12 +473,12 @@ export default function AdminProposalWorkspacePage() {
                         <span>{t("approved")}</span>
                       </Badge>
                     ) : sec.status === "generating" ? (
-                      <Badge className="bg-indigo-50 text-indigo-700 hover:bg-indigo-50 border-indigo-100 text-[9px] py-0.5 px-1.5 font-bold rounded-md flex items-center gap-1 animate-pulse">
+                      <Badge className="bg-primary-50 text-primary-700 hover:bg-primary-50 border-primary-100 text-[9px] py-0.5 px-1.5 font-bold rounded-md flex items-center gap-1 animate-pulse">
                         <Clock className="h-2.5 w-2.5 animate-spin" />
                         <span>{t("statusGenerating")}</span>
                       </Badge>
                     ) : sec.aiGenerated ? (
-                      <Badge className="bg-indigo-50 text-indigo-700 hover:bg-indigo-50 border-indigo-100 text-[9px] py-0.5 px-1.5 font-bold rounded-md flex items-center gap-1">
+                      <Badge className="bg-primary-50 text-primary-700 hover:bg-primary-50 border-primary-100 text-[9px] py-0.5 px-1.5 font-bold rounded-md flex items-center gap-1">
                         <Sparkles className="h-2.5 w-2.5" />
                         <span>{t("aiDraft")}</span>
                       </Badge>
@@ -473,7 +496,6 @@ export default function AdminProposalWorkspacePage() {
 
         {/* Center Column: Interactive Editor / Preview Panel */}
         <main className="flex-1 flex flex-col overflow-hidden bg-white border-r border-neutral-100">
-          {/* Tab Selector & Section Metadata */}
           <div className="px-6 py-3 border-b border-neutral-100 bg-neutral-50/10 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-4">
               <h2 className="text-sm font-bold text-neutral-800">
@@ -485,7 +507,6 @@ export default function AdminProposalWorkspacePage() {
               </h2>
             </div>
 
-            {/* Tab Selector */}
             <div className="flex items-center bg-neutral-100 p-0.5 rounded-lg border border-neutral-200/60">
               <button
                 onClick={() => setActiveTab("editor")}
@@ -510,7 +531,6 @@ export default function AdminProposalWorkspacePage() {
             </div>
           </div>
 
-          {/* Workspace Area: Editor vs Preview */}
           {activeTab === "editor" ? (
             <div className="flex-1 p-6 flex flex-col min-h-128 bg-neutral-50/10">
               <div className="flex-1 flex flex-col gap-4 min-h-0">
@@ -541,8 +561,8 @@ export default function AdminProposalWorkspacePage() {
                       dir={locale === "ar" ? "rtl" : "ltr"}
                     />
                   )}
-                  {(isGenerating || generateAiMutation.isPending) && (
-                    <div className="absolute bottom-4 inset-e-4 bg-indigo-50 border border-indigo-100 text-indigo-800 px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs font-bold shadow-sm animate-pulse z-10">
+                  {((isGenerating && !isWaitingForStream) || generateAiMutation.isPending) && (
+                    <div className="absolute bottom-4 inset-e-4 bg-primary-50 border border-primary-100 text-primary-800 px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs font-bold shadow-sm animate-pulse z-10">
                       <Clock className="h-3.5 w-3.5 animate-spin" />
                       <span>{t("generatingAI")}</span>
                     </div>
@@ -552,7 +572,6 @@ export default function AdminProposalWorkspacePage() {
             </div>
           ) : (
             proposalData && (
-              /* Preview Mode */
               <SectionTemplate
                 sectionId={selectedSection?.sectionType || selectedSectionId || ""}
                 content={editingContent}
@@ -566,7 +585,6 @@ export default function AdminProposalWorkspacePage() {
             )
           )}
 
-          {/* Action Bar Footer */}
           <footer className="px-6 py-4 bg-white border-t border-neutral-100 flex items-center justify-between shrink-0">
             <Button
               variant="outline"
@@ -577,7 +595,7 @@ export default function AdminProposalWorkspacePage() {
                 selectedSection?.sectionType === "cover_page"
               }
               onClick={handleAiGeneration}
-              className="bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border-indigo-100 hover:border-indigo-200 font-bold px-4 h-10 rounded-xl gap-2 transition-colors cursor-pointer"
+              className="bg-primary-50 hover:bg-primary-100 text-primary-800 border-primary-100 hover:border-primary-200 font-bold px-4 h-10 rounded-xl gap-2 transition-colors cursor-pointer"
             >
               {isGenerating || generateAiMutation.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -622,11 +640,14 @@ export default function AdminProposalWorkspacePage() {
         </main>
       </div>
 
-      {/* Confirmation Dialog: Send to Client */}
+      {/* Confirmation Dialog */}
       <Dialog open={isSendDialogOpen} onOpenChange={setIsSendDialogOpen}>
         <DialogContent className="max-w-md rounded-2xl bg-white border border-border p-6 shadow-xl">
           <DialogHeader>
-            <DialogTitle className="text-base font-bold text-neutral-900">
+            <DialogTitle
+              className="text-base font-bold text-neutral-900"
+              aria-describedby="Dialog Title"
+            >
               {t("confirmSend")}
             </DialogTitle>
             <DialogDescription className="text-xs text-neutral-500 mt-1.5 leading-relaxed">
@@ -650,6 +671,63 @@ export default function AdminProposalWorkspacePage() {
               {t("confirmSendButton")}
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* AI Thinking / Pre-Stream Dialog */}
+      <Dialog open={isWaitingForStream} onOpenChange={() => {}}>
+        {/* Backdrop-blur applied to content container. [&>button]:hidden prevents closing via the top-right X */}
+        <DialogContent className="max-w-sm rounded-2xl bg-white/90 backdrop-blur-xl border border-neutral-200 p-8 shadow-2xl [&>button]:hidden outline-none">
+          <DialogTitle aria-describedby="Dialog Title" />
+          <div className="flex flex-col gap-6">
+            <h3 className="text-lg font-bold flex items-center gap-2 text-primary-950">
+              <Sparkles className="h-5 w-5 text-primary-600 animate-pulse" />
+              {t("aiThinking")}
+            </h3>
+
+            <div className="flex flex-col gap-5 relative">
+              {/* Connecting vertical line for timeline */}
+              <div className="absolute top-3 bottom-3 inset-s-[11px] w-[2px] bg-neutral-100" />
+
+              {[1, 2, 3, 4, 5].map((step, idx) => {
+                const isActive = idx === currentThinkingStep;
+                const isPast = idx < currentThinkingStep;
+
+                return (
+                  <div key={idx} className="flex items-center gap-4 relative z-10">
+                    <div
+                      className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] transition-all duration-300 ${
+                        isActive
+                          ? "bg-primary-600 text-white ring-4 ring-primary-50 shadow-sm"
+                          : isPast
+                            ? "bg-primary-100 text-primary-600"
+                            : "bg-neutral-100 text-neutral-400"
+                      }`}
+                    >
+                      {isPast ? (
+                        <CheckCircle className="w-3 h-3" />
+                      ) : isActive ? (
+                        <Loader2 className="w-3 h-3 animate-spin" />
+                      ) : (
+                        idx + 1
+                      )}
+                    </div>
+                    <span
+                      className={`text-sm font-medium transition-all duration-300 ${
+                        isActive
+                          ? "text-primary-900 transform translate-x-1"
+                          : isPast
+                            ? "text-neutral-600"
+                            : "text-neutral-400"
+                      }`}
+                    >
+                      {t(`thinkingSteps.step${idx + 1}`)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
