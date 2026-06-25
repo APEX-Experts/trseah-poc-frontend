@@ -156,7 +156,7 @@ export default function PastProjectsForm({
           {projects.map((project, idx) => (
             <div
               key={idx}
-              className="border border-neutral-200 p-5 rounded-2xl bg-neutral-50/10 space-y-4 relative text-start"
+              className="border border-neutral-200 p-5 rounded-2xl  page-bg bg-neutral-50/10 space-y-4 relative text-start"
             >
               {/* Remove Project Button */}
               <div className="flex justify-between items-center">

@@ -26,10 +26,7 @@ export interface UpdateOrganizationDto {
   crExpiry?: string;
   /** Local content score of the organization */
   localContentScore?: number;
-  /**
-   * Industry sector of the organization
-   * @maxLength 100
-   */
+  /** Industry sector of the organization */
   sector?: string;
   /**
    * Size of the organization

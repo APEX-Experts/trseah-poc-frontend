@@ -524,8 +524,9 @@ export default function RequestStatusPage() {
                 <div className="space-y-8 relative">
                   {timelineSteps.map((step, idx) => {
                     const stepState = getStepState(step.id, idx);
-                    const isStepCompleted = stepState === "completed";
                     const isStepActive = stepState === "active";
+                    const isStepCompleted =
+                      stepState === "completed" || (isStepActive && step.id === "delivered");
                     const isStepDisabled = stepState === "disabled";
 
                     // Node Icon & Styles
@@ -581,7 +582,7 @@ export default function RequestStatusPage() {
                             {t(`statuses.${step.labelKey}`)}
                           </h3>
                           <p className="text-xs text-neutral-400">
-                            {isStepActive
+                            {isStepActive && step.id !== "delivered"
                               ? t("statusPage.currentStage")
                               : isStepCompleted
                                 ? t("statusPage.completed")

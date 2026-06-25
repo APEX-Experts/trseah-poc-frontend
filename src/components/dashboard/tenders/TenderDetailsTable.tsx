@@ -84,7 +84,7 @@ export default function TenderDetailsTable({ tender }: TenderDetailsTableProps) 
     { label: t("initialGuaranteeAddress"), value: initialGuaranteeAddress },
     {
       label: t("finalGuarantee"),
-      value: tender.finalGuarantee !== undefined ? `${tender.finalGuarantee}%` : undefined,
+      value: !!tender.finalGuarantee ? `${tender.finalGuarantee}%` : undefined,
     },
     { label: t("bidsOpeningLocation"), value: bidsOpeningLocation },
     { label: t("bidsOpeningDate"), value: formatDate(tender.bidsOpeningDate) },

@@ -476,7 +476,7 @@ export default function TenderFilters({
                               type="number"
                               value={localMaxBudget}
                               onChange={(e) => setLocalMaxBudget(e.target.value)}
-                              placeholder="Any"
+                              placeholder={t("filters.any")}
                               className="w-full bg-neutral-100 border border-neutral-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-300 focus:ring-2 focus:ring-accent-300/20 text-primary-900"
                             />
                           </div>

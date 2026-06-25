@@ -36,14 +36,11 @@ function CoverLetterTemplate({
     (parsedLetter.signatoryTitle && parsedLetter.signatoryTitle.trim() !== "");
 
   return (
-    <div className="flex-1 overflow-y-auto p-2 bg-neutral-100/50">
+    <div className="flex-1 overflow-y-auto rounded-2xl">
       <div
-        className="w-full aspect-[1/1.414] bg-white text-neutral-800 rounded-2xl shadow-xl overflow-y-auto border border-neutral-200/50 flex flex-col justify-between relative p-8 sm:p-10 select-none"
+        className="w-full aspect-[1/1.414] bg-white text-neutral-800 rounded-2xl  page-bg overflow-y-auto border border-neutral-200/50 flex flex-col justify-between relative p-8 sm:p-10 select-none"
         style={{ direction: isRtl ? "rtl" : "ltr" }}
       >
-        {/* Top Accent Line */}
-        <div className="absolute top-0 inset-x-0 h-1.5 bg-accent-500" />
-
         {/* Header Row */}
         <div className="flex justify-between items-center border-b border-neutral-200/60 pb-3 mt-1 text-[10px] sm:text-xs text-neutral-400 font-medium z-10">
           <div>{isRtl ? "خطاب التقديم" : "Cover Letter"}</div>
@@ -60,7 +57,7 @@ function CoverLetterTemplate({
           {/* Cover Letter Title with Vertical Accent Line */}
           <div className="flex justify-between items-start">
             <div
-              className={`border-accent-500 ${isRtl ? "border-r-4 pr-3 text-right" : "border-l-4 pl-3 text-left"}`}
+              className={`border-primary-500 ${isRtl ? "border-r-4 pr-3 text-right" : "border-l-4 pl-3 text-left"}`}
             >
               <h1 className="text-xl sm:text-2xl font-black text-primary-800 tracking-tight leading-tight">
                 {isRtl ? "خطاب التقديم" : "Cover Letter"}
