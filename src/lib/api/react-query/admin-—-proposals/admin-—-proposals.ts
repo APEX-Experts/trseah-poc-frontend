@@ -21,7 +21,6 @@ import type {
 } from "@tanstack/react-query";
 
 import type {
-  AdminDeliverProposalDto,
   AdminProposalsControllerDeliverProposal200,
   AdminProposalsControllerGetProposalDetail200,
   AdminProposalsControllerGetProposalSections200,
@@ -192,18 +191,11 @@ export function useAdminProposalsControllerGetProposalDetail<
  */
 export const adminProposalsControllerDeliverProposal = (
   id: string,
-  adminDeliverProposalDto: AdminDeliverProposalDto,
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
   return api<AdminProposalsControllerDeliverProposal200>(
-    {
-      url: `/api/admin-api/proposals/${id}/deliver`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: adminDeliverProposalDto,
-      signal,
-    },
+    { url: `/api/admin-api/proposals/${id}/deliver`, method: "PATCH", signal },
     options,
   );
 };
@@ -215,14 +207,14 @@ export const getAdminProposalsControllerDeliverProposalMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
     TError,
-    { id: string; data: AdminDeliverProposalDto },
+    { id: string },
     TContext
   >;
   request?: SecondParameter<typeof api>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
   TError,
-  { id: string; data: AdminDeliverProposalDto },
+  { id: string },
   TContext
 > => {
   const mutationKey = ["adminProposalsControllerDeliverProposal"];
@@ -234,11 +226,11 @@ export const getAdminProposalsControllerDeliverProposalMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
-    { id: string; data: AdminDeliverProposalDto }
+    { id: string }
   > = (props) => {
-    const { id, data } = props ?? {};
+    const { id } = props ?? {};
 
-    return adminProposalsControllerDeliverProposal(id, data, requestOptions);
+    return adminProposalsControllerDeliverProposal(id, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -247,7 +239,7 @@ export const getAdminProposalsControllerDeliverProposalMutationOptions = <
 export type AdminProposalsControllerDeliverProposalMutationResult = NonNullable<
   Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>
 >;
-export type AdminProposalsControllerDeliverProposalMutationBody = AdminDeliverProposalDto;
+
 export type AdminProposalsControllerDeliverProposalMutationError = void;
 
 /**
@@ -258,7 +250,7 @@ export const useAdminProposalsControllerDeliverProposal = <TError = void, TConte
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
       TError,
-      { id: string; data: AdminDeliverProposalDto },
+      { id: string },
       TContext
     >;
     request?: SecondParameter<typeof api>;
@@ -267,7 +259,7 @@ export const useAdminProposalsControllerDeliverProposal = <TError = void, TConte
 ): UseMutationResult<
   Awaited<ReturnType<typeof adminProposalsControllerDeliverProposal>>,
   TError,
-  { id: string; data: AdminDeliverProposalDto },
+  { id: string },
   TContext
 > => {
   return useMutation(

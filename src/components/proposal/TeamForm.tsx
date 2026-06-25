@@ -21,9 +21,16 @@ interface TeamFormProps {
   onChange: (newContent: string) => void;
   isRtl: boolean;
   proposalData?: ProposalDto | null;
+  isDisabled?: boolean;
 }
 
-export default function TeamForm({ content, onChange, isRtl, proposalData }: TeamFormProps) {
+export default function TeamForm({
+  content,
+  onChange,
+  isRtl,
+  proposalData,
+  isDisabled,
+}: TeamFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
 
@@ -117,6 +124,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
               className={inputClass}
               value={teamData.title}
               onChange={(e) => updateTeamField("title", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -125,6 +133,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
               markdown={teamData.subtitle || ""}
               onChange={(value) => updateTeamField("subtitle", value)}
               dir={locale === "ar" ? "rtl" : "ltr"}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -139,6 +148,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
           <button
             type="button"
             onClick={handleAddMember}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.team.addMember")}
@@ -159,6 +169,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
                 <button
                   type="button"
                   onClick={() => handleRemoveMember(idx)}
+                  disabled={isDisabled}
                   className="text-xs px-2.5 py-1 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold"
                 >
                   {t("form.team.remove")}
@@ -179,6 +190,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
                       className={inputClass}
                       value={member.icon || "User"}
                       onChange={(e) => handleUpdateMember(idx, "icon", e.target.value)}
+                      disabled={isDisabled}
                     >
                       {TEAM_ICONS.map((ico) => (
                         <option key={ico} value={ico}>
@@ -195,6 +207,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
                     className={inputClass}
                     value={member.name}
                     onChange={(e) => handleUpdateMember(idx, "name", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
               </div>
@@ -207,6 +220,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
                     className={inputClass}
                     value={member.role}
                     onChange={(e) => handleUpdateMember(idx, "role", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
                 <div>
@@ -216,6 +230,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
                     className={inputClass}
                     value={member.bio}
                     onChange={(e) => handleUpdateMember(idx, "bio", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
               </div>
@@ -233,6 +248,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
           <button
             type="button"
             onClick={handleAddDivision}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.team.addDivision")}
@@ -245,6 +261,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
             type="text"
             className={inputClass}
             value={teamData.divisionsTitle}
+            disabled={isDisabled}
             onChange={(e) => updateTeamField("divisionsTitle", e.target.value)}
           />
         </div>
@@ -261,6 +278,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
                   type="text"
                   className={inputClass}
                   value={div.department}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateDivision(idx, "department", e.target.value)}
                 />
               </div>
@@ -270,6 +288,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
                   type="text"
                   className={inputClass}
                   value={div.responsibility}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateDivision(idx, "responsibility", e.target.value)}
                 />
               </div>
@@ -279,6 +298,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
                   type="text"
                   className={inputClass}
                   value={div.count}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateDivision(idx, "count", e.target.value)}
                 />
               </div>
@@ -288,12 +308,14 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
                   type="text"
                   className={inputClass}
                   value={div.location}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateDivision(idx, "location", e.target.value)}
                 />
               </div>
               <button
                 type="button"
                 onClick={() => handleRemoveDivision(idx)}
+                disabled={isDisabled}
                 className="text-xs p-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold self-end sm:mb-0.5"
               >
                 {t("form.team.remove")}
@@ -314,6 +336,7 @@ export default function TeamForm({ content, onChange, isRtl, proposalData }: Tea
             markdown={teamData.additionalContent || ""}
             onChange={(value) => updateTeamField("additionalContent", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>

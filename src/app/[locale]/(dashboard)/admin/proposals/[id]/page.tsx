@@ -14,17 +14,26 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Link } from "@/i18n/navigation";
+import { Locale } from "@/i18n/routing";
 import {
   useAdminProposalsControllerDeliverProposal,
   useAdminProposalsControllerGetProposalDetail,
   useAdminProposalsControllerUpdateProposalSection,
 } from "@/lib/api/react-query/admin-—-proposals/admin-—-proposals";
+import {
+  usePythonAiControllerGenerate,
+  usePythonAiControllerInitialize,
+} from "@/lib/api/react-query/python-ai/python-ai";
 import { ProposalSectionResponseDto } from "@/types/api";
+
+import { getPythonAi } from "@/lib/api/client/python-ai/python-ai";
+import { AxiosProgressEvent } from "axios";
 import {
   ArrowLeft,
   ArrowRight,
   CheckCircle,
   Clock,
+  Loader2,
   RotateCcw,
   Save,
   Send,
@@ -60,6 +69,10 @@ export default function AdminProposalWorkspacePage() {
 
   const deliverProposalMutation = useAdminProposalsControllerDeliverProposal();
 
+  // 3. Initialize the AI mutations
+  const generateAiMutation = usePythonAiControllerGenerate();
+  const initializeAiMutation = usePythonAiControllerInitialize();
+  const { pythonAiControllerGenerate } = getPythonAi();
   // States
   const proposalSections: ProposalSectionResponseDto[] = proposalData?.sections || [];
   const { mutateAsync: updateSection } = useAdminProposalsControllerUpdateProposalSection({
@@ -82,9 +95,7 @@ export default function AdminProposalWorkspacePage() {
 
   const selectedSection = sections.find((s) => s.id === selectedSectionId);
 
-  const allSectionsGenerated = sections
-    .filter((sec) => sec.id !== "cover_page")
-    .every((sec) => sec.status === "completed");
+  const allSectionsGenerated = sections.every((sec) => sec.humanApproved === true);
 
   // Formatted date
   const formattedDate = new Date(
@@ -95,8 +106,6 @@ export default function AdminProposalWorkspacePage() {
     day: "numeric",
   });
 
-  const isExternalTender = !requestData?.tenderId;
-
   useEffect(() => {
     if (sections.length === 0 && proposalData?.sections) {
       setSections(proposalData.sections);
@@ -106,20 +115,6 @@ export default function AdminProposalWorkspacePage() {
     }
   }, [proposalData?.sections, sections.length]);
 
-  const getProposalTitle = () => {
-    if (isExternalTender) {
-      return isRtl
-        ? "العرض الفني والمالي - [اسم المشروع الافتراضي]"
-        : "Technical & Financial Proposal - [Project Name Placeholder]";
-    }
-    const title = isRtl ? tenderData?.titleAr : tenderData?.titleEn || tenderData?.titleAr;
-    return (
-      title ||
-      requestData?.rfpExternalDescription ||
-      (isRtl ? "عرض فني ومالي" : "Technical & Financial Proposal")
-    );
-  };
-
   // Sync editor content when selected section or locale changes
   useEffect(() => {
     if (selectedSection) {
@@ -127,7 +122,8 @@ export default function AdminProposalWorkspacePage() {
         locale === "ar" ? selectedSection.contentAr || "" : selectedSection.contentEn || "",
       );
     }
-  }, [selectedSectionId, locale, selectedSection]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSectionId, locale]);
 
   // Action: Save Section
   const handleSave = async () => {
@@ -154,17 +150,11 @@ export default function AdminProposalWorkspacePage() {
         status: editingContent ? "completed" : "empty",
       },
     });
-    toast.success(t("successSave"));
 
     if (allSectionsGenerated) {
       await deliverProposalMutation.mutateAsync(
         {
           id,
-          data: {
-            rfpFileUrl: proposalData?.rfpFileUrl || "https://test.com/proposal.pdf",
-            titleAr: getProposalTitle(),
-            titleEn: getProposalTitle(),
-          },
         },
         {
           onSuccess: () => {
@@ -230,52 +220,77 @@ export default function AdminProposalWorkspacePage() {
     toast.success(t("successApprove"));
   };
 
-  // Action: Generate with AI (Simulated SSE Streaming)
-  const handleAiGeneration = () => {
-    if (!selectedSection) return;
+  // 4. Action: Generate with AI (Real Backend Call)
+  const handleAiGeneration = async () => {
+    if (!selectedSection || !selectedSectionId) return;
 
     setIsGenerating(true);
-    setEditingContent("");
 
-    // Set section status to generating
-    setSections((prev) =>
-      prev.map((s) =>
-        s.id === selectedSectionId ? { ...s, status: "generating", aiGenerated: true } : s,
-      ),
-    );
-
-    const fullResponse = "";
-    const words = fullResponse.split(" ");
-    let currentWordIndex = 0;
-    let accumulatedText = "";
-
-    // Simulated Server-Sent Events interval
-    const streamInterval = setInterval(() => {
-      if (currentWordIndex < words.length) {
-        accumulatedText += (currentWordIndex === 0 ? "" : " ") + words[currentWordIndex];
-        setEditingContent(accumulatedText);
-        currentWordIndex++;
-      } else {
-        clearInterval(streamInterval);
-        setIsGenerating(false);
-
-        // Update the section contents in memory
-        setSections((prev) =>
-          prev.map((s) =>
-            s.id === selectedSectionId
-              ? {
-                  ...s,
-                  contentAr: locale === "ar" ? accumulatedText : s.contentAr,
-                  contentEn: locale === "en" ? accumulatedText : s.contentEn,
-                  status: "completed",
-                }
-              : s,
-          ),
-        );
-
-        toast.success(t("successGenerate"));
+    let streamedText = "";
+    try {
+      // Initialize project if not initialized
+      if (!proposalData?.isInitialized) {
+        await handleInitializeProposal();
       }
-    }, 45); // Typing speed
+      await pythonAiControllerGenerate(
+        id,
+        selectedSection.sectionType,
+        { locale: locale as Locale },
+        {
+          onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
+            // Axios attaches the raw XMLHttpRequest to the event
+            const xhr = progressEvent.event?.target;
+            const accumulatedText = xhr?.responseText;
+
+            if (accumulatedText) {
+              streamedText = accumulatedText;
+              setEditingContent(accumulatedText);
+              // Force React to re-render the Markdown/Form immediately
+              setMarkdownContentKey((prev) => prev + 1);
+            }
+          },
+        },
+      );
+
+      setSections((prev) =>
+        prev.map((s) =>
+          s.id === selectedSectionId
+            ? {
+                ...s,
+                contentAr: locale === "ar" ? streamedText : s.contentAr,
+                contentEn: locale === "en" ? streamedText : s.contentEn,
+                status: "completed",
+              }
+            : s,
+        ),
+      );
+      setMarkdownContentKey((prev) => prev + 1);
+      await updateSection({
+        id,
+        sectionId: selectedSectionId,
+        data: {
+          contentAr: locale === "ar" ? streamedText : undefined,
+          contentEn: locale === "en" ? streamedText : undefined,
+          status: streamedText ? "completed" : "empty",
+        },
+      });
+
+      toast.success(t("successGenerate") || "Section successfully generated.");
+    } catch (error) {
+      console.error("AI generation failed:", error);
+      toast.error(t("errorGenerate") || "Failed to generate AI content. Please try again.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  // Optional: Initialization handler
+  const handleInitializeProposal = async () => {
+    try {
+      await initializeAiMutation.mutateAsync({ projectId: id });
+    } catch (_error) {
+      toast.error(t("error"));
+    }
   };
 
   // Action: Final Send to Client
@@ -283,11 +298,6 @@ export default function AdminProposalWorkspacePage() {
     deliverProposalMutation.mutate(
       {
         id,
-        data: {
-          rfpFileUrl: proposalData?.rfpFileUrl || "https://test.com/proposal.pdf",
-          titleAr: getProposalTitle(),
-          titleEn: getProposalTitle(),
-        },
       },
       {
         onSuccess: () => {
@@ -346,11 +356,29 @@ export default function AdminProposalWorkspacePage() {
 
         {/* Global Toolbar Controls */}
         <div className="flex items-center gap-3">
+          {/* Optional Initializer button if no sections exist yet */}
+          {sections.length === 0 && (
+            <Button
+              variant="outline"
+              className="border-neutral-200 text-neutral-700 font-bold h-9 px-4 rounded-xl gap-2 hover:bg-neutral-50 transition-colors"
+              onClick={handleInitializeProposal}
+              disabled={initializeAiMutation.isPending}
+            >
+              <Sparkles className="h-4 w-4" />
+              <span>Initialize AI Proposal</span>
+            </Button>
+          )}
+
           <Button
             variant="outline"
             className="border-neutral-200 text-neutral-700 font-bold h-9 px-4 rounded-xl gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
             onClick={handleResetSection}
-            disabled={isGenerating || deliverProposalMutation.isPending}
+            disabled={
+              isGenerating ||
+              deliverProposalMutation.isPending ||
+              generateAiMutation.isPending ||
+              selectedSection?.humanApproved
+            }
           >
             <RotateCcw className="h-4 w-4" />
             <span>{t("reset")}</span>
@@ -358,9 +386,13 @@ export default function AdminProposalWorkspacePage() {
 
           <Button
             variant="default"
-            className="bg-primary-800 hover:bg-primary-900 text-white font-bold h-9 px-4 rounded-xl gap-2 shadow-sm disabled:opacity-50"
+            className="bg-primary-800 hover:bg-primary-900 text-white font-bold h-9 px-4 rounded-xl gap-2 shadow-sm disabled:opacity-50 cursor-pointer"
             onClick={() => setIsSendDialogOpen(true)}
-            disabled={!allSectionsGenerated || deliverProposalMutation.isPending}
+            disabled={
+              !allSectionsGenerated ||
+              deliverProposalMutation.isPending ||
+              proposalData?.status === "submitted"
+            }
           >
             <Send className="h-4 w-4" />
             <span>{t("sendToClient")}</span>
@@ -494,17 +526,22 @@ export default function AdminProposalWorkspacePage() {
                       requestData={requestData}
                       tenderData={tenderData}
                       formattedDate={formattedDate}
+                      isDisabled={
+                        selectedSection?.humanApproved ||
+                        isGenerating ||
+                        generateAiMutation.isPending
+                      }
                     />
                   ) : (
                     <MarkdownEditor
                       key={selectedSectionId + "_" + locale + "_" + markdownContentKey}
                       markdown={editingContent}
                       onChange={setEditingContent}
-                      disabled={isGenerating}
+                      disabled={isGenerating || generateAiMutation.isPending}
                       dir={locale === "ar" ? "rtl" : "ltr"}
                     />
                   )}
-                  {isGenerating && (
+                  {(isGenerating || generateAiMutation.isPending) && (
                     <div className="absolute bottom-4 inset-e-4 bg-indigo-50 border border-indigo-100 text-indigo-800 px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs font-bold shadow-sm animate-pulse z-10">
                       <Clock className="h-3.5 w-3.5 animate-spin" />
                       <span>{t("generatingAI")}</span>
@@ -535,21 +572,35 @@ export default function AdminProposalWorkspacePage() {
               variant="outline"
               disabled={
                 isGenerating ||
+                generateAiMutation.isPending ||
                 !!selectedSection?.humanApproved ||
                 selectedSection?.sectionType === "cover_page"
               }
               onClick={handleAiGeneration}
               className="bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border-indigo-100 hover:border-indigo-200 font-bold px-4 h-10 rounded-xl gap-2 transition-colors cursor-pointer"
             >
-              <Sparkles className="h-4 w-4" />
-              <span>{t("generateWithAI")}</span>
+              {isGenerating || generateAiMutation.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Sparkles className="h-4 w-4" />
+              )}
+              <span>
+                {isGenerating || generateAiMutation.isPending
+                  ? t("generatingAI")
+                  : t("generateWithAI")}
+              </span>
             </Button>
 
             <div className="flex items-center gap-3">
               <Button
                 variant="default"
                 onClick={handleSave}
-                disabled={isGenerating || deliverProposalMutation.isPending}
+                disabled={
+                  isGenerating ||
+                  deliverProposalMutation.isPending ||
+                  !!selectedSection?.humanApproved ||
+                  generateAiMutation.isPending
+                }
                 className="font-bold px-4 h-10 rounded-xl gap-2 cursor-pointer disabled:opacity-50"
               >
                 <Save className="h-4 w-4" />
@@ -558,7 +609,9 @@ export default function AdminProposalWorkspacePage() {
               <Button
                 variant="outline"
                 onClick={handleApprove}
-                disabled={isGenerating || selectedSection?.humanApproved}
+                disabled={
+                  isGenerating || generateAiMutation.isPending || selectedSection?.humanApproved
+                }
                 className=" font-bold px-5 h-10 rounded-xl gap-2 shadow-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <CheckCircle className="h-4 w-4" />

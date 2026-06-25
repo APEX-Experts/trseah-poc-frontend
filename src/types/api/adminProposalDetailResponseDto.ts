@@ -29,6 +29,7 @@ export interface AdminProposalDetailResponseDto {
   createdAt: string;
   updatedAt: string;
   sections?: ProposalSectionResponseDto[];
+  isInitialized: boolean;
   request?: ServiceRequestResponseDto;
   organization: OrganizationResponseDto;
   tender?: TenderResponseDto;

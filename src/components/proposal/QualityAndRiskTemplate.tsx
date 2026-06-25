@@ -33,8 +33,8 @@ function QualityAndRiskTemplate({
       requestData?.rfpExternalDescription ||
       "Digital Transformation Platform";
 
-  const getBadgeStyles = (val: string) => {
-    const v = val.trim().toLowerCase();
+  const getBadgeStyles = (val?: string) => {
+    const v = val?.trim().toLowerCase();
     if (v === "high" || v === "عالي") {
       return "bg-red-50 text-red-700 border-red-200/60";
     }

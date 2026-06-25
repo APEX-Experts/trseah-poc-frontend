@@ -650,6 +650,7 @@
     "successSend": "Technical proposal has been sent to client successfully!",
     "generateWithAI": "Generate with AI",
     "generatingAI": "AI Generating...",
+    "errorGenerate": "Failed to generate AI content. Please try again.",
     "save": "Save Changes",
     "saving": "Saving...",
     "successSave": "Section content saved successfully!",

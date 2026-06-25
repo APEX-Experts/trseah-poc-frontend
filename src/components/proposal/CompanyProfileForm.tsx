@@ -17,6 +17,7 @@ interface CompanyProfileFormProps {
   onChange: (newContent: string) => void;
   isRtl: boolean;
   proposalData?: ProposalDto | null;
+  isDisabled?: boolean;
 }
 
 export default function CompanyProfileForm({
@@ -24,6 +25,7 @@ export default function CompanyProfileForm({
   onChange,
   isRtl,
   proposalData,
+  isDisabled,
 }: CompanyProfileFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
@@ -112,6 +114,7 @@ export default function CompanyProfileForm({
               className={inputClass}
               value={profileData.title}
               onChange={(e) => updateProfileField("title", e.target.value)}
+              disabled={isDisabled}
             />
           </div>
           <div>
@@ -120,6 +123,7 @@ export default function CompanyProfileForm({
               markdown={profileData.subtitle || ""}
               onChange={(value) => updateProfileField("subtitle", value)}
               dir={locale === "ar" ? "rtl" : "ltr"}
+              disabled={isDisabled}
             />
           </div>
         </div>
@@ -135,6 +139,7 @@ export default function CompanyProfileForm({
             type="button"
             onClick={handleAddMetric}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
+            disabled={isDisabled}
           >
             + {t("form.companyProfile.addMetric")}
           </button>
@@ -154,6 +159,7 @@ export default function CompanyProfileForm({
                     className={inputClass}
                     value={metric.value}
                     onChange={(e) => handleUpdateMetric(idx, "value", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
                 <div>
@@ -163,12 +169,14 @@ export default function CompanyProfileForm({
                     className={inputClass}
                     value={metric.label}
                     onChange={(e) => handleUpdateMetric(idx, "label", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => handleRemoveMetric(idx)}
+                disabled={isDisabled}
                 className="text-xs px-2.5 py-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold self-end mb-0.5"
               >
                 {t("form.companyProfile.remove")}
@@ -187,6 +195,7 @@ export default function CompanyProfileForm({
           <button
             type="button"
             onClick={handleAddCertificate}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.companyProfile.addCert")}
@@ -207,6 +216,7 @@ export default function CompanyProfileForm({
                     className={inputClass}
                     value={cert.name}
                     onChange={(e) => handleUpdateCertificate(idx, "name", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
                 <div>
@@ -216,6 +226,7 @@ export default function CompanyProfileForm({
                     className={inputClass}
                     value={cert.authority}
                     onChange={(e) => handleUpdateCertificate(idx, "authority", e.target.value)}
+                    disabled={isDisabled}
                   />
                 </div>
                 <div>
@@ -226,6 +237,7 @@ export default function CompanyProfileForm({
                     onChange={(e) =>
                       handleUpdateCertificate(idx, "theme", e.target.value as "blue" | "green")
                     }
+                    disabled={isDisabled}
                   >
                     <option value="blue">{t("form.companyProfile.themeBlue")}</option>
                     <option value="green">{t("form.companyProfile.themeGreen")}</option>
@@ -235,6 +247,7 @@ export default function CompanyProfileForm({
               <button
                 type="button"
                 onClick={() => handleRemoveCertificate(idx)}
+                disabled={isDisabled}
                 className="text-xs px-2.5 py-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold self-end mb-0.5"
               >
                 {t("form.companyProfile.remove")}
@@ -254,6 +267,7 @@ export default function CompanyProfileForm({
           <MarkdownEditor
             markdown={profileData.additionalContent || ""}
             onChange={(value) => updateProfileField("additionalContent", value)}
+            disabled={isDisabled}
             dir={locale === "ar" ? "rtl" : "ltr"}
           />
         </div>

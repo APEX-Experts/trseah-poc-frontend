@@ -23,4 +23,5 @@ export interface ProposalResponseDto {
   createdAt: string;
   updatedAt: string;
   sections?: ProposalSectionResponseDto[];
+  isInitialized: boolean;
 }

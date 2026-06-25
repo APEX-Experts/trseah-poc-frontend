@@ -5,7 +5,6 @@
  * OpenAPI spec version: 1.0
  */
 import type {
-  AdminDeliverProposalDto,
   AdminProposalsControllerDeliverProposal200,
   AdminProposalsControllerGetProposalDetail200,
   AdminProposalsControllerGetProposalSections200,
@@ -37,16 +36,10 @@ export const getAdminProposals = () => {
    */
   const adminProposalsControllerDeliverProposal = (
     id: string,
-    adminDeliverProposalDto: AdminDeliverProposalDto,
     options?: SecondParameter<typeof api<AdminProposalsControllerDeliverProposal200>>,
   ) => {
     return api<AdminProposalsControllerDeliverProposal200>(
-      {
-        url: `/api/admin-api/proposals/${id}/deliver`,
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        data: adminDeliverProposalDto,
-      },
+      { url: `/api/admin-api/proposals/${id}/deliver`, method: "PATCH" },
       options,
     );
   };

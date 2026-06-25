@@ -5,7 +5,6 @@
  * OpenAPI spec version: 1.0
  */
 
-export * from "./adminDeliverProposalDto";
 export * from "./adminProposalDetailResponseDto";
 export * from "./adminProposalDetailResponseDtoStatus";
 export * from "./adminProposalsControllerDeliverProposal200";
@@ -111,6 +110,8 @@ export * from "./proposalSectionResponseDto";
 export * from "./proposalSectionResponseDtoStatus";
 export * from "./providersResponseDto";
 export * from "./providersResponseDtoProvidersItem";
+export * from "./pythonAiControllerGenerateLocale";
+export * from "./pythonAiControllerGenerateParams";
 export * from "./refundPaymentDto";
 export * from "./refundResultDto";
 export * from "./refundResultDtoStatus";

@@ -15,9 +15,10 @@ interface TimelineFormProps {
   content: string;
   onChange: (newContent: string) => void;
   isRtl: boolean;
+  isDisabled?: boolean;
 }
 
-export default function TimelineForm({ content, onChange, isRtl }: TimelineFormProps) {
+export default function TimelineForm({ content, onChange, isRtl, isDisabled }: TimelineFormProps) {
   const t = useTranslations("AdminProposals");
   const locale = useLocale();
 
@@ -73,7 +74,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
   const handleAddMilestone = () => {
     const nextNum = milestones.length + 1;
     const newMilestone: TimelineMilestone = {
-      code: `M${nextNum}`,
+      code: `#${nextNum}`,
       description: "",
       targetDate: "",
       owner: "",
@@ -108,6 +109,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
             type="text"
             className={inputClass}
             value={dataState.title}
+            disabled={isDisabled}
             onChange={(e) => updateField("title", e.target.value)}
           />
         </div>
@@ -122,6 +124,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
           <button
             type="button"
             onClick={handleAddPhase}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.timeline.addPhase")}
@@ -142,6 +145,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                 <button
                   type="button"
                   onClick={() => handleRemovePhase(idx)}
+                  disabled={isDisabled}
                   className="text-xs px-2.5 py-1.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold"
                 >
                   {t("form.timeline.remove")}
@@ -156,6 +160,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                     type="text"
                     className={inputClass}
                     value={phase.title}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdatePhase(idx, "title", e.target.value)}
                   />
                 </div>
@@ -165,6 +170,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                     type="text"
                     className={inputClass}
                     value={phase.duration}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdatePhase(idx, "duration", e.target.value)}
                   />
                 </div>
@@ -178,6 +184,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                     type="text"
                     className={inputClass}
                     value={phase.durationLabel}
+                    disabled={isDisabled}
                     onChange={(e) => handleUpdatePhase(idx, "durationLabel", e.target.value)}
                   />
                 </div>
@@ -188,6 +195,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                     min="1"
                     className={inputClass}
                     value={phase.startMonth}
+                    disabled={isDisabled}
                     onChange={(e) =>
                       handleUpdatePhase(idx, "startMonth", parseInt(e.target.value) || 1)
                     }
@@ -200,6 +208,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                     min="1"
                     className={inputClass}
                     value={phase.endMonth}
+                    disabled={isDisabled}
                     onChange={(e) =>
                       handleUpdatePhase(idx, "endMonth", parseInt(e.target.value) || 1)
                     }
@@ -220,6 +229,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
           <button
             type="button"
             onClick={handleAddMilestone}
+            disabled={isDisabled}
             className="text-xs px-3 py-1 bg-primary-800/5 text-primary-800 font-bold rounded-lg border border-primary-800/10 hover:bg-primary-800/10 transition-all"
           >
             + {t("form.timeline.addMilestone")}
@@ -232,6 +242,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
             type="text"
             className={inputClass}
             value={dataState.milestonesTitle}
+            disabled={isDisabled}
             onChange={(e) => updateField("milestonesTitle", e.target.value)}
           />
         </div>
@@ -247,6 +258,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                 <input
                   type="text"
                   className={inputClass}
+                  disabled={isDisabled}
                   value={milestone.code}
                   onChange={(e) => handleUpdateMilestone(idx, "code", e.target.value)}
                 />
@@ -257,6 +269,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                   type="text"
                   className={inputClass}
                   value={milestone.description}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateMilestone(idx, "description", e.target.value)}
                 />
               </div>
@@ -266,6 +279,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                   type="text"
                   className={inputClass}
                   value={milestone.targetDate}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateMilestone(idx, "targetDate", e.target.value)}
                 />
               </div>
@@ -275,12 +289,14 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
                   type="text"
                   className={inputClass}
                   value={milestone.owner}
+                  disabled={isDisabled}
                   onChange={(e) => handleUpdateMilestone(idx, "owner", e.target.value)}
                 />
               </div>
               <button
                 type="button"
                 onClick={() => handleRemoveMilestone(idx)}
+                disabled={isDisabled}
                 className="text-xs p-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all font-bold self-end sm:mb-0.5"
               >
                 {t("form.timeline.remove")}
@@ -301,6 +317,7 @@ export default function TimelineForm({ content, onChange, isRtl }: TimelineFormP
             markdown={dataState.additionalContent || ""}
             onChange={(value) => updateField("additionalContent", value)}
             dir={locale === "ar" ? "rtl" : "ltr"}
+            disabled={isDisabled}
           />
         </div>
       </div>
